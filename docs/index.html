@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Migration of Fishery SUA and FBS compilation into the SWS</title>
+  <meta name="description" content="This online book describes the migration of the statistical processes performed by the FAO Fisheries and Aquaculture Department into the Corporate Statistical Working System (SWS) for the compilation of Supply Utilization Accounts (SUAs) and Food Balance Sheets (FBSs) ." />
+  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Migration of Fishery SUA and FBS compilation into the SWS" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This online book describes the migration of the statistical processes performed by the FAO Fisheries and Aquaculture Department into the Corporate Statistical Working System (SWS) for the compilation of Supply Utilization Accounts (SUAs) and Food Balance Sheets (FBSs) ." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Migration of Fishery SUA and FBS compilation into the SWS" />
+  
+  <meta name="twitter:description" content="This online book describes the migration of the statistical processes performed by the FAO Fisheries and Aquaculture Department into the Corporate Statistical Working System (SWS) for the compilation of Supply Utilization Accounts (SUAs) and Food Balance Sheets (FBSs) ." />
+  
+
+<meta name="author" content="Charlotte Taglioni (Statistician, ESSD - Methodological Innovation Team)" />
+
+
+<meta name="date" content="2020-03-31" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+
+<link rel="next" href="PluginDes.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="ess.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="index.html#introduction"><strong>Introduction</strong></a><ul>
+<li><a href="index.html#migration-actors"><strong>Migration actors</strong></a></li>
+<li><a href="index.html#new-fias-methodology"><strong>New FIAS methodology</strong></a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>SUAs/FBS for fish and fish products (based on FIAS documentation)</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#working-system-of-fao-fias-for-the-calculation-of-suas-and-fbs"><i class="fa fa-check"></i>Working system of FAO FIAS for the calculation of SUAs and FBS</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#standardization-to-fbs"><i class="fa fa-check"></i>Standardization to FBS</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#fias-processed-production-in-sws-proposed-workflow"><i class="fa fa-check"></i>FIAS processed production in SWS: proposed workflow</a></li>
+</ul></li>
+<li><a href="index.html#sws-resources"><strong>SWS resources</strong></a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#code-lists"><i class="fa fa-check"></i>Code lists</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#data-tables"><i class="fa fa-check"></i>Data tables</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#datasets"><i class="fa fa-check"></i>Datasets</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#definition-and-conversion-of-sua-fbs-elements"><i class="fa fa-check"></i>Definition and conversion of SUA-FBS Elements</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#sua-element-conversion"><i class="fa fa-check"></i>SUA element conversion</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#fias-standardized-fbs-element-conversion"><i class="fa fa-check"></i>FIAS standardized FBS element conversion</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#faostat-standardized-fbs-element-conversion"><i class="fa fa-check"></i>Faostat standardized FBS element conversion</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#flag-conversion"><i class="fa fa-check"></i>Flag conversion</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="PluginDes.html"><a href="PluginDes.html"><i class="fa fa-check"></i><b>1</b> <strong>SUA-FBS compilation process</strong></a><ul>
+<li class="chapter" data-level="1.1" data-path="PluginDes.html"><a href="PluginDes.html#initiate-plugin"><i class="fa fa-check"></i><b>1.1</b> Initiate plugin</a></li>
+<li class="chapter" data-level="1.2" data-path="PluginDes.html"><a href="PluginDes.html#pull-data-to-sua"><i class="fa fa-check"></i><b>1.2</b> Pull data to SUA</a></li>
+<li class="chapter" data-level="1.3" data-path="PluginDes.html"><a href="PluginDes.html#fill-sua"><i class="fa fa-check"></i><b>1.3</b> Fill SUA</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="PluginDes.html"><a href="PluginDes.html#extraction-rate-and-input-calculation"><i class="fa fa-check"></i><b>1.3.1</b> Extraction rate and input calculation</a></li>
+<li class="chapter" data-level="1.3.2" data-path="PluginDes.html"><a href="PluginDes.html#food-processing-calculation-and-balancing"><i class="fa fa-check"></i><b>1.3.2</b> Food processing calculation and balancing</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="PluginDes.html"><a href="PluginDes.html#sua-with-nutrients"><i class="fa fa-check"></i><b>1.4</b> SUA with nutrients</a></li>
+<li class="chapter" data-level="1.5" data-path="PluginDes.html"><a href="PluginDes.html#standardization"><i class="fa fa-check"></i><b>1.5</b> Standardization</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="PluginCode.html"><a href="PluginCode.html"><i class="fa fa-check"></i><b>2</b> <strong>fi_SUA-FBS plugin R code</strong></a><ul>
+<li class="chapter" data-level="2.1" data-path="PluginCode.html"><a href="PluginCode.html#main-file"><i class="fa fa-check"></i><b>2.1</b> Main file</a></li>
+<li class="chapter" data-level="2.2" data-path="PluginCode.html"><a href="PluginCode.html#external-functions"><i class="fa fa-check"></i><b>2.2</b> External functions</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="PluginCode.html"><a href="PluginCode.html#extraction-rates"><i class="fa fa-check"></i><b>2.2.1</b> Extraction rates</a></li>
+<li class="chapter" data-level="2.2.2" data-path="PluginCode.html"><a href="PluginCode.html#input"><i class="fa fa-check"></i><b>2.2.2</b> Input</a></li>
+<li class="chapter" data-level="2.2.3" data-path="PluginCode.html"><a href="PluginCode.html#food-processing"><i class="fa fa-check"></i><b>2.2.3</b> Food Processing</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="ShinyDes.html"><a href="ShinyDes.html"><i class="fa fa-check"></i><b>3</b> <strong>SUA-FBS Validation Shiny application</strong></a><ul>
+<li class="chapter" data-level="3.1" data-path="ShinyDes.html"><a href="ShinyDes.html#token-tab"><i class="fa fa-check"></i><b>3.1</b> <strong>Token tab</strong></a></li>
+<li class="chapter" data-level="3.2" data-path="ShinyDes.html"><a href="ShinyDes.html#overview-tab"><i class="fa fa-check"></i><b>3.2</b> <strong>Overview tab</strong></a></li>
+<li class="chapter" data-level="3.3" data-path="ShinyDes.html"><a href="ShinyDes.html#sua-compare-tab"><i class="fa fa-check"></i><b>3.3</b> <strong>SUA compare tab</strong></a></li>
+<li class="chapter" data-level="3.4" data-path="ShinyDes.html"><a href="ShinyDes.html#sua-imbalance-tab"><i class="fa fa-check"></i><b>3.4</b> <strong>SUA imbalance tab</strong></a></li>
+<li class="chapter" data-level="3.5" data-path="ShinyDes.html"><a href="ShinyDes.html#fbs-by-ics-tab"><i class="fa fa-check"></i><b>3.5</b> <strong>FBS by ICS tab</strong></a></li>
+<li class="chapter" data-level="3.6" data-path="ShinyDes.html"><a href="ShinyDes.html#ics-by-element-tab"><i class="fa fa-check"></i><b>3.6</b> <strong>ICS by element tab</strong></a></li>
+<li class="chapter" data-level="3.7" data-path="ShinyDes.html"><a href="ShinyDes.html#global-production-tab"><i class="fa fa-check"></i><b>3.7</b> <strong>Global Production tab</strong></a></li>
+<li class="chapter" data-level="3.8" data-path="ShinyDes.html"><a href="ShinyDes.html#commodities-tab"><i class="fa fa-check"></i><b>3.8</b> <strong>Commodities tab</strong></a></li>
+<li class="chapter" data-level="3.9" data-path="ShinyDes.html"><a href="ShinyDes.html#link-table-tab"><i class="fa fa-check"></i><b>3.9</b> <strong>Link table tab</strong></a></li>
+<li class="chapter" data-level="3.10" data-path="ShinyDes.html"><a href="ShinyDes.html#extraction-rates-tab"><i class="fa fa-check"></i><b>3.10</b> <strong>Extraction rates tab</strong></a></li>
+<li class="chapter" data-level="3.11" data-path="ShinyDes.html"><a href="ShinyDes.html#data-validation-tab"><i class="fa fa-check"></i><b>3.11</b> <strong>Data validation tab</strong></a></li>
+<li class="chapter" data-level="3.12" data-path="ShinyDes.html"><a href="ShinyDes.html#data-update-tab"><i class="fa fa-check"></i><b>3.12</b> <strong>Data update tab</strong></a></li>
+<li class="chapter" data-level="3.13" data-path="ShinyDes.html"><a href="ShinyDes.html#data-saving-tab"><i class="fa fa-check"></i><b>3.13</b> <strong>Data saving tab</strong></a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="ShinyCode.html"><a href="ShinyCode.html"><i class="fa fa-check"></i><b>4</b> <strong>The Fisheries SUA-FBS Shiny R code</strong></a><ul>
+<li class="chapter" data-level="4.1" data-path="ShinyCode.html"><a href="ShinyCode.html#global.r-file"><i class="fa fa-check"></i><b>4.1</b> <strong>‘global.R’ file</strong></a></li>
+<li class="chapter" data-level="4.2" data-path="ShinyCode.html"><a href="ShinyCode.html#ui.r-file"><i class="fa fa-check"></i><b>4.2</b> <strong>‘ui.R’ file</strong></a></li>
+<li class="chapter" data-level="4.3" data-path="ShinyCode.html"><a href="ShinyCode.html#server.r-file"><i class="fa fa-check"></i><b>4.3</b> <strong>‘server.R’ file</strong></a><ul>
+<li class="chapter" data-level="4.3.1" data-path="ShinyCode.html"><a href="ShinyCode.html#overview-tab-1"><i class="fa fa-check"></i><b>4.3.1</b> ‘Overview’ tab</a></li>
+<li class="chapter" data-level="4.3.2" data-path="ShinyCode.html"><a href="ShinyCode.html#sua-compare-tab-1"><i class="fa fa-check"></i><b>4.3.2</b> ‘SUA compare’ tab</a></li>
+<li class="chapter" data-level="4.3.3" data-path="ShinyCode.html"><a href="ShinyCode.html#sua-imbalance-tab-1"><i class="fa fa-check"></i><b>4.3.3</b> ‘SUA imbalance’ tab</a></li>
+<li class="chapter" data-level="4.3.4" data-path="ShinyCode.html"><a href="ShinyCode.html#fbs-by-ics-tab-1"><i class="fa fa-check"></i><b>4.3.4</b> ‘FBS by ICS’ tab</a></li>
+<li class="chapter" data-level="4.3.5" data-path="ShinyCode.html"><a href="ShinyCode.html#ics-by-element-tab-1"><i class="fa fa-check"></i><b>4.3.5</b> ‘ICS by Element’ tab</a></li>
+<li class="chapter" data-level="4.3.6" data-path="ShinyCode.html"><a href="ShinyCode.html#global-production-tab-1"><i class="fa fa-check"></i><b>4.3.6</b> ‘Global production’ tab</a></li>
+<li class="chapter" data-level="4.3.7" data-path="ShinyCode.html"><a href="ShinyCode.html#commodities-tab-1"><i class="fa fa-check"></i><b>4.3.7</b> ‘Commodities’ tab</a></li>
+<li class="chapter" data-level="4.3.8" data-path="ShinyCode.html"><a href="ShinyCode.html#link-table-tab-1"><i class="fa fa-check"></i><b>4.3.8</b> ‘Link table’ tab</a></li>
+<li class="chapter" data-level="4.3.9" data-path="ShinyCode.html"><a href="ShinyCode.html#extraction-rates-tab-1"><i class="fa fa-check"></i><b>4.3.9</b> ‘Extraction rates’ tab</a></li>
+<li class="chapter" data-level="4.3.10" data-path="ShinyCode.html"><a href="ShinyCode.html#data-validation-tab-1"><i class="fa fa-check"></i><b>4.3.10</b> ‘Data validation’ tab</a></li>
+<li class="chapter" data-level="4.3.11" data-path="ShinyCode.html"><a href="ShinyCode.html#data-update-tab-1"><i class="fa fa-check"></i><b>4.3.11</b> ‘Data update’ tab</a></li>
+<li class="chapter" data-level="4.3.12" data-path="ShinyCode.html"><a href="ShinyCode.html#data-saving-tab-1"><i class="fa fa-check"></i><b>4.3.12</b> ‘Data saving’ tab</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="ShinyCode.html"><a href="ShinyCode.html#external-functions-1"><i class="fa fa-check"></i><b>4.4</b> External functions</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="ShinyCode.html"><a href="ShinyCode.html#gprecalc"><i class="fa fa-check"></i><b>4.4.1</b> GPrecalc</a></li>
+<li class="chapter" data-level="4.4.2" data-path="ShinyCode.html"><a href="ShinyCode.html#cdbrecalc"><i class="fa fa-check"></i><b>4.4.2</b> CDBrecalc</a></li>
+<li class="chapter" data-level="4.4.3" data-path="ShinyCode.html"><a href="ShinyCode.html#suaunbalcalc"><i class="fa fa-check"></i><b>4.4.3</b> SUAunbalCalc</a></li>
+<li class="chapter" data-level="4.4.4" data-path="ShinyCode.html"><a href="ShinyCode.html#suabalcalc"><i class="fa fa-check"></i><b>4.4.4</b> SUAbalCalc</a></li>
+<li class="chapter" data-level="4.4.5" data-path="ShinyCode.html"><a href="ShinyCode.html#suanutrcalc"><i class="fa fa-check"></i><b>4.4.5</b> SUAnutrCalc</a></li>
+<li class="chapter" data-level="4.4.6" data-path="ShinyCode.html"><a href="ShinyCode.html#fbscalc"><i class="fa fa-check"></i><b>4.4.6</b> FBScalc</a></li>
+<li class="chapter" data-level="4.4.7" data-path="ShinyCode.html"><a href="ShinyCode.html#reloaddata"><i class="fa fa-check"></i><b>4.4.7</b> reloadData</a></li>
+<li class="chapter" data-level="4.4.8" data-path="ShinyCode.html"><a href="ShinyCode.html#reloaddatatoken"><i class="fa fa-check"></i><b>4.4.8</b> reloadDataToken</a></li>
+</ul></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Migration of Fishery SUA and FBS compilation into the SWS</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="header">
+<h1 class="title">Migration of Fishery SUA and FBS compilation into the SWS</h1>
+<p class="author"><em>Charlotte Taglioni (Statistician, ESSD - Methodological Innovation Team)</em></p>
+<p class="date"><em>2020-03-31</em></p>
+</div>
+<div id="introduction" class="section level1 unnumbered">
+<h1><strong>Introduction</strong></h1>
+<p>FAO Fisheries and Aquaculture Department is migrating its statistical processes into the Corporate Statistical Working System (SWS). This online book documents the significant steps that have been taken so far concerning this migration. The document describes the main institutional actors involved in the migration as well as the FIAS - SWS resources (<strong>code lists</strong>, <strong>datasets</strong>, <strong>data tables</strong>) that have been created to support the SWS plugins (R modules) to meet technical unit requirements. Furthermore, the SWS plugins and Shiny applications are presented in the form of chapters providing a detailed description of their workflows as well as results.</p>
+<div class="rmdnote">
+<p>
+<strong>IMPORTANT:</strong> Use the <strong>Chrome browser</strong> to have a correct visualization of HTML outputs in this online document.
+</p>
+</div>
+<div id="migration-actors" class="section level2 unnumbered">
+<h2><strong>Migration actors</strong></h2>
+<p>Any migration into the SWS requires the interaction between at least three actors:</p>
+<ol style="list-style-type: decimal">
+<li>The <strong>technical unit</strong> interested in automating either some or all its analytic processes in the SWS. The technical unit can be treated as client demanding services from the counterparts responsible for the implementation of its data and statistical assets in the SWS. Therefore, a successful FIAS - SWS migration depends on the coordination between the technical division and other parts. In the FIAS - SWS migration framework the technical unit is called FIAS and is represented by:</li>
+</ol>
+<ul>
+<li><strong>Stefania Vannuccini</strong> <em>Senior Fishery Officer, FIAS</em></li>
+<li><strong>Adrienne Egger</strong> <em>Fishery Officer, FIAS</em></li>
+<li><strong>Gabriella Laurenti</strong> <em>Statistical clerk, FIAS</em></li>
+<li><strong>Thomas Berger</strong> <em>Statistician, FIAS</em></li>
+</ul>
+<ol start="2" style="list-style-type: decimal">
+<li>The <strong>ESS - Methodological Innovation Team</strong> (ESS - SWS) responsible for the implementation and documentation of the required statistical processes. From the ESS - SWS team the focal points for FIAS - SWS process migration are:</li>
+</ol>
+<ul>
+<li><strong>Charlotte Taglioni</strong> <em>Statistician (ESSD)</em></li>
+<li><strong>Carola Fabi</strong> <em>Statistician (ESSD)</em></li>
+</ul>
+<ol start="3" style="list-style-type: decimal">
+<li>The <strong>CIO - SWS</strong> the <strong>primary backend and frontend maintainer of the SWS</strong> and responsible for the implementation and documentation of non-statistical processes (IT infrastructure). The CIO - SWS team have as interlocutors:</li>
+</ol>
+<ul>
+<li><strong>Enrico Anello</strong> <em>Full Stack Developer (CIO)</em></li>
+<li><strong>John Rowell</strong> <em>Information Technology Officer (CIO)</em></li>
+<li><strong>Matteo Terrinoni</strong> <em>Lead Front End developer (CIO)</em></li>
+</ul>
+</div>
+<div id="new-fias-methodology" class="section level2 unnumbered">
+<h2><strong>New FIAS methodology</strong></h2>
+<p>The book focuses on SWS statistical processes and only recalls old methodology if useful to understand the new one. However, FIAS documents describing the old methodology can be found in the <a href="https://unfao.sharepoint.com/sites/tssws/Shared%20Documents/Forms/AllItems.aspx?viewid=07492829%2Dae8e%2D4338%2Dbc40%2D97411da985e8&amp;id=%2Fsites%2Ftssws%2FShared%20Documents%2F03%2E%20Statistical%20Documentation%2F02%2E%20Statistical%20Processes%2F09%2E%20FIAS%2FFIAS%20%E2%80%93%20Commodities%2FFIAS%20Team%20Documentation">shared folder</a> of the SWS.</p>
+</div>
+<div id="suasfbs-for-fish-and-fish-products-based-on-fias-documentation" class="section level2 unnumbered">
+<h2>SUAs/FBS for fish and fish products (based on FIAS documentation)</h2>
+<p>A Food Balance Sheet (FBS) for fish and fishery products presents a comprehensive picture of the pattern of a country’s fish supply and its utilization during a specified reference period. The total quantity of fish and fish products produced in a country added to the total quantity imported and adjusted to any change in stocks minus exports, gives the supply available for the indicated reference period.</p>
+<p>The FBS of fish and fishery products represent a compendium of five decades of statistics of apparent consumption for fish and fishery products for 221 countries based on the Supply/Utilization Accounts (SUAs). The Fishery module maintains SUAs for eight groups of primary fishery commodities and ten groups of products derived from them for almost all the countries and areas in the world from 1961, on a calendar-year basis.</p>
+<p>The compilation of SUAs and FBS, according to FAO current methodology, is a statistical exercise drawing together data from various sectors, for example production and trade, on the basis of information available in a given period – in general calendar year. In constructing the SUAs and the FBS derived from them, data available in the databases of the Statistics and Information Branch of the Fisheries and Aquaculture Department (FIAS) are used. These series are regularly updated and revised in the light of any new information. SUAs contain data on supplies from different sources matched against the different forms of utilization of each product. In this way, SUAs series for each primary and processed fishery commodities are calculated.</p>
+<p><strong>Classifications</strong></p>
+<p>In FIAS capture and aquaculture data are collected according to the ASFIS list of Species for Fishery Statistics Purposes. This is the list of species selected on the basis of their interest or relation to fisheries and aquaculture.</p>
+<p>For each species item stored in a record, the following descriptors are available:</p>
+<p><em>3-alpha code</em></p>
+<p>This is a code developed by the CWP for tabulations, questionnaires and publications in which the lack of space may impede the use of adequate descriptors in all the languages required</p>
+<p>It is assigned to a species item permanently (it is, thus, a permanent reference to that species item)</p>
+<p>The 3-alpha code is issued only for species of commercial significance</p>
+<p>FAO is the depository agency for the 3-alpha codes: requests for information and for the allocation of a 3-alpha code to new species should be addressed to FAO.</p>
+<p><em>ISSCAAP code</em></p>
+<p>The International Standard Statistical Classification for Aquatic Animals and Plants (ISSCAAP) classifies aquatic commercial species into 50 groups and nine divisions on the basis of their taxonomic, ecological and economic characteristics</p>
+<p>Currently, all species in the ASFIS List are classified by ISSCAAP group, with the exception of marine birds and snakes</p>
+<p><em>taxonomic code</em></p>
+<p>The taxonomic code consists of five levels of aggregation (Main groupings, Orders, Families, Genera and Species)</p>
+<p>Taxonomic information (scientific name, author(s), family, and higher taxonomic classification</p>
+<p>More information about ASFIS is available at <a href="http://www.fao.org/fishery/collection/asfis/en" class="uri">http://www.fao.org/fishery/collection/asfis/en</a> and from this website you can download its 2018 version.</p>
+<p>For production of processed and preserved commodities as well as for trade of fish and fisheries products (i.e. commodities), the classification being used is the International Standard Statistical Classification of Fisheries Commodities (ISSCFC). It covers products derived from fish, crustaceans, molluscs and other aquatic animals, plants and residues. This classification is based on the structure of the United Nations Standard International Trade Classification (SITC), with additional codes to include links to ISSCAAP and breakdown by additional species and product forms. It includes links to the Harmonized System classification (HS) and to the Central Product Classification (CPC). In the ISSCFC, fisheries and aquaculture commodities are classified according to the species and to the degree of processing undergone.</p>
+<p>The classification being used for the calculation of FBS/SUAs of fish and fishery products is the ICS FAOSTAT. Fish and fish products contained in SUAs/FBS do not represent individual species or commodities, but the aggregation of different species and products. About 2000 species produced and 1000 items traded are conveyed into 8 main groups of similar biological characteristic, reflecting the ISSCAAP classification, with a further breakdown up to 11 groups in the case of SUAs.</p>
+<p>The main eight groups of species forming SUAs and FBS for fish and fishery products are:</p>
+<ul>
+<li>Freshwater and Diadromous fish;</li>
+<li>Demersal fish;</li>
+<li>Pelagic fish;</li>
+<li>Marine fish other;<br />
+</li>
+<li>Crustaceans;<br />
+</li>
+<li>Molluscs, excluding cephalopods;<br />
+</li>
+<li>Cephalopods;<br />
+</li>
+<li>Other aquatic animals.</li>
+</ul>
+<p>There are plans to split “Freshwater &amp; diadromous fish” into two groups: “Freshwater fish” and “Diadromous fish” as well to split “Pelagic fish” into two groups: “Tunas, bonitos, billfishes” and “Other pelagic fish”.</p>
+<p>Currently the SUAs/FBS for aquatic plants are not calculated (with the exception of three countries in FAOSTAT) due to the lack of separate data for edible/non-edible trade until recently. Due to the improvement of the HS classification and the introduction of specific codes distinguishing edible from non-edible aquatic plants/seaweed, this could change in the near future.</p>
+<p><em>Product types according to utilization for SUAs</em></p>
+<ul>
+<li>fresh, whole</li>
+<li>frozen, whole</li>
+<li>fresh fillets</li>
+<li>frozen fillets</li>
+<li>cured</li>
+<li>canned</li>
+<li>prepared</li>
+<li>meals</li>
+<li>body oils*</li>
+<li>liver oils*</li>
+<li>meals from offals*</li>
+<li>*not included in the standardization process</li>
+</ul>
+<p>The above classifications are available in the SWS with the following dimensions:</p>
+<ul>
+<li>the coding of the ICS_FAOSTAT classification for SUAs/FBS: measuredItemFAOSTAT_L2</li>
+<li>the element coding used in the SUAs/FBS calculation: measuredElementSuaFbs</li>
+<li>the FAO ISSCAAP classification and its links with the ICS_FAOSTAT codes: Map ASFIS - ICS - ISSCAAP data table</li>
+<li>the FAO ISSCFC and its links to the ICS_FAOSTAT codes: Map ISSCFC - ICS data table</li>
+<li>the latest version of the ASFIS list (2018), which also includes the links between species and ISSCAAP: fisheriesAsfis</li>
+</ul>
+<p>The food composition factors being used for the fish and fishery products are provided in the Fishery Nutrient Factors data table. In each FBS the fish contribution to animal and total protein supply is indicated as a percentage.</p>
+<p>For countries, currently the M49 coding is used: geographicAreaM49_fi dimension in the SWS.</p>
+<div id="working-system-of-fao-fias-for-the-calculation-of-suas-and-fbs" class="section level3 unnumbered">
+<h3>Working system of FAO FIAS for the calculation of SUAs and FBS</h3>
+<p>Due to the close connection and interaction between species, products and elements, fishery food balance sheets need to be visualized in their completeness. Therefore the system is conceived countrywise, extracting one country at a time, with all its SUAs in product weight onscreen and having standardization into primary equivalent as its latest output.</p>
+<p>The whole historical series is extracted, starting from 1961, as very frequent revisions occur either in data or in species identification and product classifications.</p>
+<p>When updating a whole country, raw data for capture, aquaculture and commodities (production and trade), stored separately, have to be extracted, therefore the executable starts with:</p>
+<p>interacting between the existing local databases to extract and merge data from different sources:</p>
+<p>total fish production is first retrieved, manually, from the FishstatJ dataset “Global Production” (capture+aquaculture), already in aggregated form representing the 8 main groups and saved as a .csv file.</p>
+<p>An executable picks up the .csv production file, then connects in real time to the commodities database, extracts all trade figures (quantities and values) and aggregates them by main groups of species and also according to their utilization type. In fact at raw data level, each one of the main groups may contain up to 11 product types, which are conceived according to the kind of processing and manufacturing they are subject to (fish can be fresh, frozen, filleted, cured, canned, prepared, reduced to meal and oils, etc. ).</p>
+<p>The exec may also re-direct some commodities to another destination (i.e. from nei canned to pelagic canned) when controversies on species or product identification may have appeared or else to solve imbalances (this operation makes use of a linkage file duly filled during the years through an integrated procedure within the program).</p>
+<p>Creation of a working spreadsheet in .csv/excel, with colored highlights on the cells presenting changes vs the existing database. The sheet can be modified, rows can be added or deleted and finally can be imported into the local extraction for balancing and analysis of final results of the updating.</p>
+</div>
+<div id="standardization-to-fbs" class="section level3 unnumbered">
+<h3>Standardization to FBS</h3>
+<p>Once raw data are balanced, the final step is the conversion of each variable for each product type within each group of species into its corresponding live-weight equivalent, by making use of specific technical conversion factors.</p>
+<p>In practice, the reason why every processed fish food commodity is reconverted into its primary equivalent is to obtain comparable statistics in homogeneous units applicable to all countries in the world.</p>
+<p>The final output, FBS, available for dissemination is therefore represented by the series reconverted into their primary equivalent.</p>
+<p>Some differences occur in the way standardization is carried out according to FIAS and FAOSTAT methodologies. This difference has always existed. It mainly consists in the way trade data are handled, taking into account both edible and inedible products (as in FAOSTAT) or only the edible component (as in FIAS). The final result of the total food fish supply and <em>per capita</em> food fish supply is practically identical</p>
+</div>
+<div id="fias-processed-production-in-sws-proposed-workflow" class="section level3 unnumbered">
+<h3>FIAS processed production in SWS: proposed workflow</h3>
+<p>Figure <a href="index.html#fig:WFpp">0.1</a> represents the essential points of the overall workflow for processed production data.</p>
+<div class="figure"><span id="fig:WFpp"></span>
+<img src="img/workflowGeneral.png" alt=" General workflow for SUA/FBS compilation." width="100%" />
+<p class="caption">
+Figure 0.1:  General workflow for SUA/FBS compilation.
+</p>
+</div>
+<p>The first part of data collection and data entry is entirely performed by FIAS unit; the second part of data imputation and validation uses the <em>ad-hoc</em> Shiny application described in paragraph <a href="#shiny"><strong>??</strong></a>; the third part is an R-plugin to be run on the SWS.</p>
+</div>
+</div>
+<div id="sws-resources" class="section level2 unnumbered">
+<h2><strong>SWS resources</strong></h2>
+<p>SWS resources are R modules, data tables, data sets, and code lists. Data tables are typically used as auxiliary data to help R modules to achieve their goals, often a long-format four-to-six dimensional data set. The statistical domains in SWS, through code/reference lists, define the dimensions of the datasets. Therefore, datasets are primarily used to store code list - referenced values as either input and output in the SWS.</p>
+<p>Because of the semi-standardized code list the questionnaire use to collect them, fishery processed production data are initially stored in data tables and migrated to a dataset only at the end of the process. The only dataset involved in the FIAS processed production is the Commodity dataset which has the dimensions listed in the description below.</p>
+<div id="code-lists" class="section level3 unnumbered">
+<h3>Code lists</h3>
+<p>Code lists, also called reference lists in SWS parlance, are the dimensions making up the data sets that are designed by the user to store analytic results from SWS modules. Some dimensions are statistical-domain-specific and are defined by the technical unit to reflect its needs regarding data collection, processing, and dissemination while meeting FAO standards. Each data set dimension has a set of codes and their associated descriptions. Thus, code lists serve to the purpose of standardization, visualization, and metadata by associating standardized codes to standardized names in the SWS data set outputs. A typical SWS compliant data set has, therefore, the following dimensions/reference lists:</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>Geographic area</strong>. Representing a spatial scale the information is measured at. For example, countries, territories, regional aggregates, regional special groups aggregates, global aggregates. In SWS, the geographic area dimension used by FIAS data sets is named <strong>geographicAreaM49_fi</strong>. The dimension is specific for FIAS unit as it was initially decided and confirmed in a meeting held on April 10, 2019.</p></li>
+<li><p><strong>Items</strong>. These one want to take a measurement from. For example, commodities, commodity groups, land use types, species, etc. The FIAS - SWS framework item code/reference for SUAs and FBSs are named: <strong>fisheriesAsfis</strong>, <strong>measuredItemISSCFC</strong>, <strong>measuredItemFaostat_L2</strong>.</p></li>
+<li><p><strong>Elements</strong>. Often representing a measurement that can be taken across different items. For example, area, production, share. In SWS, the element dimension/code list used by FIAS dataset is named <strong>measuredElementSuaFbs</strong>.</p></li>
+<li><p><strong>Time</strong> (the time unit the data is displayed for: year, months, etc). In SWS, the time dimension used by FIAS data sets is named <strong>timePointYears</strong>.</p></li>
+<li><p><strong>Flag</strong> (A standardized label indicating origin and/or nature of a number in the data set, e.g. <blank> (Official number)). In SWS, the flag dimension used by FIAS data sets is named <strong>flagObservationStatus</strong>. Please check the <a href="http://intranet.fao.org/statistics_coordination_portal/standards_for_quality_compliance/">OCS statistical standards</a> and the <a href="http://intranet.fao.org/fileadmin/user_upload/scp/Standards_for_quality_compliance/SSS1_Flags.pdf">flags document</a> to understand the flagObservationStatus rational and obtain the description of flags.</p></li>
+<li><p><strong>Method</strong> (A standardized label indicating method utilized to obtain a number in the data set. In SWS, the method dimension used by FIAS data sets is named <strong>flagMethod</strong>. Please check the <a href="http://intranet.fao.org/statistics_coordination_portal/standards_for_quality_compliance/">OCS statistical standards</a> and the <a href="http://intranet.fao.org/fileadmin/user_upload/scp/Standards_for_quality_compliance/SSS1_Flags.pdf">flags document</a> to understand the flagMethod rational and obtain the description of flags.</p></li>
+</ol>
+</div>
+<div id="data-tables" class="section level3 unnumbered">
+<h3>Data tables</h3>
+<p>Data tables are mainly used to store information helping R modules to output analytic results. Information in data tables can be of a number of types. For example, conversion factors, arithmetic formulas, mapping between flags, mapping between international classifications, etc. Exceptionally, data are stored in data tables because of the initial code list used by the FIAS unit to collect data. In SWS hierarchy, all data tables reside in a given statistical domain. In the FIAS - SWS migration framework, the data tables are mainly in the <strong>Fisheries Commodities</strong> domain and only the nutrients table in the <strong>Fishery</strong> domain. Below is a list of current available and filled data tables used in the SUA-FBS calculation process.</p>
+<p><strong>Note</strong>: These data tables, especially those for mapping purposes, have to be regularly checked and updated inserting new links or new commodities or species codified.</p>
+<ol style="list-style-type: decimal">
+<li>Mapping data tables:</li>
+</ol>
+<ul>
+<li><p><strong>Map ASFIS - ICS - ISSCAAP</strong> (SWS identifier: <code>map_asfis</code>) maps species to the ICS and ISSCAAP group according to the YBKlang file.</p></li>
+<li><p><strong>Map ICS FBS - ICS SUA</strong> (SWS identifier: <code>ics_l1_ics_l2</code>) maps all the Faostat level 2 (ICS) products to the main Faostat group.</p></li>
+<li><p><strong>Map ISSCFC - ICS</strong> (SWS identifier: <code>map_isscfc</code>) maps all the commodities to the corresponding ICS product.</p></li>
+</ul>
+<ol start="2" style="list-style-type: decimal">
+<li>SUA-FBS process instrumental data tables:</li>
+</ol>
+<ul>
+<li><p><strong>SUA-FBS: Balancing elements</strong> (SWS identifier: <code>balancing_elements</code>) lists for each country the balancing element for each ICS product. This table is based on the SUAs provided as legacy from FIAS.</p></li>
+<li><p><strong>SUA-FBS: Balancing problems</strong> (SWS identifier: <code>balancing_problems_tab</code>) table where all the problems encountered with balancing are stored (negative balancing or unavailable quantities to cover input during the food processing element calculation)</p></li>
+<li><p><strong>SUA-FBS: Commodity DB mapping</strong> (SWS identifier: <code>cdb_mapping</code>) table to map single commodities to other ICS than the default one specified into the YBKlang file.</p></li>
+<li><p><strong>SUA-FBS: conversion FBS elements (from old FIAS code)</strong> (SWS identifier: <code>oldfias2measuredelementfbs</code>) table to import FIAS legacy FBS to convert FBS elements into SWS compatible codes.</p></li>
+<li><p><strong>SUA-FBS: conversion FBS products (from old FIAS code)</strong> (SWS identifier: <code>oldfias2measureditemfbs</code>) same as the previous table but with the FBS groups.</p></li>
+<li><p><strong>SUA-FBS: conversion SUA elements (from old FIAS code)</strong> (SWS identifier: <code>oldfias2measuredelement</code>) same as ‘oldfias2measuredelementfbs’ but for SUAs elements.</p></li>
+<li><p><strong>SUA-FBS: element sign table</strong> (SWS identifier: <code>element_sign_table</code>) table to assign the sign to all the elements in order to compute availability.</p></li>
+<li><p><strong>SUA-FBS: FAOSTAT FBS element from SUA</strong> (SWS identifier: <code>fi_faostat_standardization_element</code>) table to group SUA elements into FBS elements because sometimes SUAs elements are aggregated into one FBS element or the code is different.</p></li>
+<li><p><strong>SUA-FBS: fbs_fias_tot2019</strong> (SWS identifier: <code>fbs_fias_tot2019</code>) since the dimension ‘measuredItemFaostat_L2’ does not contain a code for the total of all groups, the table stores these totals.</p></li>
+<li><p><strong>SUA-FBS: Fisheries commodity tree</strong> (SWS identifier: <code>fi_commodity_tree</code>) specifies the commodity tree for ICS product including both primary and secondary parents. The table also contains default extraction rates and the rank of ‘parenthood’ used for the food processing computation.</p></li>
+<li><p><strong>SUA-FBS: Flag conversion (from old FIAS)</strong> (SWS identifier: <code>oldfias2flags</code>) to convert old FIAS flags into SDMX flag system.</p></li>
+<li><p><strong>SUA-FBS: Global Production mapping</strong> (SWS identifier: <code>gp_mapping</code>) same as the ‘cd_mapping’ table but redirecting species into different ICS products.</p></li>
+<li><p><strong>SUA-FBS: ICS product to FBS group</strong> (SWS identifier: <code>faostatl2_to_faostatl1</code>) similar to the ‘ics_l1_2_ics_l2’ table but only including primary groups and Faostat major groups.</p></li>
+<li><p><strong>SUA-FBS: Imbalances</strong> (SWS identifier: <code>imbalance_tab</code>) where the imbalances involving secondary products are stored before increasing production so that the user can always check the initial imbalance and work on in differently from the simple production increase.</p></li>
+<li><p><strong>SUA-FBS: Import deviations to other uses</strong> (SWS identifier: <code>other_uses</code>) commodities allocated to other uses than the default one in the YBKlang file.</p></li>
+<li><p><strong>SUA-FBS: importgeocodefias</strong> (SWS identifier: <code>importgeocodefias</code>) table to import FIAS legacy file to link file names to M49 codes.</p></li>
+<li><p><strong>SUA-FBS: Link table elements</strong> (SWS identifier: <code>link_table</code>) table to deviate ICS products to other ones by flow (production, import, export) and specific periods.</p></li>
+<li><p><strong>SUA-FBS: token</strong> (SWS identifier: <code>fi_sua_fbs_token</code>) table where the token used by the shiny app are stored. This table get changes through the shiny app and has the tokens of the dataset sessions opened to run the plugin.</p></li>
+<li><p><strong>SUA-FBS: token validated</strong> (SWS identifier: <code>fi_sua_fbs_token_val</code>) table where the token used by the shiny app are stored. This table get changes through the shiny app and has the tokens of the validated dataset sessions opened to save the validated data.</p></li>
+</ul>
+</div>
+<div id="datasets" class="section level3 unnumbered">
+<h3>Datasets</h3>
+<p>From the ‘Fishery’ SWS domain:</p>
+<ul>
+<li><strong>Global Production</strong> (SWS identifier: <code>fi_global_production</code>) contains all the production data for capture and aquaculture product by species and catching area.</li>
+</ul>
+<p>From the ‘Fisheries Commodities’ SWS domain:</p>
+<ul>
+<li><p><strong>Commodities (total)</strong> (SWS identifier: <code>commodities_total</code>) contains all the flows (production, import, export, re-export) of commodities by country and year.</p></li>
+<li><p><strong>FBS fisheries - FAOSTAT standardized</strong> (SWS identifier: <code>fi_fbs_faostat</code>) working dataset<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a> where FAOSTAT FBS are stored after the plugin completion.</p></li>
+<li><p><strong>FBS fisheries - FAOSTAT standardized (Validated)</strong> (SWS identifier: <code>fi_fbs_faostat_validated</code>) where FAOSTAT FBS data are saved after validation through the shiny app.</p></li>
+<li><p><strong>FBS fisheries - FIAS standardized (1961-2017 legacy)</strong> (SWS identifier: <code>fi_fbs_fias_legacy</code>) FIAS FBSs provided as legacy.</p></li>
+<li><p><strong>FBS fisheries - FIAS standardized (Validated)</strong> (SWS identifier: <code>fi_fbs_fias_validated</code>) where FIAS FBS data are saved after validation through the shiny app.</p></li>
+<li><p><strong>FBS fisheries - FIAS standardized</strong> (SWS identifier: <code>fi_fbs_fias</code>) working dataset<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a> where FIAS FBS are stored after the plugin completion.</p></li>
+<li><p><strong>SUA balanced fisheries (1961-2017 legacy)</strong> (SWS identifier: <code>fi_sua_balanced_legacy</code>) FIAS SUAs provided as legacy.</p></li>
+<li><p><strong>SUA balanced fisheries (Validated)</strong> (SWS identifier: <code>fi_sua_balanced_validated</code>) where SUA balanced data are saved after validation through the shiny app.</p></li>
+<li><p><strong>SUA balanced fisheries</strong> (SWS identifier: <code>fi_sua_validated</code>) working dataset<a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a> where SUA balanced are stored after the plugin completion.</p></li>
+<li><p><strong>SUA unbalanced fisheries (Validated) </strong> (SWS identifier: <code>fi_sua_unbalanced_validated</code>) where SUA unbalanced data are saved after validation through the shiny app.</p></li>
+<li><p><strong>SUA unbalanced fisheries</strong> (SWS identifier: <code>fi_sua_unbalanced</code>) working dataset<a href="#fn4" class="footnoteRef" id="fnref4"><sup>4</sup></a> where SUA unbalanced are stored after the plugin completion.</p></li>
+</ul>
+</div>
+</div>
+<div id="definition-and-conversion-of-sua-fbs-elements" class="section level2 unnumbered">
+<h2>Definition and conversion of SUA-FBS Elements</h2>
+<p>The integration of the statistical processes to produce the Supply Utilization Accounts (SUAs) and Food Balance Sheets (FBSs) for the Fisheries and Aquaculture Statistics and Information Branch (FIAS) into the Statistical Working System (SWS) requires the harmonization of Element codes currently used by FIAS. The new codes are already in use in the SWS for producing the SUA/FBS of crops and livestock food items and are consistent with FAOSTAT. The conversion tables proposed in this document aim to reflect the current variables and their codes in use by FIAS with no or minimum discrepancy. Nevertheless, the conversion also seeks consistency with other domains. Consistency helps to integrate the same elements from separate domains and simplifies the standardization needed to produce the FBSs including fish products. Proposed changes mainly concern units of measure and labels.</p>
+<p>List of the SUA elements used by FIAS:</p>
+<table style="width:100%;">
+<colgroup>
+<col width="10%" />
+<col width="32%" />
+<col width="56%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"><strong>Code</strong></th>
+<th><strong>Description</strong></th>
+<th><strong>Unit of measure</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">031</td>
+<td>Input</td>
+<td>Tonnes</td>
+</tr>
+<tr class="even">
+<td align="center">041</td>
+<td>Extraction rate</td>
+<td>hg/tonnes (Prod in hg / Input in tonnes)</td>
+</tr>
+<tr class="odd">
+<td align="center">051</td>
+<td>Production (or Output)</td>
+<td>Tonnes</td>
+</tr>
+<tr class="even">
+<td align="center">061</td>
+<td>Imports – Qty</td>
+<td>Tonnes</td>
+</tr>
+<tr class="odd">
+<td align="center">062</td>
+<td>Imports – Val 1000</td>
+<td>US Dollars</td>
+</tr>
+<tr class="even">
+<td align="center">063</td>
+<td>Import Unit Value</td>
+<td>US Dollars/tonnes</td>
+</tr>
+<tr class="odd">
+<td align="center">066</td>
+<td>Standardized Imports</td>
+<td>Not in use as only FBSs contain standardized quantities</td>
+</tr>
+<tr class="even">
+<td align="center">071</td>
+<td>Stock Variation</td>
+<td>Tonnes</td>
+</tr>
+<tr class="odd">
+<td align="center">077</td>
+<td>Cumulative Stocks</td>
+<td>Tonnes</td>
+</tr>
+<tr class="even">
+<td align="center">091</td>
+<td>Exports – Qty</td>
+<td>Tonnes</td>
+</tr>
+<tr class="odd">
+<td align="center">092</td>
+<td>Exports – Val</td>
+<td>1000 US Dollars</td>
+</tr>
+<tr class="even">
+<td align="center">093</td>
+<td>Export Unit Value</td>
+<td>US Dollars/tonnes</td>
+</tr>
+<tr class="odd">
+<td align="center">096</td>
+<td>Standardized Exports</td>
+<td>Not in use as only FBSs contain standardized quantities</td>
+</tr>
+<tr class="even">
+<td align="center">101</td>
+<td>Feed</td>
+<td>Tonnes</td>
+</tr>
+<tr class="odd">
+<td align="center">111</td>
+<td>Baiting</td>
+<td>Tonnes</td>
+</tr>
+<tr class="even">
+<td align="center">121</td>
+<td>Waste</td>
+<td>Tonnes</td>
+</tr>
+<tr class="odd">
+<td align="center">131</td>
+<td>Processing</td>
+<td>Tonnes</td>
+</tr>
+<tr class="even">
+<td align="center">141</td>
+<td>Food</td>
+<td>Tonnes</td>
+</tr>
+<tr class="odd">
+<td align="center">151</td>
+<td>Other Utilizations</td>
+<td>Tonnes</td>
+</tr>
+<tr class="even">
+<td align="center">181</td>
+<td>Statistical Discrepancy</td>
+<td>Tonnes</td>
+</tr>
+<tr class="odd">
+<td align="center">261</td>
+<td>Food: Total Calories Eqv</td>
+<td>Kcal</td>
+</tr>
+<tr class="even">
+<td align="center">264</td>
+<td>Calories/Caput/Day</td>
+<td>Kcal/caput/day</td>
+</tr>
+<tr class="odd">
+<td align="center">271</td>
+<td>Food: Total Proteins Eqv</td>
+<td>Grams</td>
+</tr>
+<tr class="even">
+<td align="center">274</td>
+<td>Proteins/Caput/Day</td>
+<td>Grams</td>
+</tr>
+<tr class="odd">
+<td align="center">281</td>
+<td>Food: Total Fats Eqv</td>
+<td>Grams</td>
+</tr>
+<tr class="even">
+<td align="center">284</td>
+<td>Fats/Caput/Day</td>
+<td>Grams</td>
+</tr>
+</tbody>
+</table>
+<div id="sua-element-conversion" class="section level3 unnumbered">
+<h3>SUA element conversion</h3>
+<p>Figure <a href="index.html#fig:SUAelementConversion">0.2</a> summarizes the conversion from FIAS codes into the Statistical Working System codes.</p>
+<div class="figure"><span id="fig:SUAelementConversion"></span>
+<img src="img/SUAelementConversion.png" alt="Conversion from FIAS to SWS codes for SUA elements." width="90%" />
+<p class="caption">
+Figure 0.2: Conversion from FIAS to SWS codes for SUA elements.
+</p>
+</div>
+<p>Major changes from the old to the new classification are listed below: 1. Baiting. The code in use for ‘baiting’, 111, corresponds to code 5525 associated to the term ‘seed’. Since the concept of bait in fishery is similar to the one of seed in agriculture, the proposed code is seed (5525). 2. Standardized import and export. The code is already not in use as quantity standardization only takes place when producing the FBSs, not in the SUA calculation. 3. Cumulative stocks. This element is not converted into the new system for two main reasons: (i) no corresponding element is currently included in the element list in SWS (ii) code is only used for checking purposes Therefore, the cumulative stock are only displayed into the shiny application to allow for checks.<br />
+4. Statistical discrepancy. The code relates to imbalances observed at SUA level. For organizational consistency purposes the code appears both in SUAs and FBSs but only actually applies to SUAs. The code does not apply to Fishery FBSs as Fishery department only publishes balanced data. 5. Tourist consumption and population. These two codes will be included into the SUAs for possible further developments.</p>
+</div>
+<div id="fias-standardized-fbs-element-conversion" class="section level3 unnumbered">
+<h3>FIAS standardized FBS element conversion</h3>
+<p>According to FIAS methodology, the standardization process from the SUAs to the FBSs has the structure presented in figure <a href="index.html#fig:FiasFBSelements">0.3</a>. The first two columns report the code and the description of the most suitable code in the SWS for the FBS element contained in FIAS documentation. The name of the element used in FIAS document is reported in the column ‘Description Doc’. The SUA elements corresponding to the FBS ones before standardization are in the columns ‘SUA codes (SWS)’ and ‘Description (SWS)’.</p>
+<div class="figure"><span id="fig:FiasFBSelements"></span>
+<img src="img/FiasFBSelements.png" alt="FBS elements according to FIAS standardization with corresponding SUA codes." width="90%" />
+<p class="caption">
+Figure 0.3: FBS elements according to FIAS standardization with corresponding SUA codes.
+</p>
+</div>
+<p>A brief description of the FBS elements as provided by FIAS:</p>
+<p><strong>Production</strong>: Production figures relate to the total national fish production in terms of live-weight (i.e. the actual ex-water weight at the time of capture or removal from aquatic environment). Production figures cover capture and aquaculture data of all fish, crustaceans, molluscs and aquatic organisms, excluding mammals and aquatic plants.</p>
+<p><strong>Other uses</strong>: Includes reduction to fish meal and fish oil; utilization of aquatic products for feed and bait; ornamental purposes; withdrawals from markets; and any other non-food use of fishery production. Waste is not included.</p>
+<p><strong>Imports</strong>: This covers all movements of commercial trade into the country of fish and fish products. Data on imports include fish caught by foreign fishing vessels and landed in domestic ports. A difference occurs in the way imports (as exports) data are recorded for the FBS of fish and fish products disseminated by FIAS and the ones disseminated by Faostat.</p>
+<p><strong>Exports</strong>: This covers all movements out of the country of fish and fish products. Data on exports include re-exports and fish caught by domestic fishing vessels and landed directly in foreign ports.</p>
+<p><strong>Stock variations</strong>: This category refers to changes in stocks occurring at all levels between the production and the retail levels. It covers changes in government stocks, in stocks with manufacturers, importers, exporters, other wholesale and retail merchants, transport and storage enterprises. Information on changes in stocks is often not available or incomplete for a number of countries and important commodities. In many instances data refer to the minimum information required to avoid a negative balance.</p>
+<p><strong>Total Food Fish Supply</strong>: There are various ways of defining “supply” and, in fact, various concepts are in use. The elements involved are production, imports, exports and changes in stocks (increases or decreases). There is no doubt that production, imports and decreases in stocks are genuine supply elements. Exports and increases in stocks might, however, be considered as utilization elements. Accordingly, the following is the way of calculating “supply” according to FAO methodology:</p>
+<p><em>Production (excluding non-food uses) + Imports - Exports + or - Changes in stocks = Total supply for human consumption</em></p>
+<p><strong>Population</strong>: Refers to the present-in-area population, i.e. includes all persons physically present within the geographical boundaries of countries. In general, the population data used are mid-year estimates published for each country by the Population Division of the UN.</p>
+<p><strong>Per Capita Supply</strong>: Data under this category indicate the <em>per capita</em> food-fish supplies available for human consumption during a given reference period. It is derived by dividing the Total Food Supply by the Population.</p>
+<p><strong>Live weight</strong>: The weight of finfish and shellfish at the time of their capture or harvest. Calculated on the basis of conversion factors from landed to nominal weight and on rates prevailing among national industries for each type of processing.</p>
+</div>
+<div id="faostat-standardized-fbs-element-conversion" class="section level3 unnumbered">
+<h3>Faostat standardized FBS element conversion</h3>
+<p>Figure <a href="index.html#fig:FaostatFBSelements">0.4</a> summarizes the conversion from FIAS codes into the Statistical Working System codes according to the Faostat standardization.</p>
+<p>Since figures in the SWS have Tonnes (t) as unit of measure, whereas in Faostat they are in Thousands of Tonnes (1000 t), figure <a href="index.html#fig:FaostatFBSelements">0.4</a> reports first the Faostat code and description as reported in the website (first and second columns); the third and fourth columns report the code and labels of the FBS elements in use in the SWS and the fifth and sixth columns refer to the SUA elements.</p>
+<div class="figure"><span id="fig:FaostatFBSelements"></span>
+<img src="img/FaostatFBSelements.png" alt="FAOSTAT FBS, SWS FBS and SUA element correspondence table. Note in the SWS to avoid disruption with the unit of measure of the other elements." width="90%" />
+<p class="caption">
+Figure 0.4: FAOSTAT FBS, SWS FBS and SUA element correspondence table. Note in the SWS to avoid disruption with the unit of measure of the other elements.
+</p>
+</div>
+</div>
+<div id="flag-conversion" class="section level3 unnumbered">
+<h3>Flag conversion</h3>
+<p>Transitioning from the current FIAS system to the SWS also the flag system is being updated. The proposed conversion is:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left"><strong>FLAG description</strong></th>
+<th align="left"><strong>Current FIAS flag</strong></th>
+<th align="left"><strong>FlagObservationStatus</strong></th>
+<th align="left"><strong>FlagMethod</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Official data</td>
+<td align="left">‘’</td>
+<td align="left">‘’</td>
+<td align="left">‘-’</td>
+</tr>
+<tr class="even">
+<td align="left">Expert estimate</td>
+<td align="left">‘E’</td>
+<td align="left">‘E’</td>
+<td align="left">‘f’</td>
+</tr>
+<tr class="odd">
+<td align="left">Calculated value</td>
+<td align="left">‘C’</td>
+<td align="left">‘I’</td>
+<td align="left">‘i’</td>
+</tr>
+<tr class="even">
+<td align="left">Balancing element</td>
+<td align="left">‘B’</td>
+<td align="left">‘E’</td>
+<td align="left">‘b’</td>
+</tr>
+<tr class="odd">
+<td align="left">Provisional value (carry-forward)</td>
+<td align="left">‘T’</td>
+<td align="left">‘E’</td>
+<td align="left">‘t’</td>
+</tr>
+</tbody>
+</table>
+<p>Respectively the FlagObservationStatus and the FlagMethod are defined by the SDMX standard as: - FlagObservationStatus: for dissemination. Definition: Information on the quality of a value or an unusual or missing value. This item is normally coded and uses codes providing information about the status of a value, with respect to events such as “break”, “estimated value”, “forecast”, “missing value”, or “provisional value”. - FlagMethod: this list of methods flags is to be used by IT specialists in statistical working systems only (Statistical Working System -SWS- and others). It does not concern dissemination. It relates to the method the figure comes from.</p>
+
+</div>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="1">
+<li id="fn1"><p>Note no data needs (can be but don’t have to) to be saved here, final data will be saved into the validated dataset.<a href="index.html#fnref1">↩</a></p></li>
+<li id="fn2"><p>Note no data needs (can be but don’t have to) to be saved here, final data will be saved into the validated dataset.<a href="index.html#fnref2">↩</a></p></li>
+<li id="fn3"><p>Note no data needs (can be but don’t have to) to be saved here, final data will be saved into the validated dataset.<a href="index.html#fnref3">↩</a></p></li>
+<li id="fn4"><p>Note no data needs (can be but don’t have to) to be saved here, final data will be saved into the validated dataset.<a href="index.html#fnref4">↩</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+
+<a href="PluginDes.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
