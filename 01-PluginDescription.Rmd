@@ -12,14 +12,15 @@ knitr::include_graphics("img/pluginWF.png")
 
 ## Initiate plugin
 
-The plugin runs and saves data on sessions of the four involved datasets so, before initiating the plugin, it is advisable to create a session for each dataset. The datasets are all under the 'Fisheries Commodities' domain: 'SUA unbalanced fisheries', 'SUA balanced fisheries', 'FBS fisheries - Faostat standardized' and 'FBS fisheries - FIAS standardized' (fig. \@ref(fig:Initiate1)). 
+The plugin runs and saves data on sessions of the four involved datasets so, before initiating the plugin, it is advisable to create a session for each dataset. The datasets are all under the 'Fisheries Commodities' domain: 'SUA unbalanced fisheries', 'SUA balanced fisheries', 'FBS fisheries - Faostat standardized' and 'FBS fisheries - FIAS standardized' (fig. \@ref(fig:Initiate1)).
 
 ```{r  Initiate1, echo=FALSE, out.width="100%", fig.cap='Select datasets to create sessions.'}
 knitr::include_graphics("img/Initiate1.png")
 ```
 
 After the four session are opened, select the 'FBS fisheries - FIAS standardized' dataset session and select the 'Run plugin' button. The follow the steps in figures \@ref(fig:Initiate1), \@ref(fig:Initiate2) and \@ref(fig:Initiate3)
-First select the 'fi_SUA-FBS' plugin. Then select the session to run the plugin on. 
+First select the 'fi_SUA-FBS' plugin. Then select the session to run the plugin on.
+
 ```{r  selectplugin1, echo=FALSE, out.width="100%", fig.cap='Plugin selection.'}
 knitr::include_graphics("img/selectplugin1.png")
 ```
@@ -28,10 +29,10 @@ knitr::include_graphics("img/selectplugin1.png")
 knitr::include_graphics("img/selectplugin2.png")
 ```
 
-The plugin allows for choosing the countries to run the plugin on. The use can either leave the 'countries' field blank, letting the plugin take the session selected countries or insert a list of countries, as in figure \@ref(fig:Initiate3), i.e. listing the M49 code of the countries separated by a comma and a space ', '. NOTE, the plugin will not run if the list is not structured in this way. The best way tested to run the plugin is to run it on around 25 countries each time to avoid too long listed not supported.
+The plugin allows for choosing the countries to run the plugin on. The use can either leave the 'countries' field blank, letting the plugin take the session selected countries or insert a list of countries, as in figure \@ref(fig:selectplugin3), i.e. listing the M49 code of the countries separated by a comma and a space ', '. NOTE, the plugin will not run if the list is not structured in this way. The best way tested to run the plugin is to run it on around 25 countries each time to avoid too long listed not supported.
 The year parameters are mandatory so the user must select the first and last year of the period.
 
-```{r  selectplugin3, echo=FALSE, out.width="100%", fig.cap='Select countries and yearsto run the plugin on'}
+```{r  selectplugin3, echo=FALSE, out.width="100%", fig.cap='Select countries and years to run the plugin on'}
 knitr::include_graphics("img/selectplugin3.png")
 ```
 
@@ -47,13 +48,13 @@ The first part of the plugin process the Global production and the commodity dat
 All production in tonnes of Global production is first aggregated in order to delete the unnecessary 'fisheriesCatchArea' dimension. Then all species are linked to their default ICS code (according to YBKlang file, 'map_asfis' data table).
 
 Sometimes the default mapping tables do not provide the proper aggregations of ASFIS or ISSCFC codes into ICS groups. This means that some species or commodity or already aggregated flows have to be migrated from the default ICS group to an _ad-hoc_ one. These exceptions are country-year specific and a data-table has been created to host this information in a such a way as to be easily digest by the R script on one hand, and easily read and updated by any FIAS user on the other.
-Exceptions for species in the Global production dataset are considered through the 'gp_mapping' data table. 
+Exceptions for species in the Global production dataset are considered through the 'gp_mapping' data table.
 
 The process for the Commodity dataset has more steps.
 First of all, re-export are considered as export since the SUA do not distinguish between them. Also, all the commodity with unit of measure in head and not in tonnes are ignored and values are set aside from quantities.
 As for Global production all commodities are linked to their default ICS code ('map_isscfc' data table) and exceptions are accounted for with the 'cdb_mapping' data table. The 'link_table' is then considered and deviates one, two or the three flows of an ICS code to another one for a defined period. The deviation of any ICS aggregated flow to another, is typically based on a one to one relationship. Anyway, sometimes it is necessary to split the aggregated ICS flow into two or more alternative ICS groups. One to many relationships need an additional information: the percentage to split one ICS flow into many.  This additional information is also contained in the _link table_.
 
-As last step some commodities are redirected to a different element than the original one. Usually import of an ICS group become get redirected to other utilizations or the seed element. 
+As last step some commodities are redirected to a different element than the original one. Usually import of an ICS group become get redirected to other utilizations or the seed element.
 The value elements of the Commodity dataset are also aggregated at ICS level taking the mean price.
 
 When both Global production and Commodity database have lost their original level of detail and are aggregate at ICS level, they are bind together and form the SUA unbalanced which is saved in the selected session.
@@ -66,7 +67,7 @@ knitr::include_graphics("img/pulldata2sua.png")
 
 The process of filling the SUA has the main steps shown in figure \@ref(fig:suafilling).
 The first part of this sub-process is again to separate value elements from the rest as they do not take any role in the balancing process.
-The availability for each ICS product is calculated with the help of the 'element_sign_ table' data table in the SWS. The signs are given according to the equation $Prod + Imp + Stock - Exp - Feed - Seed - Loss - Processing - Food - OtherUtil - Residuals= 0$.
+The availability for each ICS product is calculated with the help of the 'element_sign_ table' data table in the SWS. The signs are given according to the equation _Prod + Imp + Stock - Exp - Feed - Seed - Loss - Processing - Food - OtherUtil - Residuals= 0_ .
 The imbalances are identified and classified in 'primary' and 'secondary' imbalances.
 
 Note the **primary** products, along with their codes are contained in the 'SUA-FBS: ICS product to FBS group' data table and reported in the following table:
@@ -104,7 +105,10 @@ Before calculating the food processing for each product, the food figures are as
 The function calculating extraction rates goes by layers. It first check if there are official inputs to calculate extraction rates from (flag (I, i). If no official extraction rate is found, it take the historical data and, if needed, applies a carry-forward estimation assigning as value the value of the previous year (flag (E, t)). If neither input nor historical data is available the default extraction rate is applied (flag (I, c)).
 The extraction rates are then embedded into the other data.
 
-The function calculating input figures starts from production and extraction rates figures and calculate the input as $Input = Prod/ExtrRate$. If there is an official figure for input this figure is kept instead of the calculated one. This is just a security step because if there is an official input the extraction rate has already been calculated as the ratio between production and input so the figures should be the same in both cases.
+The function calculating input figures starts from production and extraction rates figures and calculate the input as
+_Input = Prod / ExtrRate_ .
+
+If there is an official figure for input this figure is kept instead of the calculated one. This is just a security step because if there is an official input the extraction rate has already been calculated as the ratio between production and input so the figures should be the same in both cases. 
 Input figures are then embedded into the other data.
 
 ### Food processing calculation and balancing
@@ -115,11 +119,9 @@ For those items that have several child-commodities the _processing_ component w
 
 The food processing computations assumes:
 
-- For all processed and preserved items the _input_ element is computed. Note that the input is always expressed in terms of primary equivalent. Sometimes it may happen that the country releases official data also for the input component, the extraction rate is thus obtained as a ratio:
+- For all processed and preserved items the _input_ element is computed. Note that the input is always expressed in terms of primary equivalent. Sometimes it may happen that the country releases official data also for the input component, the extraction rate is thus obtained as a ratio: _extractionRate = production / input_ .
 
-$extractionRate_{i}= \frac{production_{i}}{input_{i}}$
-
-where \textit{i} runs over the processed and preserved commodity.
+where _i_ runs over the processed and preserved commodity.
 
 - Once _input_ for all processed and preserve commodities has been computed (actually missing), its aggregation, by parent, corresponds to the overall quantity of primary item that has been used to produce derived items. In other word it corresponds to the primary processing component.
 
@@ -138,14 +140,7 @@ For many SUA equations a single balancer may not be enough to properly allocate 
 After the SUA balanced dataset has been populated, **nutritive values** are calculated. Calories, proteins and fats, based on the resulting Food availability, are calculated
 using official Nutritive Factors stored in the SWS. Values of Nutritive elements are stored in the system in the 'fishery_nutrient' data table, stored in the _Fisheries_ domain and provided by FIAS team.
 
-After all Nutritive Values are calculated, the Dietary Energy Supply (DES) can be compiled. DES is given by:
-
-$$
- DES_{ijt} = \cfrac{\cfrac{Kcal_{ijt}}{Population_{jt}}}{365}
-$$
-where the \(i\) index runs over all countries, the \(j\) index over all
-commodities, and \(t\) over years.
-
+After all Nutritive Values are calculated, the Dietary Energy Supply (DES) can be compiled. DES is given by: _DES = Kcal / Population * 1/365_ .
 
 After the SUA with nutrients is calculated, it is saved into SWS in the SUA balanced dataset and the standardization process can start.
 
@@ -153,9 +148,9 @@ After the SUA with nutrients is calculated, it is saved into SWS in the SUA bala
 
 Every primary product is the input for producing a broad variety of processed and preserved products. A modern food processing sector is characterized by a vast variety of different processed products.
 
-The Standardization - the conversion and subsequent aggregation of processed products into their primary equivalents - aims to bring these products into a hierarchical order that reflects the various food processing chains in which primary products are converted into processed equivalents. The most straightforward way of depicting this hierarchy is in the form of commodity trees which contain a structured and clear set of relationships between commodities. 
+The Standardization - the conversion and subsequent aggregation of processed products into their primary equivalents - aims to bring these products into a hierarchical order that reflects the various food processing chains in which primary products are converted into processed equivalents. The most straightforward way of depicting this hierarchy is in the form of commodity trees which contain a structured and clear set of relationships between commodities.
 
-Commodity trees are so-called because they 'stem' from one primary product and then branch out into one or successive levels of processed products, each level is linked by extraction rates. Commodity trees are designed to be exhaustive, such that all possible uses of a particular commodity are covered. This means that they can be more or less complicated depending upon the number of derived products, the number of processing levels, and the creation of 'parallel-products' during processing. 
+Commodity trees are so-called because they 'stem' from one primary product and then branch out into one or successive levels of processed products, each level is linked by extraction rates. Commodity trees are designed to be exhaustive, such that all possible uses of a particular commodity are covered. This means that they can be more or less complicated depending upon the number of derived products, the number of processing levels, and the creation of 'parallel-products' during processing.
 
 As just mentioned, in the commodity-tree representation, each parent-child combination is characterized by an 'extraction rate'. Extraction rates reflect the amount of parent product contained in the next level of processed product.
 
@@ -164,17 +159,17 @@ Extraction rates are exogenously assumed. In terms of a broader interpretation, 
 When a single productive process leads to more than one processed item, the resulting two or more by-products are identified as parallel-products (or co-products). This means that from the same amount of parent-commodity it is possible to obtain several processed items. A common example of co-products are fillet and offals, the both deriving from the filleting process. A particular attention should be paid in standardize this kind of processed items: only one (out of two) processed items expressed in terms of its parent equivalent is sufficient to obtain the total amount of \textit{fish (fresh)} necessary to produce the both by-products. That is why 'offals' are generally assigned a weight equal to zero in the standardization process: this means that they are not standardized. A full list of commodity classified as co-product is available and embedded into the R routines in order to avoid double-counting.
 
 Standardization is the process of expressing all the processed commodities in terms of their primary equivalent and to add up all the calories of the food commodities. One of the most important uses of the FBS consists indeed of measuring the overall average calorie supply in a country.
-The Dietary Energy Supply (DES) is not only a standard output of the FBS, but also the key input into the FAO indicator of undernourishment, i.e. the number of undernourished people and the prevalence of undernourishment. 
+The Dietary Energy Supply (DES) is not only a standard output of the FBS, but also the key input into the FAO indicator of undernourishment, i.e. the number of undernourished people and the prevalence of undernourishment.
 In addition the FBS contains a complete picture of the source of consumption on that primary item in all its forms. This procedure allows comparisons among the various processed items deriving from the same primary item, across time and countries.
 
 
-Some differences occur in the way standardization is carried out according to FIAS and Faostat methodologies. This difference mainly consists in the way meals data are handled, and in taking into account both edible and inedible products (as in Faostat) or only the edible component (as in FIAS). The final result of the total food fish supply and _per capita_ food fish supply is practically identical.  
+Some differences occur in the way standardization is carried out according to FIAS and Faostat methodologies. This difference mainly consists in the way meals data are handled, and in taking into account both edible and inedible products (as in Faostat) or only the edible component (as in FIAS). The final result of the total food fish supply and _per capita_ food fish supply is practically identical.
 
 The both approaches have to be implemented and their output will be used for different dissemination purposes.
 
 The first step of the standardization process is to retrieve the commodity tree with the calculated extraction rates and to include the primary products (with extraction rate equal to one). Products figures can then be transformed into live-weight (primary) equivalent. All the figures are transformed but input (5302) already in live-weight equivalent, population and nutrient elements as calories and grams that do not change according to the way of expressing the product they come from.
 Once all products are in live weight equivalent, input and production figures of secondary products are taken aside since they are already included into the food processing figures.
-The figures are now ready to be aggregated according to major FAO groups. 
+The figures are now ready to be aggregated according to major FAO groups.
 
 Until this point the standardization process for Faostat and FIAS are equivalent.
 The the Faostat FBS is compiled using the 'fi_faostat_standardization_element' data table.

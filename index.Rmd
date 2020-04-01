@@ -35,7 +35,7 @@ Any migration into the SWS requires the interaction between at least three actor
 2. The **ESS - Methodological Innovation Team** (ESS - SWS) responsible for the implementation and documentation of the required statistical processes. From the ESS - SWS team the focal points for FIAS - SWS process migration are:
 
 - **Charlotte Taglioni** *Statistician (ESSD)*
-- **Carola Fabi** *Statistician (ESSD)*
+- **Carola Fabi** *Senior Statistician (ESSD)*
 
 3. The **CIO - SWS** the **primary backend and frontend maintainer of the SWS** and responsible for the implementation and documentation of non-statistical processes (IT infrastructure). The CIO - SWS team have as interlocutors:
 

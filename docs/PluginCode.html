@@ -1,0 +1,2073 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 2 fi_SUA-FBS plugin R code | Migration of Fishery SUA and FBS compilation into the SWS</title>
+  <meta name="description" content="This online book describes the migration of the statistical processes performed by the FAO Fisheries and Aquaculture Department into the Corporate Statistical Working System (SWS) for the compilation of Supply Utilization Accounts (SUAs) and Food Balance Sheets (FBSs) ." />
+  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 2 fi_SUA-FBS plugin R code | Migration of Fishery SUA and FBS compilation into the SWS" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This online book describes the migration of the statistical processes performed by the FAO Fisheries and Aquaculture Department into the Corporate Statistical Working System (SWS) for the compilation of Supply Utilization Accounts (SUAs) and Food Balance Sheets (FBSs) ." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 2 fi_SUA-FBS plugin R code | Migration of Fishery SUA and FBS compilation into the SWS" />
+  
+  <meta name="twitter:description" content="This online book describes the migration of the statistical processes performed by the FAO Fisheries and Aquaculture Department into the Corporate Statistical Working System (SWS) for the compilation of Supply Utilization Accounts (SUAs) and Food Balance Sheets (FBSs) ." />
+  
+
+<meta name="author" content="Charlotte Taglioni (Statistician, ESSD - Methodological Innovation Team)" />
+
+
+<meta name="date" content="2020-04-01" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="PluginDes.html"/>
+<link rel="next" href="ShinyDes.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="ess.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="index.html#introduction"><strong>Introduction</strong></a><ul>
+<li><a href="index.html#migration-actors"><strong>Migration actors</strong></a></li>
+<li><a href="index.html#new-fias-methodology"><strong>New FIAS methodology</strong></a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>SUAs/FBS for fish and fish products (based on FIAS documentation)</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#working-system-of-fao-fias-for-the-calculation-of-suas-and-fbs"><i class="fa fa-check"></i>Working system of FAO FIAS for the calculation of SUAs and FBS</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#standardization-to-fbs"><i class="fa fa-check"></i>Standardization to FBS</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#fias-processed-production-in-sws-proposed-workflow"><i class="fa fa-check"></i>FIAS processed production in SWS: proposed workflow</a></li>
+</ul></li>
+<li><a href="index.html#sws-resources"><strong>SWS resources</strong></a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#code-lists"><i class="fa fa-check"></i>Code lists</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#data-tables"><i class="fa fa-check"></i>Data tables</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#datasets"><i class="fa fa-check"></i>Datasets</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#definition-and-conversion-of-sua-fbs-elements"><i class="fa fa-check"></i>Definition and conversion of SUA-FBS Elements</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#sua-element-conversion"><i class="fa fa-check"></i>SUA element conversion</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#fias-standardized-fbs-element-conversion"><i class="fa fa-check"></i>FIAS standardized FBS element conversion</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#faostat-standardized-fbs-element-conversion"><i class="fa fa-check"></i>Faostat standardized FBS element conversion</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#flag-conversion"><i class="fa fa-check"></i>Flag conversion</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="PluginDes.html"><a href="PluginDes.html"><i class="fa fa-check"></i><b>1</b> <strong>SUA-FBS compilation process</strong></a><ul>
+<li class="chapter" data-level="1.1" data-path="PluginDes.html"><a href="PluginDes.html#initiate-plugin"><i class="fa fa-check"></i><b>1.1</b> Initiate plugin</a></li>
+<li class="chapter" data-level="1.2" data-path="PluginDes.html"><a href="PluginDes.html#pull-data-to-sua"><i class="fa fa-check"></i><b>1.2</b> Pull data to SUA</a></li>
+<li class="chapter" data-level="1.3" data-path="PluginDes.html"><a href="PluginDes.html#fill-sua"><i class="fa fa-check"></i><b>1.3</b> Fill SUA</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="PluginDes.html"><a href="PluginDes.html#extraction-rate-and-input-calculation"><i class="fa fa-check"></i><b>1.3.1</b> Extraction rate and input calculation</a></li>
+<li class="chapter" data-level="1.3.2" data-path="PluginDes.html"><a href="PluginDes.html#food-processing-calculation-and-balancing"><i class="fa fa-check"></i><b>1.3.2</b> Food processing calculation and balancing</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="PluginDes.html"><a href="PluginDes.html#sua-with-nutrients"><i class="fa fa-check"></i><b>1.4</b> SUA with nutrients</a></li>
+<li class="chapter" data-level="1.5" data-path="PluginDes.html"><a href="PluginDes.html#standardization"><i class="fa fa-check"></i><b>1.5</b> Standardization</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="PluginCode.html"><a href="PluginCode.html"><i class="fa fa-check"></i><b>2</b> <strong>fi_SUA-FBS plugin R code</strong></a><ul>
+<li class="chapter" data-level="2.1" data-path="PluginCode.html"><a href="PluginCode.html#main-file"><i class="fa fa-check"></i><b>2.1</b> <strong>Main file</strong></a></li>
+<li class="chapter" data-level="2.2" data-path="PluginCode.html"><a href="PluginCode.html#external-functions"><i class="fa fa-check"></i><b>2.2</b> <strong>External functions</strong></a><ul>
+<li class="chapter" data-level="2.2.1" data-path="PluginCode.html"><a href="PluginCode.html#extraction-rates"><i class="fa fa-check"></i><b>2.2.1</b> Extraction rates</a></li>
+<li class="chapter" data-level="2.2.2" data-path="PluginCode.html"><a href="PluginCode.html#input"><i class="fa fa-check"></i><b>2.2.2</b> Input</a></li>
+<li class="chapter" data-level="2.2.3" data-path="PluginCode.html"><a href="PluginCode.html#food-processing"><i class="fa fa-check"></i><b>2.2.3</b> Food Processing</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="ShinyDes.html"><a href="ShinyDes.html"><i class="fa fa-check"></i><b>3</b> <strong>SUA-FBS Validation Shiny application</strong></a><ul>
+<li class="chapter" data-level="3.1" data-path="ShinyDes.html"><a href="ShinyDes.html#token-tab"><i class="fa fa-check"></i><b>3.1</b> <strong>Token tab</strong></a></li>
+<li class="chapter" data-level="3.2" data-path="ShinyDes.html"><a href="ShinyDes.html#overview-tab"><i class="fa fa-check"></i><b>3.2</b> <strong>Overview tab</strong></a></li>
+<li class="chapter" data-level="3.3" data-path="ShinyDes.html"><a href="ShinyDes.html#sua-compare-tab"><i class="fa fa-check"></i><b>3.3</b> <strong>SUA compare tab</strong></a></li>
+<li class="chapter" data-level="3.4" data-path="ShinyDes.html"><a href="ShinyDes.html#sua-imbalance-tab"><i class="fa fa-check"></i><b>3.4</b> <strong>SUA imbalance tab</strong></a></li>
+<li class="chapter" data-level="3.5" data-path="ShinyDes.html"><a href="ShinyDes.html#fbs-by-ics-tab"><i class="fa fa-check"></i><b>3.5</b> <strong>FBS by ICS tab</strong></a></li>
+<li class="chapter" data-level="3.6" data-path="ShinyDes.html"><a href="ShinyDes.html#ics-by-element-tab"><i class="fa fa-check"></i><b>3.6</b> <strong>ICS by element tab</strong></a></li>
+<li class="chapter" data-level="3.7" data-path="ShinyDes.html"><a href="ShinyDes.html#global-production-tab"><i class="fa fa-check"></i><b>3.7</b> <strong>Global Production tab</strong></a></li>
+<li class="chapter" data-level="3.8" data-path="ShinyDes.html"><a href="ShinyDes.html#commodities-tab"><i class="fa fa-check"></i><b>3.8</b> <strong>Commodities tab</strong></a></li>
+<li class="chapter" data-level="3.9" data-path="ShinyDes.html"><a href="ShinyDes.html#link-table-tab"><i class="fa fa-check"></i><b>3.9</b> <strong>Link table tab</strong></a></li>
+<li class="chapter" data-level="3.10" data-path="ShinyDes.html"><a href="ShinyDes.html#extraction-rates-tab"><i class="fa fa-check"></i><b>3.10</b> <strong>Extraction rates tab</strong></a></li>
+<li class="chapter" data-level="3.11" data-path="ShinyDes.html"><a href="ShinyDes.html#data-validation-tab"><i class="fa fa-check"></i><b>3.11</b> <strong>Data validation tab</strong></a></li>
+<li class="chapter" data-level="3.12" data-path="ShinyDes.html"><a href="ShinyDes.html#data-update-tab"><i class="fa fa-check"></i><b>3.12</b> <strong>Data update tab</strong></a></li>
+<li class="chapter" data-level="3.13" data-path="ShinyDes.html"><a href="ShinyDes.html#data-saving-tab"><i class="fa fa-check"></i><b>3.13</b> <strong>Data saving tab</strong></a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="ShinyCode.html"><a href="ShinyCode.html"><i class="fa fa-check"></i><b>4</b> <strong>The Fisheries SUA-FBS Shiny R code</strong></a><ul>
+<li class="chapter" data-level="4.1" data-path="ShinyCode.html"><a href="ShinyCode.html#global.r-file"><i class="fa fa-check"></i><b>4.1</b> <strong>‘global.R’ file</strong></a></li>
+<li class="chapter" data-level="4.2" data-path="ShinyCode.html"><a href="ShinyCode.html#ui.r-file"><i class="fa fa-check"></i><b>4.2</b> <strong>‘ui.R’ file</strong></a></li>
+<li class="chapter" data-level="4.3" data-path="ShinyCode.html"><a href="ShinyCode.html#server.r-file"><i class="fa fa-check"></i><b>4.3</b> <strong>‘server.R’ file</strong></a><ul>
+<li class="chapter" data-level="4.3.1" data-path="ShinyCode.html"><a href="ShinyCode.html#overview-tab-1"><i class="fa fa-check"></i><b>4.3.1</b> ‘Overview’ tab</a></li>
+<li class="chapter" data-level="4.3.2" data-path="ShinyCode.html"><a href="ShinyCode.html#sua-compare-tab-1"><i class="fa fa-check"></i><b>4.3.2</b> ‘SUA compare’ tab</a></li>
+<li class="chapter" data-level="4.3.3" data-path="ShinyCode.html"><a href="ShinyCode.html#sua-imbalance-tab-1"><i class="fa fa-check"></i><b>4.3.3</b> ‘SUA imbalance’ tab</a></li>
+<li class="chapter" data-level="4.3.4" data-path="ShinyCode.html"><a href="ShinyCode.html#fbs-by-ics-tab-1"><i class="fa fa-check"></i><b>4.3.4</b> ‘FBS by ICS’ tab</a></li>
+<li class="chapter" data-level="4.3.5" data-path="ShinyCode.html"><a href="ShinyCode.html#ics-by-element-tab-1"><i class="fa fa-check"></i><b>4.3.5</b> ‘ICS by Element’ tab</a></li>
+<li class="chapter" data-level="4.3.6" data-path="ShinyCode.html"><a href="ShinyCode.html#global-production-tab-1"><i class="fa fa-check"></i><b>4.3.6</b> ‘Global production’ tab</a></li>
+<li class="chapter" data-level="4.3.7" data-path="ShinyCode.html"><a href="ShinyCode.html#commodities-tab-1"><i class="fa fa-check"></i><b>4.3.7</b> ‘Commodities’ tab</a></li>
+<li class="chapter" data-level="4.3.8" data-path="ShinyCode.html"><a href="ShinyCode.html#link-table-tab-1"><i class="fa fa-check"></i><b>4.3.8</b> ‘Link table’ tab</a></li>
+<li class="chapter" data-level="4.3.9" data-path="ShinyCode.html"><a href="ShinyCode.html#extraction-rates-tab-1"><i class="fa fa-check"></i><b>4.3.9</b> ‘Extraction rates’ tab</a></li>
+<li class="chapter" data-level="4.3.10" data-path="ShinyCode.html"><a href="ShinyCode.html#data-validation-tab-1"><i class="fa fa-check"></i><b>4.3.10</b> ‘Data validation’ tab</a></li>
+<li class="chapter" data-level="4.3.11" data-path="ShinyCode.html"><a href="ShinyCode.html#data-update-tab-1"><i class="fa fa-check"></i><b>4.3.11</b> ‘Data update’ tab</a></li>
+<li class="chapter" data-level="4.3.12" data-path="ShinyCode.html"><a href="ShinyCode.html#data-saving-tab-1"><i class="fa fa-check"></i><b>4.3.12</b> ‘Data saving’ tab</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="ShinyCode.html"><a href="ShinyCode.html#external-functions-1"><i class="fa fa-check"></i><b>4.4</b> External functions</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="ShinyCode.html"><a href="ShinyCode.html#gprecalc"><i class="fa fa-check"></i><b>4.4.1</b> GPrecalc</a></li>
+<li class="chapter" data-level="4.4.2" data-path="ShinyCode.html"><a href="ShinyCode.html#cdbrecalc"><i class="fa fa-check"></i><b>4.4.2</b> CDBrecalc</a></li>
+<li class="chapter" data-level="4.4.3" data-path="ShinyCode.html"><a href="ShinyCode.html#suaunbalcalc"><i class="fa fa-check"></i><b>4.4.3</b> SUAunbalCalc</a></li>
+<li class="chapter" data-level="4.4.4" data-path="ShinyCode.html"><a href="ShinyCode.html#suabalcalc"><i class="fa fa-check"></i><b>4.4.4</b> SUAbalCalc</a></li>
+<li class="chapter" data-level="4.4.5" data-path="ShinyCode.html"><a href="ShinyCode.html#suanutrcalc"><i class="fa fa-check"></i><b>4.4.5</b> SUAnutrCalc</a></li>
+<li class="chapter" data-level="4.4.6" data-path="ShinyCode.html"><a href="ShinyCode.html#fbscalc"><i class="fa fa-check"></i><b>4.4.6</b> FBScalc</a></li>
+<li class="chapter" data-level="4.4.7" data-path="ShinyCode.html"><a href="ShinyCode.html#reloaddata"><i class="fa fa-check"></i><b>4.4.7</b> reloadData</a></li>
+<li class="chapter" data-level="4.4.8" data-path="ShinyCode.html"><a href="ShinyCode.html#reloaddatatoken"><i class="fa fa-check"></i><b>4.4.8</b> reloadDataToken</a></li>
+</ul></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Migration of Fishery SUA and FBS compilation into the SWS</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="PluginCode" class="section level1">
+<h1><span class="header-section-number">Chapter 2</span> <strong>fi_SUA-FBS plugin R code</strong></h1>
+<p>The code for the ‘fi_SUA-FBS’ plugin can be downloaded from the SWS at the plugin tab to check the current latest version. The plugin is composed by one main file and three additional functions. A paragraph is dedicated to each of them.</p>
+<div id="main-file" class="section level2">
+<h2><span class="header-section-number">2.1</span> <strong>Main file</strong></h2>
+<p>The first part of the main file is dedicated to library loading and parameter selection:</p>
+<ul>
+<li><p>The structure of the four session used is stored in the <code>sessionKey_</code> objects.</p></li>
+<li><p>The country parameter is optional therefore if the parameter is null or has length zero the countries from the session of the FBS FIAS dataset are pulled (<code>sessionCountry</code> object).</p></li>
+<li><p>The start and end years are mandatory parameters and all the selected years are stored in the <code>yearVals</code> object.</p></li>
+</ul>
+<pre><code>
+## load the library
+library(faosws)
+library(faoswsUtil)
+library(faoswsProcessing)
+library(data.table)
+library(sendmailR)
+library(zoo)
+
+# -- Token QA ----
+if(CheckDebug()){
+  
+  library(faoswsModules)
+  SETTINGS = ReadSettings(&quot;sws.yml&quot;)
+  
+  ## If you&#39;re not on the system, your settings will overwrite any others
+  R_SWS_SHARE_PATH = SETTINGS[[&quot;share&quot;]]
+  
+  ## Define where your certificates are stored
+  SetClientFiles(SETTINGS[[&quot;certdir&quot;]])
+  
+  ## Get session information from SWS. Token must be obtained from web interface
+  GetTestEnvironment(baseUrl = SETTINGS[[&quot;server&quot;]],
+                     token = &#39;b1193433-3a61-4ee1-9f26-a54a8a6b447b&#39;)
+  
+}
+
+# -- Parameters ----
+
+message(&quot;fi_SUA-FBS: Getting parameters&quot;)
+# Paramenters from session
+sessionKey_fbsFias = swsContext.datasets[[1]]
+sessionKey_suaUnb = swsContext.datasets[[2]]
+sessionKey_suabal = swsContext.datasets[[3]]
+sessionKey_fbsFaostat = swsContext.datasets[[4]]
+
+# Countries either from session or from parameters
+countryPar &lt;-  swsContext.computationParams$countries
+if(!is.null(countryPar) &amp; length(countryPar) &gt; 0){
+  countryPar &lt;- swsContext.computationParams$countries
+  sessionCountry &lt;- strsplit(countryPar, &#39;, &#39;)[[1]]
+} else {
+  sessionCountry &lt;- swsContext.datasets[[1]]@dimensions$geographicAreaM49_fi@keys
+  countries &lt;- GetCodeList(&quot;FisheriesCommodities&quot;, &quot;fi_fbs_fias&quot;, &quot;geographicAreaM49_fi&quot;)[ type == &#39;country&#39;]$code
+  # Make sure only countries not areas
+  sessionCountry &lt;- sessionCountry[sessionCountry %in% countries]
+}
+message(paste(&quot;fi_SUA-FBS: countries selected &quot;, paste0(sessionCountry, collapse = &#39;, &#39;), &#39;.&#39;, sep = &#39;&#39;))
+
+# Mandatory year values
+maxyear &lt;- as.numeric(swsContext.computationParams$maxyear)
+minyear &lt;- as.numeric(swsContext.computationParams$minyear)
+yearVals &lt;- as.character(minyear:maxyear)
+year &lt;- max(as.numeric(yearVals))
+</code></pre>
+<p>The data from the initial datasets (Global production and Commodity) can now be retrieved. The ‘fisheriesCatchArea’ dimension of the Global production dataset is aggregated and the production code is made coherent with the rest of the data. All the observation flags, before aggregation, are transformed into factor objects so to make aggregation and flag selection easier. Method flag are usually set to ‘s’ being the flag for sum elements.</p>
+<pre><code>
+# -- Needed datasets ----
+
+## Get global production (from Production environment)
+
+message(&quot;fi_SUA-FBS: Pulling data from Global production&quot;)
+
+KeyGlobal &lt;- DatasetKey(domain = &quot;Fisheries&quot;, dataset = &quot;fi_global_production&quot;, dimensions = list(
+geographicAreaM49_fi = Dimension(name = &quot;geographicAreaM49_fi&quot;, keys = sessionCountry),
+fisheriesAsfis = Dimension(name = &quot;fisheriesAsfis&quot;, keys = GetCodeList(&quot;Fisheries&quot;, &quot;fi_global_production&quot;,&quot;fisheriesAsfis&quot; )[,code]),
+fisheriesCatchArea = Dimension(name = &quot;fisheriesCatchArea&quot;, keys = GetCodeList(&quot;Fisheries&quot;, &quot;fi_global_production&quot;,&quot;fisheriesCatchArea&quot; )[,code]),
+measuredElement = Dimension(name = &quot;measuredElement&quot;, keys = c(&quot;FI_001&quot;)),
+timePointYears = Dimension(name = &quot;timePointYears&quot;, keys = yearVals )))
+
+globalProduction &lt;- GetData(KeyGlobal)
+
+# Aggregate by fisheriesCatchArea
+# Convert flags into ordinal factor so that simple aggregation is possible
+# The function aggregateObservationFlag is too slow so flag are transformed into factors
+
+globalProduction$flagObservationStatus &lt;- factor(globalProduction$flagObservationStatus, 
+levels = c(&#39;M&#39;, &#39;O&#39;, &#39;N&#39;, &#39;&#39;, &#39;X&#39;, &#39;T&#39;, &#39;E&#39;, &#39;I&#39;), 
+ordered = TRUE)
+
+globalProduction &lt;- globalProduction[ , list(ValueAggr = sum(Value, na.rm = TRUE), 
+flagObservationStatusAggr = max(flagObservationStatus),
+flagMethodAggr = &quot;-&quot;),
+by=c(&quot;geographicAreaM49_fi&quot;,
+&quot;fisheriesAsfis&quot;,
+&quot;measuredElement&quot;,
+&quot;timePointYears&quot;)]
+
+setnames(globalProduction, names(globalProduction), c(&quot;geographicAreaM49_fi&quot;, &quot;fisheriesAsfis&quot;,
+&quot;measuredElement&quot;, &quot;timePointYears&quot;,
+&quot;Value&quot;, &quot;flagObservationStatus&quot;,
+&quot;flagMethod&quot;))
+
+# Hard code change from FI_001 to 5510, both are Production in tonnes.
+globalProduction$measuredElement &lt;- ifelse(globalProduction$measuredElement == &quot;FI_001&quot;, &quot;5510&quot;, globalProduction$measuredElement)
+if(any(globalProduction$measuredElement != &quot;5510&quot;) ){
+message(&quot;Not all the elements in Global production dataset are FI_001&quot;)
+}
+</code></pre>
+<p>The commodity data are loaded by country for monitoring purposes, all the re-export data are transformed in export (SUA do not contains re-exports) and the data in units and not in tonnes (if any) are discarded. The value elements are set aside as they do not go through all the process as quantities. The mapping table for species and commodities are loaded.</p>
+<pre><code>
+## Get Commodities data (from QA environment)
+
+message(&quot;fi_SUA-FBS: Pulling data from Commodites dataset&quot;)
+
+commodityDB0 &lt;- data.table()
+
+for(i in 1:length(sessionCountry)){
+  KeyComm &lt;- DatasetKey(domain = &quot;Fisheries Commodities&quot;, dataset = &quot;commodities_total&quot;, dimensions = list(
+    geographicAreaM49_fi = Dimension(name = &quot;geographicAreaM49_fi&quot;, keys = sessionCountry[i]),
+    measuredItemISSCFC = Dimension(name = &quot;measuredItemISSCFC&quot;, keys = GetCodeList(&quot;FisheriesCommodities&quot;, &quot;commodities_total&quot;,&quot;measuredItemISSCFC&quot; )[,code]),
+    measuredElement = Dimension(name = &quot;measuredElement&quot;, keys = GetCodeList(&quot;FisheriesCommodities&quot;, &quot;commodities_total&quot;,&quot;measuredElement&quot; )[,code]),
+    timePointYears = Dimension(name = &quot;timePointYears&quot;, keys = yearVals )))
+  
+  commodityDBchunk &lt;- GetData(KeyComm)
+  commodityDB0 &lt;- rbind(commodityDB0, commodityDBchunk)
+  print(i)
+}
+
+commodityDB0$flagObservationStatus &lt;- factor(commodityDB0$flagObservationStatus,
+                                            levels = c(&#39;M&#39;, &#39;O&#39;, &#39;N&#39;, &#39;&#39;, &#39;X&#39;, &#39;T&#39;, &#39;E&#39;, &#39;I&#39;), 
+                                            ordered = TRUE)
+
+# Re-export in Export (quantity and values)
+commodityDB0[measuredElement == &#39;5912&#39;, measuredElement := &#39;5910&#39;] # quantity
+commodityDB0[measuredElement == &#39;5923&#39;, measuredElement := &#39;5922&#39;] # Value in 1000$
+commodityDB0[measuredElement == &#39;5931&#39;, measuredElement := &#39;5930&#39;] # Unit value $/t
+
+commodityDB0 &lt;- commodityDB0[!measuredElement %in% c(&#39;5907&#39;, &#39;5937&#39;, 
+                                                     &#39;5607&#39;, &#39;5637&#39;,
+                                                     &#39;5906&#39;, &#39;5940&#39;)]
+
+# Other import
+
+# Isolate prices (not entering all the processing)
+ValueElements &lt;- c(&#39;5922&#39;, &#39;5930&#39;, &#39;5622&#39;, &#39;5630&#39;)
+commodityDBValue &lt;- commodityDB0[measuredElement %in% ValueElements]
+commodityDB &lt;- commodityDB0[!measuredElement %in% ValueElements]
+
+# Aggregate re-export to export
+commodityDB &lt;- commodityDB[ , c(&quot;Value&quot;, 
+                                &quot;flagObservationStatus&quot;, 
+                                &quot;flagMethod&quot;) := list(sum(Value, na.rm = TRUE),
+                                                      max(flagObservationStatus),
+                                                      &#39;-&#39;),
+                            by = c(&#39;geographicAreaM49_fi&#39;,
+                                   &#39;timePointYears&#39;,
+                                   &#39;measuredItemISSCFC&#39;,
+                                   &#39;measuredElement&#39;)]
+
+# Get datatables that correspond to the EBX code
+map_isscfc &lt;- ReadDatatable(&#39;map_isscfc&#39;)
+setnames(map_isscfc, &quot;measured_item_isscfc&quot;, &quot;measuredItemISSCFC&quot;)
+
+map_asfis &lt;- ReadDatatable(&#39;map_asfis&#39;)
+setnames(map_asfis, &quot;asfis&quot;, &quot;fisheriesAsfis&quot;)
+</code></pre>
+<p>The Global production is merged with the mapping table to assign the ICS code to all the species and the species that do not have a correspondence are stored in a message that will be pasted in the final email and the not-mapped species are eventually discarded. The plugin also checks if there is any deviation in the ‘gp_mapping’ data table and takes them into account if any. The Global production is then aggregated by ICS code as required to enter the SUA.</p>
+<pre><code>
+# -- Start processing global production ----
+
+message(&#39;fi_SUA-FBS: Start processing Global Production&#39;)
+
+# Map to ICS
+globalProductionMapping &lt;- merge(globalProduction, map_asfis, by = c(&quot;fisheriesAsfis&quot;), all.x = TRUE)
+
+if(any(is.na(globalProductionMapping$ics))){
+  notMappedSpecies &lt;- unique(globalProductionMapping[is.na(ics)]$fisheriesAsfis)
+  message(paste(&quot;These species are not mapped to any ICS group:&quot;, 
+                paste(notMappedSpecies, collapse = &quot;, &quot;)))
+  msg2email1 &lt;- paste(&quot;These species are not mapped to any ICS group:&quot;, 
+                      paste(notMappedSpecies, collapse = &quot;, &quot;))
+  }
+msg2email1 &lt;- ifelse(any(is.na(globalProductionMapping$ics)), msg2email1, &quot;&quot;)
+
+message(&#39;Species - ICS mapping table for exceptions.&#39;)
+
+# Load table of deviated species
+new_map_asfis &lt;- data.table()
+for(i in seq(sessionCountry)){
+    new_country &lt;-  ReadDatatable(&#39;gp_mapping&#39;, where = paste(&quot;country = &#39;&quot;, sessionCountry[i], &quot;&#39;&quot;, sep = &#39;&#39;))
+    new_map_asfis &lt;- rbind(new_map_asfis, new_country)
+}
+
+# Deviate species
+if(nrow(new_map_asfis) &gt; 0){ # if there is any change from default YBKlang mapping
+  new_map_asfis[ end_year == &#39;LAST&#39;, end_year := as.character(year)]
+  newMapping &lt;- merge(globalProductionMapping, new_map_asfis, 
+                      by.x = c(&#39;geographicAreaM49_fi&#39;, &#39;fisheriesAsfis&#39;),
+                      by.y = c(&#39;country&#39;, &#39;asfis&#39;), all = TRUE, allow.cartesian = TRUE)
+  
+  unchanged &lt;- newMapping[is.na(from_code)]
+  unchanged &lt;- rbind(unchanged,  newMapping[!is.na(from_code) &amp; timePointYears &gt; end_year | timePointYears &lt; start_year])
+  tochange &lt;- newMapping[!is.na(from_code)]
+  tochange &lt;- tochange[ , c(&#39;timePointYears&#39;, &#39;end_year&#39;, &#39;start_year&#39;) := list(as.numeric(timePointYears), as.numeric(end_year), as.numeric(start_year))]
+  tochange1 &lt;- tochange[ timePointYears &lt;= end_year &amp; timePointYears &gt;= start_year &amp; ratio == 1]
+  tochange1 &lt;- tochange1[, ics := to_code]
+  duplicate &lt;- tochange[ timePointYears &lt;= end_year &amp; timePointYears &gt;= start_year &amp; ratio &lt; 1]
+  
+  # Allow for splitting
+  if(nrow(duplicate) &gt; 0){
+    duplicate[ timePointYears &lt;= end_year &amp; timePointYears &gt;= start_year &amp; ratio != 1, c(&#39;ics&#39;, &#39;Value&#39;) := list(to_code, Value * as.numeric(ratio))]
+    duplicate[ , total := sum(as.numeric(ratio)), by = c(&#39;geographicAreaM49_fi&#39;, &#39;fisheriesAsfis&#39;, &#39;measuredElement&#39;, &#39;timePointYears&#39;,&#39;from_code&#39;, &#39;start_year&#39;, &#39;end_year&#39;)]
+    
+    if(nrow(duplicate[total &lt; 1]) &gt; 0){
+      duplicate[ , diff := (1-total)]
+      addMissingQuantities &lt;- duplicate[diff != 0, ]
+      addMissingQuantities[ , c(&#39;Value&#39;, &#39;ratio&#39;) := list(sum(Value), diff), 
+                            by = c(&#39;geographicAreaM49_fi&#39;, &#39;fisheriesAsfis&#39;, &#39;measuredElement&#39;, 
+                                   &#39;timePointYears&#39;, &#39;from_code&#39;, &#39;start_year&#39;, &#39;end_year&#39;)]
+      addMissingQuantities[ , c(&#39;Value&#39;, &#39;to_code&#39;, &#39;ics&#39;) := list((Value/total)*as.numeric(ratio), from_code, from_code)]
+      setkey(addMissingQuantities)
+      addMissingQuantities &lt;- unique(addMissingQuantities)
+      duplicate &lt;- rbind(duplicate, addMissingQuantities)
+      duplicate[ , diff := NULL]
+    }
+    duplicate[ , total := NULL]
+  }
+  changed &lt;- rbind(tochange1, duplicate)
+  gpMap_new &lt;- rbind(unchanged, changed) 
+  gpMap_new[ , c(&#39;from_code&#39;, &#39;to_code&#39;, &#39;start_year&#39;, &#39;end_year&#39;, &#39;ratio&#39;):= NULL]
+} else {  # if no change from default YBKlang mapping
+  gpMap_new  &lt;- globalProductionMapping
+}
+
+globalProductionAggr &lt;- gpMap_new[, list(Value = sum(Value, na.rm = TRUE),
+                                         flagObservationStatus = max(flagObservationStatus),
+                                         flagMethod = &quot;s&quot;), 
+                                  by = list(geographicAreaM49_fi,
+                                            timePointYears,
+                                            measuredElement,
+                                            ics)]
+
+# Remove ISSCAAP/ASFIS not mapped to any ICS (Sponges, Corals, Pearls): 
+globalProductionAggr &lt;- globalProductionAggr[!is.na(ics), ]
+</code></pre>
+<p>A similar process to the one just described for Global production is applied to the Commodity dataset but the aggregation happens after two additional steps: the link table and the other uses deviation.</p>
+<pre><code>
+# -- Start processing commodity DB ----
+
+message(&#39;fi_SUA-FBS: Start processing commodity DB&#39;)
+# Map to ICS
+commodityDBIcs &lt;- merge(commodityDB, map_isscfc, by = &quot;measuredItemISSCFC&quot;)
+commodityDBIcs$measuredItemISSCFC &lt;- as.character(commodityDBIcs$measuredItemISSCFC)
+
+# Check if all commodities are mapped
+if(any(is.na(commodityDBIcs$ics))){
+  
+  notMappedCommodity &lt;- unique(commodityDBIcs[is.na(ics)]$measuredItemISSCFC)
+  message(paste(&quot;These species are not mapped to any ICS group:&quot;, 
+                paste(notMappedCommodity, collapse = &quot;, &quot;)))
+  msg2email1CDB &lt;- paste(&quot;These species are not mapped to any ICS group:&quot;, 
+                      paste(notMappedCommodity, collapse = &quot;, &quot;))
+}
+msg2email1CDB &lt;- ifelse(any(is.na(commodityDBIcs$ics)), msg2email1CDB, &quot;&quot;)
+
+message(&#39;Commodity - ICS mapping table for exceptions.&#39;)
+
+# Account for commodity deviation as for GP
+new_map_isscfc &lt;- data.table()
+
+for(i in seq(sessionCountry)){
+  new_country_isscfc &lt;-  ReadDatatable(&#39;cdb_mapping&#39;, where = paste(&quot;country = &#39;&quot;, sessionCountry[i], &quot;&#39;&quot;, sep = &#39;&#39;))
+  new_map_isscfc &lt;- rbind(new_map_isscfc, new_country_isscfc)
+}
+
+if(nrow(new_map_isscfc) &gt; 0){
+  new_map_isscfc[ end_year == &#39;LAST&#39;, end_year := as.character(year)]
+  newMappingCDB &lt;- merge(commodityDBIcs, new_map_isscfc,
+                         by.x = c(&#39;geographicAreaM49_fi&#39;, &#39;measuredElement&#39;,&#39;measuredItemISSCFC&#39;),
+                         by.y = c(&#39;country&#39;, &#39;element&#39;,&#39;isscfc&#39;), all = TRUE, allow.cartesian = TRUE)
+  
+  unchangedCDB &lt;- newMappingCDB[is.na(from_code)]
+  unchangedCDB &lt;- rbind(unchangedCDB,  newMappingCDB[!is.na(from_code) &amp; timePointYears &gt; end_year | timePointYears &lt; start_year])
+  tochangeCDB &lt;- newMappingCDB[!is.na(from_code)]
+  tochangeCDB &lt;- tochangeCDB[ , c(&#39;timePointYears&#39;, &#39;end_year&#39;, &#39;start_year&#39;) := list(as.numeric(timePointYears), as.numeric(end_year), as.numeric(start_year))]
+  tochangeCDB1 &lt;- tochangeCDB[ timePointYears &lt;= end_year &amp; timePointYears &gt;= start_year &amp; ratio == 1]
+  tochangeCDB1 &lt;- tochangeCDB1[, ics := to_code]
+  duplicateCDB &lt;- tochangeCDB[ timePointYears &lt;= end_year &amp; timePointYears &gt;= start_year &amp; ratio &lt; 1]
+  
+  # Allow for splitting
+  if(nrow(duplicateCDB) &gt; 0){
+    duplicateCDB[ timePointYears &lt;= end_year &amp; timePointYears &gt;= start_year &amp; ratio != 1, c(&#39;ics&#39;, &#39;Value&#39;) := list(to_code, Value * as.numeric(ratio))]
+    duplicateCDB[ , total := sum(ratio), by = c(&#39;geographicAreaM49_fi&#39;, &#39;measuredItemISSCFC&#39;, &#39;measuredElement&#39;, &#39;timePointYears&#39;,&#39;from_code&#39;, &#39;start_year&#39;, &#39;end_year&#39;)]
+    
+    if(nrow(duplicateCDB[total &lt; 1]) &gt; 0){
+      duplicateCDB[ , diff := (1-total)]
+      addMissingQuantitiesCDB &lt;- duplicateCDB[diff != 0, ]
+      addMissingQuantitiesCDB[ , c(&#39;Value&#39;, &#39;ratio&#39;) := list(sum(Value), diff), 
+                            by = c(&#39;geographicAreaM49_fi&#39;, &#39;measuredItemISSCFC&#39;, &#39;measuredElement&#39;, 
+                                   &#39;timePointYears&#39;, &#39;from_code&#39;, &#39;start_year&#39;, &#39;end_year&#39;)]
+      addMissingQuantitiesCDB[ , c(&#39;Value&#39;, &#39;to_code&#39;, &#39;ics&#39;) := list((Value/total)*as.numeric(ratio), from_code, from_code)]
+      setkey(addMissingQuantitiesCDB)
+      addMissingQuantitiesCDB &lt;- unique(addMissingQuantitiesCDB)
+      duplicateCDB &lt;- rbind(duplicateCDB, addMissingQuantitiesCDB)
+      duplicateCDB[ , diff := NULL]
+    }
+    duplicateCDB[ , total := NULL]
+  }
+  changedCDB &lt;- rbind(tochangeCDB1, duplicateCDB)
+  cdbMap_new &lt;- rbind(unchangedCDB, changedCDB) 
+  cdbMap_new &lt;- rbind(unchangedCDB, changedCDB[ics != &#39;9999&#39;]) # 9999 is a code when the production of the commodity does not have to be considered
+  cdbMap_new[ , c(&#39;from_code&#39;, &#39;to_code&#39;, &#39;start_year&#39;, &#39;end_year&#39;, &#39;ratio&#39;):= NULL]
+  # Sum by ICS, no commodities anymore
+} else {
+  cdbMap_new &lt;- commodityDBIcs
+}
+
+</code></pre>
+<p>The link table is a table to deviate flows from one ICS code to another. The flow is not expressed in code so it has to be converted through the ‘link_table_elements’ data table and the checks to make sure the 100% of the available quantity is deviated controls are coded. The deviation period is checked and the deviation is applied.</p>
+<pre><code>
+# -- Link table ----
+message(&#39;fi_SUA-FBS: Link table and other uses deviations&#39;)
+# Link table for special period ICS group changes (regularly updated)
+link_table &lt;- ReadDatatable(&quot;link_table&quot;)
+
+## Checks on link table
+# quantity different from 100% allocated
+link_table[ , check := sum(percentage), by=c(&quot;geographic_area_m49&quot;,&quot;flow&quot;,&quot;start_year&quot;,&quot;end_year&quot;,&quot;from_code&quot;)]
+
+if(any(link_table$check!=1)){
+  message(paste0(&quot;Not 100% of the original quantity is allocated for link:&quot; , 
+                 paste0(link_table[link_table$check!=1,], collapse = &quot; &quot;)))
+  msg2email2 &lt;- paste0(&quot;Not 100% of the original quantity is allocated for link:&quot; , 
+                       paste0(link_table[link_table$check!=1,], collapse = &quot; &quot;))
+}
+msg2email2 &lt;- ifelse(any(link_table$check!=1), msg2email2, &quot;&quot;)
+
+# Link table expressed in terms of &quot;PRD&quot;, &quot;TRD&quot;, &quot;EXP&quot;, &quot;IMP&quot;, &quot;ALL&quot;
+# they translate into standard measuredElement through linkCorrespondence datatable &#39;link_table_elements&#39;
+
+linkCorrespondence &lt;- ReadDatatable(&#39;link_table_elements&#39;)
+setnames(linkCorrespondence, old = &#39;measuredelement&#39;, new = &#39;measuredElement&#39;)
+
+message(&#39;From flow to code&#39;)
+link_table2 &lt;- merge(link_table, linkCorrespondence, by = &quot;flow&quot;, allow.cartesian = TRUE)
+
+link_table2$end_year &lt;- ifelse(link_table2$end_year == &quot;LAST&quot;, max(as.numeric(cdbMap_new$timePointYears)),
+                               link_table2$end_year)
+
+# Change ICS codes
+message(&#39;From table to CDB&#39;)
+commodityDBLink &lt;- merge(cdbMap_new, link_table2, 
+                         by.x = c(&quot;geographicAreaM49_fi&quot;, &quot;measuredElement&quot;, &quot;ics&quot;),
+                         by.y = c(&quot;geographic_area_m49&quot;, &quot;measuredElement&quot;, &quot;from_code&quot;), 
+                         all.x = TRUE, allow.cartesian = TRUE)
+
+setkey(commodityDBLink)
+commodityDBLink &lt;- unique(commodityDBLink)
+
+# Avoid NAs for periods
+commodityDBLink$start_year &lt;- ifelse(is.na(commodityDBLink$start_year), &quot;1900&quot;, commodityDBLink$start_year)
+commodityDBLink$end_year &lt;- ifelse(is.na(commodityDBLink$end_year), &quot;9999&quot;, commodityDBLink$end_year)
+
+commodityDBLink &lt;- commodityDBLink[timePointYears &gt;= start_year, ]
+commodityDBLink &lt;- commodityDBLink[timePointYears &lt;= end_year]
+
+# Change ICS for defined periods
+commodityDBLink[!is.na(to_code) &amp; 
+                  as.numeric(timePointYears) &gt;= as.numeric(start_year) &amp;
+                  as.numeric(timePointYears) &lt;= as.numeric(end_year), ics := to_code]
+
+commodityDBLink[!is.na(percentage) , Value := Value*percentage]
+
+# remove unnecessary dimensions
+commodityDBLink &lt;- commodityDBLink[ , c(&quot;flow&quot;, &quot;start_year&quot;, &quot;end_year&quot;, &quot;percentage&quot;, &quot;to_code&quot;, &quot;check&quot;) := NULL]
+
+</code></pre>
+<p>A similar but simpler process is applied to the data with the ‘other_uses’ data table before aggregation. Value elements are also aggregated and appended to the rest.</p>
+<pre><code>
+## -- Other uses introduction ----
+# Some commodities are not imported for food purpouses (e.g. &quot;ornamental fish&quot;).
+# Those flow are deviated to &quot;other utilizations&quot;
+
+otherUses &lt;- ReadDatatable(&#39;other_uses&#39;)
+message(&#39;Other uses merge&#39;)
+commodityDBotherUses &lt;- merge(commodityDBLink, otherUses, 
+                              by.x = c( &quot;measuredItemISSCFC&quot;, &quot;measuredElement&quot;, &quot;ics&quot;),
+                              by.y = c(&quot;isscfc&quot;, &quot;measured_element_orig&quot;, &quot;ics&quot;))
+
+commodityDBotherUses$measuredElement &lt;- ifelse(is.na(commodityDBotherUses$measured_element_dest),
+                                               commodityDBotherUses$measuredElement,
+                                               commodityDBotherUses$measured_element_dest)
+commodityDBotherUses &lt;- commodityDBotherUses[ , c(&quot;label&quot;, &quot;measured_element_dest&quot;, &quot;fias_code&quot;) := NULL]
+commodityDBdeviated &lt;- rbind(commodityDBLink, commodityDBotherUses)
+
+# Sum by ICS, no commodities anymore
+commodityDBAggr &lt;- commodityDBdeviated[ , list(Value = sum(Value, na.rm = TRUE),
+                                               flagObservationStatus = max(flagObservationStatus),
+                                               flagMethod = &quot;s&quot;),
+                                        by = list(geographicAreaM49_fi,
+                                                  timePointYears,
+                                                  measuredElement,
+                                                  ics)]
+
+# Aggregate commodity value data by ICS
+commodityDBValueIcs &lt;- merge(commodityDBValue, map_isscfc, by = &quot;measuredItemISSCFC&quot;)
+commodityDBValueIcs$measuredItemISSCFC &lt;- as.character(commodityDBValueIcs$measuredItemISSCFC)
+
+commodityDBValueAggr &lt;- commodityDBValueIcs[ , list(Value = mean(Value, na.rm = TRUE),
+                                               flagObservationStatus = max(flagObservationStatus),
+                                               flagMethod = &quot;s&quot;),
+                                        by = list(geographicAreaM49_fi,
+                                                  timePointYears,
+                                                  measuredElement,
+                                                  ics)]
+
+commodityDBAggrTot &lt;- rbind(commodityDBAggr, commodityDBValueAggr)
+
+</code></pre>
+<p>The aggregated Global production and Commodity datasets are bind together to form the SUA unbalanced which is saved back into the SWS. An additional aggregation is done in case Global production and Commodity datasets have quantities for same ICS code.</p>
+<pre><code>
+# -- SUA ----
+
+SUA &lt;- rbind(globalProductionAggr, commodityDBAggrTot)
+setnames(SUA, &quot;ics&quot;, &quot;measuredItemFaostat_L2&quot;)
+
+SUA &lt;- SUA[ , list(Value = sum(Value, na.rm = TRUE),
+                   flagObservationStatus = max(flagObservationStatus),
+                   flagMethod = &quot;s&quot;), by = list(geographicAreaM49_fi,
+                                                timePointYears,
+                                                measuredElement,
+                                                measuredItemFaostat_L2)]
+setnames(SUA, &#39;measuredElement&#39;, &#39;measuredElementSuaFbs&#39;)
+
+SUA &lt;- SUA[!is.na(Value)]
+
+message(&quot;fi_SUA-FBS: Saving SUA unbalanced data&quot;)
+
+CONFIG &lt;- GetDatasetConfig(sessionKey_suaUnb@domain, sessionKey_suaUnb@dataset)
+stats &lt;- SaveData(domain = CONFIG$domain,
+                  dataset = CONFIG$dataset,
+                  data = SUA, waitTimeout = Inf)
+
+msg2email3 &lt;- paste0(&quot;Pull data to SUA_unbalanced process completed successfully! &quot;,
+                     stats$inserted, &quot; observations written, &quot;,
+                     stats$ignored, &quot; weren&#39;t updated, &quot;,
+                     stats$discarded, &quot; had problems.&quot;)
+</code></pre>
+<p>Once the SUA unbalanced is ready, value elements are separated from the rest of the data again. The availability is the calculated for each ICS product with the help of the ‘element_sign_table’ data table</p>
+<pre><code>
+# -- Filling SUA ----
+
+# set aside price elements
+SUAValues &lt;- SUA[measuredElementSuaFbs %in% ValueElements, ]
+
+SUA &lt;- SUA[! measuredElementSuaFbs %in% ValueElements, ] 
+
+# Load datatable with element signs to calculate availability
+# Equation: Prod + Imp + Stock - Exp - Feed - Seed - Loss - Processing - Food - Other util = 0
+
+elementSignTable &lt;- ReadDatatable(&#39;element_sign_table&#39;)
+setnames(elementSignTable, &#39;measured_element&#39;, &#39;measuredElementSuaFbs&#39;)
+
+# Now compute availability from SUA unbalanced as a first check
+SUAexpanded &lt;- merge(SUA, elementSignTable[ , .(measuredElementSuaFbs, sign)], by = &quot;measuredElementSuaFbs&quot;, all.x = TRUE)
+
+if(any(is.na(SUAexpanded$sign))){
+  stop(&#39;There is an element in the SUA not included in the availability calculation.&#39;)
+}
+
+message(&quot;fi_SUA-FBS: Calculating availability&quot;)
+SUAexpanded[, availability := sum(Value * sign, na.rm = TRUE), 
+            by = list(geographicAreaM49_fi, timePointYears, measuredItemFaostat_L2)]
+
+</code></pre>
+<p>Negative imbalances are checked and divided into primary and secondary imbalances. Primary imbalances are notified and compensated with the ‘Residual other uses’ (5166) element for a quantity equal to the imbalance. The user will treat this imbalance in the shiny app. Secondary imbalances regarding meals are treated as primary imbalance whereas for the other the production is increased for a value equal to the imbalance. They are the stored into the ‘imbalance_tab’ data table.</p>
+<pre><code>
+# Check no negative primary availability. 
+map_asfis &lt;- ReadDatatable(&#39;map_asfis&#39;)
+setnames(map_asfis, c(&quot;asfis&quot;, &quot;ics&quot;), c(&quot;fisheriesAsfis&quot;, &quot;measuredItemFaostat_L2&quot;))
+setkey(map_asfis)
+primary &lt;- unique(map_asfis$measuredItemFaostat_L2)
+primaryneg &lt;- SUAexpanded[availability &lt; 0 &amp; measuredItemFaostat_L2 %in% primary]
+
+if(nrow(primaryneg) &gt; 0){
+  countriesneg &lt;- unique(primaryneg[ , .(geographicAreaM49_fi, measuredItemFaostat_L2, timePointYears)])
+  msgg &lt;- apply(countriesneg,1, paste0, collapse = &#39;, &#39;)
+  msg2email4 &lt;- paste0(&#39;There are negative primary availabilities. Check (country code, product code, year): &#39;,
+                       paste0(msgg, collapse = &quot; and &quot;))
+  message(msg2email4)
+}
+msg2email4 &lt;- ifelse(nrow(primaryneg) &gt; 0, msg2email4, &quot;&quot;)
+
+# If primary imbalance then put imbalance to Statistical discrepancy (Residual other uses (rou) 5166)
+
+rou &lt;- copy(primaryneg)
+rou[ , c(&#39;measuredElementSuaFbs&#39;, 
+         &#39;Value&#39;, 
+         &#39;flagObservationStatus&#39;, 
+         &#39;flagMethod&#39;, &#39;sign&#39;) := list(&#39;5166&#39;, availability,
+                                       &#39;I&#39;, &#39;i&#39;, -1)]
+setkey(rou)
+rou &lt;- unique(rou)
+
+SUAexpanded &lt;- rbind(SUAexpanded, rou)
+
+message(&quot;fi_SUA-FBS: Start processing negative availability&quot;)
+
+secondaryneg0 &lt;- SUAexpanded[availability &lt; 0 &amp; !measuredItemFaostat_L2 %in% primary]
+setkey(secondaryneg0)
+secondaryneg0 &lt;- unique(secondaryneg0)
+
+# Delete old imbalances stored
+imbalance_store &lt;- ReadDatatable(&#39;imbalance_tab&#39;, readOnly = FALSE)
+if(nrow(imbalance_store[ geographicaream49_fi %in% unique(secondaryneg0$geographicAreaM49_fi) &amp; timepointyears %in% yearVals, ]) &gt; 0){
+  changeset &lt;- Changeset(&#39;imbalance_tab&#39;)
+  AddDeletions(changeset, imbalance_store[ geographicaream49_fi %in% unique(secondaryneg0$geographicAreaM49_fi) &amp; timepointyears %in% yearVals, ])
+  Finalise(changeset)
+}
+
+# Add new imbalances
+secondarynegCompliant &lt;- copy(secondaryneg0)
+secondarynegCompliant &lt;- secondarynegCompliant[ , .(geographicAreaM49_fi, measuredItemFaostat_L2,
+                                                    timePointYears, availability)]
+setkey(secondarynegCompliant)
+secondarynegCompliant &lt;- unique(secondarynegCompliant)
+
+setnames(secondarynegCompliant,
+         c(&#39;geographicAreaM49_fi&#39;, &#39;timePointYears&#39;,
+           &#39;measuredItemFaostat_L2&#39;),
+         c(&#39;geographicaream49_fi&#39;, &#39;timepointyears&#39;,
+           &#39;measureditemfaostat_l2&#39;))
+
+changeset &lt;- Changeset(&#39;imbalance_tab&#39;)
+AddInsertions(changeset, secondarynegCompliant)
+Finalise(changeset)
+
+if(nrow(secondaryneg0) &gt; 0){
+  
+  countriessecneg &lt;- unique(secondaryneg0[ , .(geographicAreaM49_fi, measuredItemFaostat_L2, timePointYears)])
+  msgg2 &lt;- apply(countriessecneg,1, paste0, collapse = &#39;, &#39;)
+  
+  msg2email5 &lt;- paste0(&#39;There are negative secondary availabilities. Check (country code, product code, year): : &#39;,
+                       paste0(msgg2, collapse = &quot; and &quot;))
+  message(msg2email5)
+}
+msg2email5 &lt;- ifelse(nrow(secondaryneg0) &gt; 0, msg2email5, &quot;&quot;)
+
+# Get meals codes
+mealCodes &lt;- GetCodeList(&quot;FisheriesCommodities&quot;, 
+                         &quot;fi_sua_balanced_legacy&quot;,
+                         &quot;measuredItemFaostat_L2&quot;)[ grepl(&#39;meals&#39;, description)]$code
+
+if(any(secondaryneg0$measuredItemFaostat_L2 %in% mealCodes)){
+  mealsUnbal &lt;- secondaryneg0[measuredItemFaostat_L2 %in% mealCodes]
+  message(&#39;Unbalance for meal products!&#39;)
+  secondaryneg &lt;- secondaryneg0[!measuredItemFaostat_L2 %in% mealCodes]
+} else {
+  secondaryneg &lt;- secondaryneg0
+    }
+
+rouMeals &lt;- copy(secondaryneg0[measuredItemFaostat_L2 %in% mealCodes])
+rouMeals[ , c(&#39;measuredElementSuaFbs&#39;, 
+         &#39;Value&#39;, 
+         &#39;flagObservationStatus&#39;, 
+         &#39;flagMethod&#39;, &#39;sign&#39;) := list(&#39;5166&#39;, availability,
+                                       &#39;I&#39;, &#39;i&#39;, -1)]
+setkey(rouMeals)
+rouMeals &lt;- unique(rouMeals)
+
+# secondaryneg is secondary imbalances without meals
+if(nrow(secondaryneg) &gt; 0){
+  # Make sure all production (5510) values have been imputed
+  icsneg &lt;- unique(secondaryneg$measuredItemFaostat_L2)
+  setkey(secondaryneg, geographicAreaM49_fi, timePointYears,  measuredItemFaostat_L2, availability)
+  prod2add &lt;- unique(secondaryneg[ , .(geographicAreaM49_fi, timePointYears,  measuredItemFaostat_L2, availability) ])
+  
+  # add production element with NA values and flags then estimate as in Francesca code with estimation flags
+  prod2add[ , &#39;:=&#39; (measuredElementSuaFbs = &#39;5510&#39;, Value = - availability,
+                    flagObservationStatus = as.factor(&#39;I&#39;), flagMethod = &#39;i&#39;, sign = 1)]
+  
+  # SUA with all production values
+  SUAwithProdupd &lt;- merge(secondaryneg, prod2add, by = c(&#39;geographicAreaM49_fi&#39;,
+                                                         &#39;timePointYears&#39;,
+                                                         &#39;measuredItemFaostat_L2&#39;,
+                                                         &#39;availability&#39;,
+                                                         &#39;measuredElementSuaFbs&#39;),
+                          suffixes = c(&#39;&#39;, &#39;_added&#39;), all = TRUE)
+  SUAwithProdupd$sign_added &lt;- as.integer(SUAwithProdupd$sign_added)
+  
+  # add production to delete negative availability
+  SUAwithProdupd[measuredElementSuaFbs == &#39;5510&#39; , c(&quot;Value&quot;, &quot;sign&quot;, 
+                                                     &quot;flagObservationStatus&quot;,
+                                                     &quot;flagMethod&quot;) := list(ifelse(is.na(Value), Value_added, 
+                                                                                  Value+Value_added),
+                                                                           sign_added,
+                                                                           flagObservationStatus_added,
+                                                                           flagMethod_added)]
+  SUAcomplement &lt;- SUAexpanded[!secondaryneg, on = names(secondaryneg)]
+  SUAcomplement &lt;- rbind(SUAcomplement, rouMeals)
+  
+  # Putting together values with negative and positive availability which had been separated before
+  SUAwithProd &lt;- rbind(SUAwithProdupd[ , .(geographicAreaM49_fi, timePointYears,
+                                           measuredItemFaostat_L2, availability,
+                                           measuredElementSuaFbs, Value,
+                                           flagObservationStatus, flagMethod, sign)],
+                       SUAcomplement)
+} else {
+  SUAwithProd &lt;- SUAexpanded
+  SUAwithProd[ , sign := NULL ]
+}
+</code></pre>
+<p>After these adjustments availability is calculated again and some validated values are pulled from the validated SUA balanced dataset in order to apply extraction rates and food ratio to the current data.</p>
+<pre><code>
+# Recalculate availability after adjustments
+
+SUAwithProd[, availability := sum(Value * sign, na.rm = TRUE), 
+            by = list(geographicAreaM49_fi, timePointYears, measuredItemFaostat_L2)]
+
+SUAwithProd[ , sign := NULL]
+
+# Add input value if present
+KeySUAinput &lt;- DatasetKey(domain = &quot;Fisheries Commodities&quot;, dataset = &quot;fi_sua_balanced_legacy&quot;, # TO SUBSTITUTE WITH &#39;fi_sua_balanced_validated&#39; 
+                                                                                                # and erase the /10000 line
+                          dimensions = list(
+                            geographicAreaM49_fi = Dimension(name = &quot;geographicAreaM49_fi&quot;, keys = sessionCountry),
+                            measuredItemFaostat_L2 = Dimension(name = &quot;measuredItemFaostat_L2&quot;, keys = GetCodeList(&quot;FisheriesCommodities&quot;, &quot;fi_sua_balanced_legacy&quot;,&quot;measuredItemFaostat_L2&quot; )[,code]),
+                            measuredElementSuaFbs = Dimension(name = &quot;measuredElementSuaFbs&quot;, keys = c(&#39;5510&#39;, &#39;5141&#39;, &#39;5423&#39;)), # GetCodeList(&quot;FisheriesCommodities&quot;, &quot;fi_sua_balanced_legacy&quot;,&quot;measuredElementSuaFbs&quot; )[,code]),
+                            timePointYears = Dimension(name = &quot;timePointYears&quot;, keys = as.character((minyear -1):maxyear))))
+
+SUAstored &lt;- GetData(KeySUAinput)
+SUAvalEr &lt;- SUAstored[measuredElementSuaFbs == &#39;5423&#39; ]
+SUAvalEr &lt;- SUAvalEr[ , Value := Value/10000] # To erase when substituting _legacy with _validated
+SUAwithInput &lt;- SUAwithProd
+setkey(SUAwithInput)
+SUAwithInput &lt;- unique(SUAwithInput)
+</code></pre>
+<p>For primary items the food/production ratio for the latest available year is computed and applied to the current production for groups that need balancing. This is to avoid to assign all the food processing to the primary products. This process is applied only to products having food as balancing element.</p>
+<pre><code>
+# Calculate ratio of food to assign to primary elements
+SUAvalProd &lt;- SUAstored[measuredItemFaostat_L2 %in% primary &amp; measuredElementSuaFbs == &#39;5510&#39; &amp; timePointYears == as.character(max(as.numeric(yearVals)) - 1)]
+SUAvalFood &lt;- SUAstored[measuredItemFaostat_L2 %in% primary &amp; measuredElementSuaFbs == &#39;5141&#39; &amp; timePointYears == as.character(max(as.numeric(yearVals)) - 1)]
+
+foodShare &lt;- merge(SUAvalProd, SUAvalFood, by = c(&#39;geographicAreaM49_fi&#39;, 
+                                                  &#39;measuredItemFaostat_L2&#39;, 
+                                                  &#39;timePointYears&#39;),
+                   suffixes = c(&#39;Prod&#39;, &#39;Food&#39;), all = TRUE)
+
+foodShare[ , perc := (ValueFood/ValueProd), by = c(&#39;geographicAreaM49_fi&#39;, 
+                                                           &#39;measuredItemFaostat_L2&#39;, 
+                                                           &#39;timePointYears&#39;)]
+# At least 3% is dedicated to Food
+foodShare[ , perc := ifelse(perc &lt; 0.03, 0.03, perc)]
+balancingElements &lt;- ReadDatatable(&#39;balancing_elements&#39;)
+
+setnames(balancingElements, names(balancingElements), c(&quot;geographicAreaM49_fi&quot;, 
+                                                        &quot;measuredItemFaostat_L2&quot;,
+                                                        &quot;measuredElementSuaFbs&quot;,
+                                                        &quot;start_year&quot;, &quot;end_year&quot;, &quot;share&quot;))
+
+# Pull ICS whose balancing element is food for the country
+onlyfood &lt;- balancingElements[!measuredItemFaostat_L2 %in% primary &amp; geographicAreaM49_fi %in% sessionCountry &amp; measuredElementSuaFbs == &#39;5141&#39;]
+# For secondary groups at least 3% is dedicated to Food
+onlyfood[ , perc := 0.03]
+SUAvalFoodSec &lt;- onlyfood[ , .(geographicAreaM49_fi, measuredItemFaostat_L2, perc)]
+
+# Take primary food
+foodShare2apply1 &lt;- foodShare[!is.na(perc) &amp; perc != Inf &amp; perc &lt; 1 ]
+foodShare2apply1 &lt;- foodShare2apply1[ , .(geographicAreaM49_fi, measuredItemFaostat_L2, perc)]
+
+# Put together primary and secondary food
+foodShare2apply &lt;- rbind(foodShare2apply1, SUAvalFoodSec)
+</code></pre>
+<p>Extraction rate and input calculations are processes needing external functions. Once the extraction rates are calculated the new commodity tree with the updated extraction rates is built and used in the following parts of the code. Availability is also calculated again considering the food element calculated earlier.</p>
+<pre><code>
+# -- ER &amp; input calc ----
+
+message(&quot;fi_SUA-FBS: Calculating extraction rates&quot;)
+
+tree &lt;- ReadDatatable(&#39;fi_commodity_tree&#39;)
+treePrim &lt;- copy(tree)
+treePrim &lt;- treePrim[parent %in% primary ]
+SUAwithEr &lt;- eRcomputation(data = SUAwithInput, tree = treePrim, 
+                           years = yearVals, oldEr = SUAvalEr)
+
+message(&quot;fi_SUA-FBS: Calculating input element&quot;)
+# If input available then eR is calculated dividing prod/input =&gt; input = prod/eR 
+# so the result is the same, input are all calculated
+SUAinput &lt;- inputComputation(data = SUAwithEr)
+
+newTree &lt;- merge(tree, unique(SUAinput[ measuredElementSuaFbs == &#39;5423&#39; &amp; !is.na(Value),
+                                        .(geographicAreaM49_fi, timePointYears, measuredItemFaostat_L2, Value)]), 
+                 by.x = &#39;child&#39;, by.y = &#39;measuredItemFaostat_L2&#39;, all.x = TRUE, allow.cartesian = TRUE)
+newTree[ , extraction_rate := Value ]
+newTree[ , Value:= NULL]
+
+# -- Recalculate availability using food imputation for primary products ----
+food1 &lt;- merge(SUAinput[availability &gt; 0 &amp; measuredElementSuaFbs == &#39;5510&#39;], 
+               foodShare2apply, 
+               by = c(&#39;geographicAreaM49_fi&#39;, &#39;measuredItemFaostat_L2&#39;), 
+               all.x = TRUE )
+
+food1[ , c(&#39;measuredElementSuaFbs&#39;, 
+           &#39;flagObservationStatus&#39;,
+           &#39;flagMethod&#39;):= list(&#39;5141&#39;, &#39;E&#39;, &#39;b&#39;)]
+
+food2 &lt;- food1[!is.na(Value) &amp; !is.na(perc), ValueFood := Value*perc]
+food2 &lt;- food2[ , c(&#39;Value&#39;,&#39;perc&#39;) := NULL]
+food2 &lt;- food2[!is.na(ValueFood)]
+# If the required percentage is available it is assigned
+# Otherwise the food processing calculation will assign it
+# according to availability
+food &lt;- food2[ availability &lt; ValueFood, ValueFood := availability]
+setnames(food, &#39;ValueFood&#39;, &#39;Value&#39;)
+
+SUAFood &lt;- rbind(SUAinput, food)
+
+SUAFood &lt;- merge(SUAFood, 
+                 elementSignTable[ , .(measuredElementSuaFbs, sign)], 
+                 by = &quot;measuredElementSuaFbs&quot;, 
+                 all.x = TRUE)
+
+SUAFood[, availability := sum(Value*sign, na.rm = TRUE), 
+        by = list(geographicAreaM49_fi, timePointYears, measuredItemFaostat_L2)]
+
+SUAFood[ , sign := NULL ]
+</code></pre>
+<p>Food processing element is calculated with an external function as well. When the food processing is ready, the problems are stored in a separate object saved into a folder that the shiny reads and the unbalances due to the impossibility to cover secondary production are assigned as food processing to the corresponding primary element and balanced by an equal quantity as ‘Residual other uses’ (5166) the user has to address the imbalance in the shiny app. Elements are summed to avoid duplicates.</p>
+<pre><code>
+# --Food processing ----
+
+message(&quot;fi_SUA-FBS: Calculating food processing&quot;)
+FPdata_all &lt;- foodProcessingComputation(SUAinput = SUAFood, treeNewER = newTree)
+FPdata &lt;- FPdata_all$result
+FPdata &lt;- FPdata[Value != 0]
+FPproblems &lt;- list()
+FPproblems &lt;- FPdata_all$problems
+
+FPdata &lt;- FPdata[ , availability := NULL ]
+FPdata[ , c(&quot;flagObservationStatus&quot;, &quot;flagMethod&quot;) := list(&quot;E&quot;, &quot;i&quot;)]
+
+SUAFood[ , availability := NULL]
+SUAunbal &lt;- rbind(SUAFood[!is.na(Value), ], FPdata)
+SUAunbal$flagObservationStatus &lt;- as.character(SUAunbal$flagObservationStatus)
+
+if(is.list(FPproblems$NotCovered) &amp; length(FPproblems$NotCovered) &gt; 0){
+  uncovered &lt;- copy(FPproblems$NotCovered)
+  uncovered[ , measuredElementSuaFbs := &#39;5023&#39;]
+  setnames(uncovered, c(&#39;parent_primary&#39;, &#39;UncoveredQuantity&#39;),
+           c(&#39;measuredItemFaostat_L2&#39;, &#39;Value&#39;))
+  
+  rouUncovered &lt;-copy(uncovered) 
+  rouUncovered[ , measuredElementSuaFbs := &#39;5166&#39;]
+  rouUncovered[ , Value := -Value]
+  
+  uncoveredAdjusted &lt;- rbind(uncovered, rouUncovered) 
+  uncoveredAdjusted[ , c(&quot;flagObservationStatus&quot;, &quot;flagMethod&quot;) := list(&quot;E&quot;, &quot;i&quot;)]
+  uncoveredAdjusted[ measuredElementSuaFbs == &#39;5166&#39; , c(&quot;flagObservationStatus&quot;, &quot;flagMethod&quot;) := list(&quot;I&quot;, &quot;i&quot;)]
+  
+} else {
+  uncoveredAdjusted &lt;- data.table()
+}
+
+SUAunbal &lt;- rbind(SUAunbal, uncoveredAdjusted)
+SUAunbal$flagObservationStatus &lt;- factor(SUAunbal$flagObservationStatus, levels = c(&#39;M&#39;, &#39;O&#39;, &#39;N&#39;, &#39;&#39;, &#39;X&#39;, &#39;T&#39;, &#39;E&#39;, &#39;I&#39;), ordered = TRUE)
+
+SUAunbal &lt;- SUAunbal[ , list(Value = sum(Value, na.rm = TRUE),
+                                          flagObservationStatus = max(flagObservationStatus),
+                                                    flagMethod = flagMethod), 
+              by = c(&quot;geographicAreaM49_fi&quot;, &quot;timePointYears&quot;,
+                     &quot;measuredItemFaostat_L2&quot;, &quot;measuredElementSuaFbs&quot;)]
+
+setkey(SUAunbal)
+SUAunbal &lt;- unique(SUAunbal)
+</code></pre>
+<p>The balancing process can start and the current new availability is calculated with the usual data table. The availability is assigned to the appropriate balancing element for each product via the ‘balancing_elements’ data table. Any encountered balancing problem is stored into the ‘balancing_problems_tab’ data table.</p>
+<pre><code>
+# -- Balancing ----
+
+SUAunbal &lt;-  merge(SUAunbal, elementSignTable[, .(measuredElementSuaFbs, sign)], by = &quot;measuredElementSuaFbs&quot;, all.x = TRUE)
+
+if(any(is.na(SUAunbal$sign))){
+  stop(&#39;There is an element in the SUA not included in the availability calculation.&#39;)
+}
+
+# Calculate imbalance
+SUAunbal[ , availability := sum(Value * sign, na.rm = TRUE), 
+          by = list(geographicAreaM49_fi, timePointYears, measuredItemFaostat_L2)]
+SUAunbal[ , availability := round(availability, 3)]
+message(&#39;fi_SUA-FBS: Pulling balancing elements&#39;)
+
+currentYear &lt;- as.numeric(gsub(&quot;\\-[0-9]*&quot;, &quot;&quot;, Sys.Date()))
+balancingElements[ end_year == &quot;LAST&quot;]$end_year &lt;- as.character(currentYear)
+
+balancingValues &lt;- unique(SUAunbal[ , .(geographicAreaM49_fi, timePointYears , measuredItemFaostat_L2, availability) ])
+
+# assign imbalance to balancing elements
+balancing &lt;- merge(balancingElements, 
+                   balancingValues, by = c(&quot;geographicAreaM49_fi&quot;,&quot;measuredItemFaostat_L2&quot;), # [availability != 0]
+                   all.y = TRUE)
+setnames(balancing, c(&quot;availability&quot;), c(&quot;Value&quot;))
+
+# Controll all imbalances have a balancing element
+if(any(is.na(balancing$measuredElementSuaFbs)) &amp; any(balancing[is.na(measuredElementSuaFbs)]$availability != 0)){
+  message(&#39;Balancing elements missing!&#39;)
+  message(balancing[is.na(measuredElementSuaFbs) &amp; availability != 0])
+}
+
+balancing2merge &lt;- balancing[ as.numeric(timePointYears) &gt;= as.numeric(start_year) &amp; as.numeric(timePointYears) &lt;= as.numeric(end_year), Value := Value*share]
+balancing2merge[ , c(&#39;start_year&#39;, &#39;end_year&#39;, &#39;share&#39;) := NULL]
+balancing2merge[ , c(&#39;flagObservationStatus&#39;, &#39;flagMethod&#39;) := list(&#39;E&#39;,&#39;b&#39;)]
+# Balancing cannot be negative
+balancingproblems &lt;- balancing2merge[round(Value,3) &lt; 0,]
+
+# Store balancing problems
+balancingproblems_store &lt;- ReadDatatable(&#39;balancing_problems_tab&#39;, readOnly = FALSE)
+if(nrow(balancingproblems_store[ geographicaream49_fi %in% sessionCountry &amp; timepointyears %in% yearVals, ]) &gt; 0){
+  changeset &lt;- Changeset(&#39;balancing_problems_tab&#39;)
+  AddDeletions(changeset, balancingproblems_store[ geographicaream49_fi %in% sessionCountry &amp; timepointyears %in% yearVals, ])
+  Finalise(changeset)
+}
+
+# Add new imbalances
+if(is.list(FPproblems$NotCovered) &amp; length(FPproblems$NotCovered) &gt; 0){
+  toupload &lt;- copy(FPproblems$NotCovered)
+  toupload[ , measuredElementSuaFbs := &#39;5023&#39;]
+  setnames(toupload, c(&#39;parent_primary&#39;, &#39;UncoveredQuantity&#39;),
+           c(&#39;measuredItemFaostat_L2&#39;, &#39;Value&#39;))
+  balancingproblemsCompliant &lt;- rbind(toupload, balancingproblems[ , .(geographicAreaM49_fi, measuredItemFaostat_L2,
+                                                                       timePointYears, measuredElementSuaFbs, Value)])
+} else {
+  balancingproblemsCompliant &lt;- rbind(balancingproblems[ , .(geographicAreaM49_fi, measuredItemFaostat_L2,
+                                                             timePointYears, measuredElementSuaFbs, Value)])
+}
+
+if(nrow(balancingproblemsCompliant) &gt; 0){
+  setkey(balancingproblemsCompliant)
+  balancingproblemsCompliant &lt;- unique(balancingproblemsCompliant)
+  
+  setnames(balancingproblemsCompliant,
+           c(&#39;geographicAreaM49_fi&#39;, &#39;timePointYears&#39;,
+             &#39;measuredItemFaostat_L2&#39;, &#39;measuredElementSuaFbs&#39;, &#39;Value&#39;),
+           c(&#39;geographicaream49_fi&#39;, &#39;timepointyears&#39;,
+             &#39;measureditemfaostat_l2&#39;, &#39;measuredelementsuafbs&#39;, &#39;value&#39;))
+  
+  changeset &lt;- Changeset(&#39;balancing_problems_tab&#39;)
+  AddInsertions(changeset, balancingproblemsCompliant)
+  Finalise(changeset)
+}
+
+# if negative balancing element then balance imbalance with 5166
+balancingimb &lt;- copy(balancing2merge[Value &lt; 0])
+balancingimb &lt;- balancingimb[Value &lt; 0, c(&#39;measuredElementSuaFbs&#39;, 
+                                          &#39;flagObservationStatus&#39;, 
+                                          &#39;flagMethod&#39;) := list(&#39;5166&#39;, &#39;I&#39;, &#39;i&#39;)]
+balancingimb[ , Value := Value]
+
+balancingTot &lt;- rbind(balancing2merge[Value &gt; 0], balancingimb)
+</code></pre>
+<p>The just calculated values for balancing elements are summed to those already computed (typically food) and availability is calculated again to make sure the balancing process has worked and all availability figures are null.</p>
+<pre><code>SUAbal &lt;- merge(SUAunbal[ , .(geographicAreaM49_fi, timePointYears , 
+                              measuredItemFaostat_L2, measuredElementSuaFbs, 
+                              Value, flagObservationStatus, flagMethod)], 
+                balancingTot,
+                by = c(&#39;geographicAreaM49_fi&#39;, &#39;timePointYears&#39;, 
+                       &#39;measuredItemFaostat_L2&#39;, &#39;measuredElementSuaFbs&#39;),
+                suffixes = c(&#39;&#39;,&#39;Bal&#39;), 
+                all = TRUE)
+
+SUAbal[is.na(ValueBal), ValueBal := 0 ]
+SUAbal[is.na(Value), Value := 0 ]
+SUAbal[ , Value := Value + ValueBal ]
+SUAbal$flagObservationStatus &lt;- as.character(SUAbal$flagObservationStatus)
+SUAbal[is.na(flagObservationStatus) , flagObservationStatus := &#39;E&#39;]
+SUAbal[is.na(flagMethod) , flagMethod := &#39;b&#39;]
+SUAbal &lt;- SUAbal[ , c(&#39;ValueBal&#39;, 
+                      &#39;flagObservationStatusBal&#39;,
+                      &#39;flagMethodBal&#39;) := NULL]
+
+# Re-calculate availability
+SUAbalAvail &lt;- merge(SUAbal, elementSignTable[, .(measuredElementSuaFbs, sign)], by = &quot;measuredElementSuaFbs&quot;, all.x = TRUE)
+
+SUAbalAvail[, availability := sum(Value * sign, na.rm = TRUE), 
+            by = list(geographicAreaM49_fi, timePointYears, measuredItemFaostat_L2)]
+
+if(any(round(SUAbalAvail$availability) &lt; 0)){
+  message(&quot;fi_SUA-FBS: Negative availability for some products.&quot;)
+  msg2email7 &lt;- paste0(&#39;Negative availability for products:&#39;, 
+                       paste0(unique(SUAbalAvail[round(availability) != 0, ]$measuredItemFaostat_L2), collapse = &quot;, &quot;),
+                       &#39;for country&#39;, paste0(unique(SUAbalAvail[round(availability) != 0, ]$geographicAreaM49_fi), collapse = &quot;, &quot;))
+  
+}
+
+msg2email7 &lt;- ifelse(any(round(SUAbalAvail$availability) &lt; 0), msg2email7, &quot;&quot;)
+
+SUAbalAvail[, c(&quot;sign&quot;, &quot;availability&quot;):=NULL]
+
+</code></pre>
+<p>Now all available quantity has been assigned the nutrition values are calculated for food quantities with the ‘fishery_nutrient’ data table and bind to the SUA.</p>
+<pre><code>
+# -- SUA with nutrient ----
+
+# Read NutrientFactors
+nutrientFactors &lt;- ReadDatatable(&quot;fishery_nutrient&quot;)
+nutrientFactors$calories &lt;- as.numeric(nutrientFactors$calories)
+nutrientFactors$proteins &lt;- as.numeric(nutrientFactors$proteins)
+nutrientFactors$fats &lt;- as.numeric(nutrientFactors$fats)
+nutrientFactors[is.na(proteins), proteins := 0]
+
+SUA_with_nutrient &lt;- merge(SUAbalAvail, nutrientFactors, by.x = &quot;measuredItemFaostat_L2&quot;, by.y = &quot;ics&quot;, all.x = TRUE)
+
+SUA_with_nutrient[measuredElementSuaFbs==&quot;5141&quot;, calories:=Value*calories/100]
+SUA_with_nutrient[measuredElementSuaFbs==&quot;5141&quot;, proteins:=Value*proteins/100]
+SUA_with_nutrient[measuredElementSuaFbs==&quot;5141&quot;, fats:=Value*fats/100]
+SUA_with_nutrient[measuredElementSuaFbs!=&quot;5141&quot;,`:=`(c(&quot;calories&quot;, &quot;proteins&quot;, &quot;fats&quot;),list(0,0,0) )]
+
+# Get &quot;calories&quot;, &quot;proteins&quot; and &quot;fats&quot; and make them in the dataset format
+SUAnutrients &lt;-  melt.data.table(SUA_with_nutrient[measuredElementSuaFbs==&quot;5141&quot;, ],
+                                 id.vars = c(&#39;geographicAreaM49_fi&#39;, &#39;measuredItemFaostat_L2&#39;, &#39;timePointYears&#39;),
+                                 measure.vars = c(&#39;calories&#39;, &#39;proteins&#39;,&#39;fats&#39;),
+                                 variable.name = &#39;measuredElementSuaFbs&#39;, value.name = &#39;Value&#39;)
+SUAnutrients$measuredElementSuaFbs &lt;- as.character(SUAnutrients$measuredElementSuaFbs)
+SUAnutrients$measuredElementSuaFbs &lt;- ifelse(SUAnutrients$measuredElementSuaFbs == &#39;calories&#39;, &#39;261&#39;,
+                                             ifelse(SUAnutrients$measuredElementSuaFbs == &#39;proteins&#39;, &#39;271&#39;,
+                                                    ifelse(SUAnutrients$measuredElementSuaFbs == &#39;fats&#39;, &#39;281&#39;, SUAnutrients$measuredElementSuaFbs)))
+
+SUAnutrients[ , c(&#39;flagObservationStatus&#39;, &#39;flagMethod&#39;) := list(&#39;E&#39;,&#39;i&#39;)]
+SUAnutrients &lt;- unique(SUAnutrients)
+foodOnly &lt;- SUA_with_nutrient[measuredElementSuaFbs==&quot;5141&quot;, .(measuredItemFaostat_L2, measuredElementSuaFbs,
+                                                               geographicAreaM49_fi, timePointYears, Value,
+                                                               flagObservationStatus, flagMethod)]
+
+SUAnutrients &lt;- rbind(SUAnutrients, foodOnly)
+</code></pre>
+<p>Population data are loaded from the ‘population_unpd’ dataset to compute <em>per caput</em> nutrition values. Once calculated the corresponding element code is assigned</p>
+<pre><code>
+# Get population data
+elemKeys &lt;- &quot;511&quot;
+
+keyPop &lt;- DatasetKey(domain = &quot;population&quot;, dataset = &quot;population_unpd&quot;, dimensions = list(
+  geographicAreaM49 = Dimension(name = &quot;geographicAreaM49&quot;, keys = sessionCountry),
+  measuredElement = Dimension(name = &quot;measuredElement&quot;, keys = elemKeys),
+  timePointYears = Dimension(name = &quot;timePointYears&quot;, keys = yearVals)
+))
+
+popSWS &lt;- GetData(keyPop)
+setnames(popSWS,c(&quot;geographicAreaM49&quot;, &quot;measuredElement&quot;),c(&quot;geographicAreaM49_fi&quot;, &quot;measuredElementSuaFbs&quot;))
+
+sourceMetaData0 &lt;- GetMetadata(keyPop)
+sourceMetaData &lt;- sourceMetaData0[grepl(&quot;WPP&quot;, Metadata_Value),]
+sourceMetaData &lt;- sourceMetaData[Metadata == &#39;GENERAL&#39;, ]
+setnames(sourceMetaData, c(&quot;geographicAreaM49&quot;, &quot;measuredElement&quot;),c(&quot;geographicAreaM49_fi&quot;, &quot;measuredElementSuaFbs&quot;))
+
+# Calculate per capita elements
+SUAnutrientCapita &lt;- merge(SUAnutrients, popSWS, by=c(&quot;geographicAreaM49_fi&quot;,&quot;timePointYears&quot;), suffixes = c(&quot;&quot;,&quot;_pop&quot;))  
+SUAnutrientCapita[measuredElementSuaFbs !=&quot;5141&quot; , Value := (Value*1000)/(Value_pop*365)]
+SUAnutrientCapita[measuredElementSuaFbs ==&quot;5141&quot; , Value := Value/Value_pop]
+SUAnutrientCapita &lt;- SUAnutrientCapita[ , .(geographicAreaM49_fi,
+                                            timePointYears,
+                                            measuredItemFaostat_L2,
+                                            measuredElementSuaFbs,
+                                            Value, flagObservationStatus,
+                                            flagMethod)]
+
+SUAnutrientCapita[measuredElementSuaFbs==&quot;261&quot;,measuredElementSuaFbs:=&quot;264&quot;]
+SUAnutrientCapita[measuredElementSuaFbs==&quot;281&quot;,measuredElementSuaFbs:=&quot;284&quot;]
+SUAnutrientCapita[measuredElementSuaFbs==&quot;271&quot;,measuredElementSuaFbs:=&quot;274&quot;]
+SUAnutrientCapita[measuredElementSuaFbs==&quot;5141&quot;,measuredElementSuaFbs:=&quot;645&quot;]
+
+SUA_with_nutrient[ , c(&#39;calories&#39;, &#39;proteins&#39;,&#39;fats&#39;) := NULL] 
+
+# bind SUA with &quot;calories&quot;, &quot;proteins&quot; and &quot;fats&quot; elements
+SUAallNutr &lt;- rbind(SUAnutrients[measuredElementSuaFbs!=&quot;5141&quot;], SUAnutrientCapita)
+SUANoPop &lt;- rbind(SUA_with_nutrient, SUAallNutr)
+Pop2include &lt;- merge(unique(SUANoPop[ , .(measuredItemFaostat_L2,
+                                          geographicAreaM49_fi,
+                                          timePointYears)]), popSWS, by = c(&#39;geographicAreaM49_fi&#39;, 
+                                                                            &#39;timePointYears&#39;))
+</code></pre>
+<p>The version of the World Population Prospect (WPP) used is saved as metadata in the SUA balanced dataset.</p>
+<pre><code>
+# Metadata
+Metadata2include &lt;- merge(unique(SUANoPop[ , .(measuredItemFaostat_L2,
+                                               geographicAreaM49_fi,
+                                               timePointYears)]), sourceMetaData, by = c(&#39;geographicAreaM49_fi&#39;, 
+                                                                                         &#39;timePointYears&#39;),
+                          allow.cartesian = TRUE)
+</code></pre>
+<p>The SUA balanced with nutrients, the SUA for value elements and the population data are bind together and saved into the SUA balanced dataset.</p>
+<pre><code>
+# add population
+SUAwithPop &lt;- rbind(SUANoPop, Pop2include)
+# add values
+SUAwithValues &lt;- rbind(SUAwithPop, SUAValues)
+
+SUA2save &lt;- SUAwithValues[!is.na(Value)]
+ 
+# -- Saving SUA balanced ----
+
+message(&quot;fi_SUA-FBS: Saving data SUA balanced data&quot;)
+CONFIG2 &lt;- GetDatasetConfig(sessionKey_suabal@domain, sessionKey_suabal@dataset)
+
+stats2 &lt;- SaveData(domain = CONFIG2$domain,
+                   dataset = CONFIG2$dataset,
+                   data = SUA2save[measuredElementSuaFbs!= &quot;645&quot; ],
+                   metadata = Metadata2include, waitTimeout = Inf)
+
+msg2email8 &lt;- paste0(&quot;SUA food processing, balancing and nutrient inclusion processes completed successfully! &quot;,
+                     stats2$inserted, &quot; observations written, &quot;,
+                     stats2$ignored, &quot; weren&#39;t updated, &quot;,
+                     stats2$discarded, &quot; had problems.&quot;)
+</code></pre>
+<p>The standardization process can now start. The first step of the Faostat and FIAS standardizations are common, they differentiate further on in the plugin. First of all the commodity tree is rebuilt with the updated extraction rates and including the primary products with extraction rate equal to one. Note, in this phase the extraction rates are referred to as conversion factors. The appropriate quantities are converted into primary equivalent with the conversion factors and then, whereas for primary products all elements are kept, for secondary the input and production are discarded since they are included into the food processing elements of hierarchically higher products. Quantities not converted with conversion factors are: input, population and nutritional values. And the value elements are also discarded.</p>
+<pre><code>
+# -- Standardisation &amp; FBS ----
+
+# get all conversion factors (or extration rates) from commodity tree
+message(&#39;Get commodity tree&#39;)
+tree &lt;- ReadDatatable(&#39;fi_commodity_tree&#39;)
+
+extrRates &lt;- unique(SUA2save[ measuredElementSuaFbs == &#39;5423&#39;, .(measuredItemFaostat_L2, geographicAreaM49_fi, timePointYears, Value)])
+compareEr &lt;- merge(unique(tree[parent %in% primary , .(child, extraction_rate)]), extrRates, by.x = &#39;child&#39;, by.y = &#39;measuredItemFaostat_L2&#39;, all.y = TRUE)
+compareEr[is.na(Value), Value := extraction_rate]
+
+updatedEr &lt;- compareEr[ , .(child, Value, geographicAreaM49_fi, timePointYears)]
+updatedtree &lt;- merge(unique(tree[parent %in% primary , .(parent, child, weight)]), updatedEr, by= &#39;child&#39;, all.y = TRUE, allow.cartesian = TRUE)
+setkey(updatedtree)
+convFact &lt;- unique(updatedtree[weight == TRUE &amp; !is.na(Value) , .(geographicAreaM49_fi, timePointYears, parent, child, Value)])
+
+# For primary product add conversion factor equal 1
+primaryTree1 &lt;- data.table(geographicAreaM49_fi = rep(unique(SUA2save$geographicAreaM49_fi), each = length(unique(SUA2save$timePointYears))), 
+                           timePointYears = rep(unique(SUA2save$timePointYears), length(unique(SUA2save$geographicAreaM49_fi))) )
+
+primaryTree2 &lt;- data.table(geographicAreaM49_fi = rep(unique(SUA2save$geographicAreaM49_fi), each = length(unique(primary))), parent = primary)
+primaryTree &lt;- merge(primaryTree1, primaryTree2, by = &#39;geographicAreaM49_fi&#39;, allow.cartesian = TRUE)  
+primaryTree[ , `:=` (child = parent, Value = 1)]
+convFact &lt;- rbind(convFact, primaryTree)
+setnames(convFact, new = &#39;extraction_rate&#39;, old = &#39;Value&#39;)
+
+# SUA with standardized element, no zero weight elements
+SUA2save &lt;- SUA2save[!measuredElementSuaFbs %in% ValueElements]
+SUAstand_prep &lt;- merge(SUA2save, convFact, by.x = c(&#39;geographicAreaM49_fi&#39;, &#39;timePointYears&#39;, &#39;measuredItemFaostat_L2&#39;),
+                       by.y = c(&#39;geographicAreaM49_fi&#39;, &#39;timePointYears&#39;, &#39;child&#39;))
+SUAstand_prep &lt;- SUAstand_prep[!is.na(Value)]
+setkey(SUAstand_prep)
+SUAstand_prep &lt;- unique(SUAstand_prep)
+# Standardised value is Value/eR except from input values which are already in primary equivalent
+SUAstand_prep[! measuredElementSuaFbs %in% c(&#39;5302&#39;, &#39;261&#39;, &#39;264&#39;, &#39;271&#39;, &#39;274&#39;, &#39;281&#39;, &#39;284&#39;, &#39;511&#39;), Value_stand := Value/extraction_rate]
+SUAstand_prep[measuredElementSuaFbs %in% c(&#39;5302&#39;, &#39;261&#39;, &#39;264&#39;, &#39;271&#39;, &#39;274&#39;, &#39;281&#39;, &#39;284&#39;, &#39;511&#39;), Value_stand := Value]
+
+# take only all primary elements and for secondary exclude production and input
+SUAstand &lt;-  rbind(SUAstand_prep[measuredItemFaostat_L2 %in% primary, ], 
+                   SUAstand_prep[!measuredElementSuaFbs %in% c(&#39;5510&#39;, &#39;5302&#39;) &amp; !measuredItemFaostat_L2 %in% primary, ])
+
+</code></pre>
+<p>Now all quantities are standardized, for Faostat standardization all the elements but population are summed by primary parent so to have only the major groups and the actual major group code according to the ‘measuredItemFaostat_L2’ dimension is overwritten to the primary ICS code with the data table ‘faostatl2_to_faostatl1’.</p>
+<pre><code>
+# -- FAOSTAT standardization ----
+
+# Aggregate SUA by parent meals included for FAOSTAT
+SUAstandAggr0 &lt;- SUAstand[ , .(measuredElementSuaFbs, geographicAreaM49_fi, timePointYears,
+                               flagObservationStatus, flagMethod, parent, Value_stand)]
+
+# SUAstandAggr0$flagObservationStatus &lt;- factor(SUAstandAggr0$flagObservationStatus, levels = c(&#39;M&#39;, &#39;O&#39;, &#39;N&#39;, &#39;&#39;, &#39;X&#39;, &#39;T&#39;, &#39;E&#39;, &#39;I&#39;), ordered = TRUE)
+
+SUAstandAggr1 &lt;- SUAstandAggr0[measuredElementSuaFbs != &#39;511&#39; , list(Value = sum(Value_stand, na.rm = TRUE),
+                                                                     flagObservationStatusAggr = &#39;I&#39;,
+                                                                     flagMethodAggr = &#39;s&#39;), 
+                               by = c(&quot;measuredElementSuaFbs&quot;, &quot;geographicAreaM49_fi&quot;, &quot;timePointYears&quot;, &quot;parent&quot;)]
+
+setnames(SUAstandAggr1, c(&#39;parent&#39;, &#39;flagObservationStatusAggr&#39;, &#39;flagMethodAggr&#39;), 
+         c(&#39;measuredItemFaostat_L2&#39;, &#39;flagObservationStatus&#39;, &#39;flagMethod&#39;))
+
+Pop2SUAaggr &lt;- SUAstandAggr0[measuredElementSuaFbs == &#39;511&#39;]
+setkey(Pop2SUAaggr)
+Pop2SUAaggr &lt;- unique(Pop2SUAaggr)
+setnames(Pop2SUAaggr, c(&#39;Value_stand&#39;, &#39;parent&#39;), c(&#39;Value&#39;, &#39;measuredItemFaostat_L2&#39;))
+SUAstandAggr &lt;- rbind(SUAstandAggr1, Pop2SUAaggr)
+
+IcsGroups &lt;- unique(SUAstandAggr[ , .(geographicAreaM49_fi, timePointYears, measuredItemFaostat_L2)])
+faostat_pop2merge &lt;- merge(IcsGroups, popSWS, by=c(&quot;geographicAreaM49_fi&quot;,&quot;timePointYears&quot;), all = TRUE) 
+faostatfbsPOP &lt;- rbind(SUAstandAggr, faostat_pop2merge)
+
+# map for FBS groups
+
+sua_fbs_mapping &lt;- ReadDatatable(&#39;faostatl2_to_faostatl1&#39;)
+setnames(sua_fbs_mapping,  &#39;measureditemfaostat_l2&#39;, &#39;measuredItemFaostat_L2&#39; )
+sua_fbs_mapping[ , label := NULL]
+
+fbsFaostatL1faostat &lt;- merge(faostatfbsPOP, sua_fbs_mapping, by = &quot;measuredItemFaostat_L2&quot;)
+fbsFaostatL1faostat[ , measuredItemFaostat_L2 := NULL]
+setnames(fbsFaostatL1faostat, &quot;fbs&quot;, &quot;measuredItemFaostat_L2&quot;)
+
+</code></pre>
+<p>With the ‘fi_faostat_standardization_element’ data table the elements are aggregated by major groups and saved into the SWS in the Faostat FBS dataset.</p>
+<pre><code>
+# -- FAOSTAT FBS standardization ----
+
+message(&quot;Starting Faostat standardization&quot;)
+faostatGroups &lt;- ReadDatatable(&#39;fi_faostat_standardization_element&#39;)
+setnames(faostatGroups, c(&#39;measuredelementsuafbs&#39;, &#39;measuredelementfaostat&#39;), c(&#39;measuredElementSuaFbs&#39;, &#39;measuredElementFaostat&#39;))
+
+FBSfaostat0 &lt;- merge(fbsFaostatL1faostat[!measuredElementSuaFbs %in% c(&#39;261&#39;, &#39;271&#39;, &#39;281&#39;)], # c(&#39;261&#39;, &#39;271&#39;, &#39;281&#39;) elements not in FBS
+                     faostatGroups, by = &quot;measuredElementSuaFbs&quot;)
+FBSfaostat1 &lt;- FBSfaostat0[measuredElementFaostat != &#39;511&#39; , list(Value = sum(Value, na.rm = TRUE),
+                                                                  flagObservationStatus = &#39;I&#39;,
+                                                                  flagMethod = &#39;s&#39;), by = c(&quot;geographicAreaM49_fi&quot;,
+                                                                                            &quot;timePointYears&quot;, &quot;measuredItemFaostat_L2&quot;,
+                                                                                            &quot;faostat&quot;, &quot;measuredElementFaostat&quot;)]
+
+FBSfaostat &lt;- rbind(FBSfaostat1, FBSfaostat0[measuredElementFaostat == &#39;511&#39;, -&#39;measuredElementSuaFbs&#39;, with = FALSE])
+setnames(FBSfaostat, c(&quot;faostat&quot;, &quot;measuredElementFaostat&quot;), c(&quot;element_description&quot;, &quot;measuredElementSuaFbs&quot;))
+faostatFBS2save &lt;- FBSfaostat[ , .(geographicAreaM49_fi, timePointYears, measuredItemFaostat_L2,
+                                   measuredElementSuaFbs, Value, flagObservationStatus, flagMethod)]
+faostatFBS2save &lt;- faostatFBS2save[!is.na(Value)]
+
+message(&quot;fi_SUA-FBS: Saving FAOSTAT standardized data&quot;)
+CONFIG4 &lt;- GetDatasetConfig(sessionKey_fbsFaostat@domain, sessionKey_fbsFaostat@dataset)
+
+statsFaostat &lt;- SaveData(domain = CONFIG4$domain,
+                         dataset = CONFIG4$dataset,
+                         data = faostatFBS2save, waitTimeout = Inf)
+
+msg2email10 &lt;- paste0(&quot;Standardization process completed successfully! &quot;,
+                      statsFaostat$inserted, &quot; observations written, &quot;,
+                      statsFaostat$ignored, &quot; weren&#39;t updated, &quot;,
+                      statsFaostat$discarded, &quot; had problems.&quot;)
+
+</code></pre>
+<p>The FIAS standardization is slightly different from the Faostat one and use its own data table to aggregate elements. From the SUA with standardized quantities, input element for meal products are taken aside. All other elements, but population, are summed by major groups and then meals and population are added again. The major group code is replaced to the correspondent primary product with the ‘faostatl2_to_faostatl1’ data table.</p>
+<pre><code>
+# -- FIAS ----
+
+# Aggregate SUA by parent code take away meals
+# SUA with elements and groups to aggregates
+SUAstandAggrFias0 &lt;- SUAstand[ !measuredItemFaostat_L2 %in% mealCodes , .(measuredElementSuaFbs, geographicAreaM49_fi, timePointYears,
+                                                                          flagObservationStatus, flagMethod, parent, Value_stand)]
+
+# take only input element 5302 for meal products
+mealsInput0 &lt;- SUA2save[measuredElementSuaFbs == &#39;5302&#39; &amp; measuredItemFaostat_L2 %in% mealCodes , .(measuredElementSuaFbs, geographicAreaM49_fi, timePointYears,
+                                                                                                    flagObservationStatus, flagMethod, 
+                                                                                                    measuredItemFaostat_L2, Value)]
+
+mealsInput &lt;- merge(mealsInput0, unique(tree[parent %in% primary, .(parent, child)]), 
+                    by.x = &#39;measuredItemFaostat_L2&#39;, by.y = &#39;child&#39;, all.x = TRUE)
+
+mealsInput[ , measuredItemFaostat_L2 := NULL]
+setnames(mealsInput, c(&quot;parent&quot;), c(&quot;measuredItemFaostat_L2&quot;))
+
+# SUAstandAggrFias0$flagObservationStatus &lt;- factor(SUAstandAggrFias0$flagObservationStatus, levels = c(&#39;M&#39;, &#39;O&#39;, &#39;N&#39;, &#39;&#39;, &#39;X&#39;, &#39;T&#39;, &#39;E&#39;, &#39;I&#39;), ordered = TRUE)
+
+SUAstandAggrFias1 &lt;- SUAstandAggrFias0[measuredElementSuaFbs != &#39;511&#39; , list(Value = sum(Value_stand, na.rm = TRUE),
+                                                                             flagObservationStatusAggr = &#39;I&#39;,
+                                                                             flagMethodAggr = &#39;s&#39;), by = c(&quot;measuredElementSuaFbs&quot;, &quot;geographicAreaM49_fi&quot;,
+                                                                                                           &quot;timePointYears&quot;, &quot;parent&quot;)]
+
+setnames(SUAstandAggrFias1, c(&#39;parent&#39;, &#39;flagObservationStatusAggr&#39;, &#39;flagMethodAggr&#39;), 
+         c(&#39;measuredItemFaostat_L2&#39;, &#39;flagObservationStatus&#39;, &#39;flagMethod&#39;))
+
+Pop2SUAaggFias &lt;- SUAstandAggrFias0[measuredElementSuaFbs == &#39;511&#39;]
+setnames(Pop2SUAaggFias,c(&#39;Value_stand&#39;, &#39;parent&#39;), c(&#39;Value&#39;, &#39;measuredItemFaostat_L2&#39;))
+SUAstandAggrFias &lt;- rbind(SUAstandAggrFias1, Pop2SUAaggFias)
+
+fiasFbsTot &lt;- rbind(SUAstandAggrFias, mealsInput)
+IcsGroups &lt;- unique(fiasFbsTot[ , .(geographicAreaM49_fi, timePointYears, measuredItemFaostat_L2)])
+
+# Introduce population data
+pop2merge &lt;- merge(popSWS, IcsGroups, by = c(&quot;geographicAreaM49_fi&quot;, &quot;timePointYears&quot;), all = TRUE)
+fiasfbsPOP &lt;- rbind(fiasFbsTot, pop2merge)
+
+# map for FBS groups
+sua_fbs_mapping &lt;- ReadDatatable(&#39;faostatl2_to_faostatl1&#39;)
+setnames(sua_fbs_mapping,  &#39;measureditemfaostat_l2&#39;, &#39;measuredItemFaostat_L2&#39; )
+sua_fbs_mapping[ , label := NULL]
+
+fbsFaostatL1 &lt;- merge(fiasfbsPOP, sua_fbs_mapping, by = &quot;measuredItemFaostat_L2&quot;)
+fbsFaostatL1[ , measuredItemFaostat_L2 := NULL]
+setnames(fbsFaostatL1, &quot;fbs&quot;, &quot;measuredItemFaostat_L2&quot;)
+
+</code></pre>
+<p>The FBS elements required by the FIAS Methodology are stored in the ‘fi_fias_standardization_element’ data table. The data table is merged with the <code>fbsFaostatL1</code> object excluding the elements that do not belong to the FBS (calories/year ,‘261’; proteins/year, ‘271’; fats/year, ‘281’). Population is then excluded as well and all the other products are aggregated by the new FBS elements. Population is then appended again to the data, metadata about the WPP are included also in this dataset and data are saved back into SWS.</p>
+<pre><code>
+# -- FIAS FBS standardization ---- 
+message(&quot;fi_SUA-FBS: Starting Fias standardization&quot;)
+fiasGroups &lt;- ReadDatatable(&#39;fi_fias_standardization_element&#39;)
+setnames(fiasGroups, c(&#39;measuredelementsuafbs&#39;, &#39;measuredelementfias&#39;), c(&#39;measuredElementSuaFbs&#39;, &#39;measuredElementFias&#39;))
+
+FBSfias0 &lt;- merge(fbsFaostatL1[!measuredElementSuaFbs %in% c(&#39;261&#39;, &#39;271&#39;, &#39;281&#39;)], 
+                  fiasGroups, by = &quot;measuredElementSuaFbs&quot;)
+FBSfias1 &lt;- FBSfias0[measuredElementFias != &#39;511&#39; , list(Value = sum(Value, na.rm = TRUE),
+                                                         flagObservationStatus = &#39;I&#39;,
+                                                         flagMethod = &#39;s&#39;), by = c(&quot;geographicAreaM49_fi&quot;,
+                                                                                   &quot;timePointYears&quot;, &quot;measuredItemFaostat_L2&quot;,
+                                                                                   &quot;fias&quot;, &quot;measuredElementFias&quot;)]
+
+fiasPop &lt;- FBSfias0[measuredElementFias == &#39;511&#39;, -&#39;measuredElementSuaFbs&#39;, with = FALSE]
+setkey(fiasPop)
+fiasPop &lt;- unique(fiasPop)
+
+FBSfias &lt;- rbind(FBSfias1, fiasPop)
+fiasFBS2save &lt;-  FBSfias[, .(geographicAreaM49_fi, timePointYears, measuredItemFaostat_L2, 
+                             measuredElementFias, Value, flagObservationStatus, flagMethod)]
+
+setnames(fiasFBS2save, &quot;measuredElementFias&quot;, &quot;measuredElementSuaFbs&quot;)
+
+metadataGroups &lt;- unique(fiasFBS2save[ , .(geographicAreaM49_fi, timePointYears, measuredItemFaostat_L2)])
+Metadata2includeFias &lt;- merge(sourceMetaData, metadataGroups, by = c(&quot;geographicAreaM49_fi&quot;, &quot;timePointYears&quot;), 
+                              all = TRUE, allow.cartesian = TRUE)
+
+message(&quot;fi_SUA-FBS: Saving FIAS standardized data&quot;)
+CONFIG3 &lt;- GetDatasetConfig(sessionKey_fbsFias@domain, sessionKey_fbsFias@dataset)
+
+statsFias &lt;- SaveData(domain = CONFIG3$domain,
+                      dataset = CONFIG3$dataset,
+                      data = fiasFBS2save,
+                      metadata = Metadata2includeFias,
+                      waitTimeout = Inf)
+
+msg2email9 &lt;- paste0(&quot;Standardization process completed successfully! &quot;,
+                     statsFias$inserted, &quot; observations written, &quot;,
+                     statsFias$ignored, &quot; weren&#39;t updated, &quot;,
+                     statsFias$discarded, &quot; had problems.&quot;)
+</code></pre>
+<p>Files with food processing problems are saved in an appropriate folder in the share drive by country and also sent as attachment via email to the user along with other saved messages along the plugin.</p>
+<pre><code>R_SWS_SHARE_PATH &lt;- Sys.getenv(&quot;R_SWS_SHARE_PATH&quot;)
+
+for( j in 1:length(sessionCountry)){
+  # Create a FP file for each country
+fp1 &lt;- lapply(FPproblems, function(x) x[geographicAreaM49_fi == sessionCountry[j]])
+
+filename &lt;- paste(&quot;FoodProcessingFeedback_&quot;, sessionCountry[j],&quot;.rds&quot;, sep = &#39;&#39;)
+dirname &lt;- file.path(R_SWS_SHARE_PATH, &#39;FisherySUAFBS&#39;)
+dir.create(dirname, showWarnings = FALSE, recursive = TRUE)
+
+saveRDS(object = fp1,
+        file = file.path(R_SWS_SHARE_PATH, &quot;FisherySUAFBS&quot;, filename))
+}
+
+## -- send Email with notification of correct execution ----
+
+emailtext &lt;- paste(&quot;The plug-in has saved the data in your sessions. The plugin returned the following messages:&quot;, 
+      msg2email1, 
+      msg2email1CDB,
+      msg2email2, 
+     # msg2email4, 
+    #  msg2email5, 
+      # msg2email6,
+      msg2email7, 
+      msg2email8, 
+      msg2email9, 
+      msg2email10,
+      # FPproblems
+      collapse = &#39;\n&#39;)
+
+primaryUnb &lt;- data.table()
+if(nrow(primaryneg) &gt; 0 ){
+  primaryUnb &lt;- countriesneg
+}
+
+secondaryUnb &lt;- data.table()
+if(nrow(secondaryneg) &gt; 0){
+  secondaryUnb &lt;- countriessecneg
+}
+
+from = &quot;sws@fao.org&quot;
+to = swsContext.userEmail
+subject = &quot;fi_SUA-FBS plug-in has correctly run&quot;
+body = list(emailtext, mime_part(primaryUnb), mime_part(secondaryUnb))
+sendmailR::sendmail(from = from, to = to, subject = subject, msg = body)
+paste0(&quot;Email sent to &quot;, swsContext.userEmail)
+</code></pre>
+</div>
+<div id="external-functions" class="section level2">
+<h2><span class="header-section-number">2.2</span> <strong>External functions</strong></h2>
+<p>The three external functions used in the plugin have as goal: computing the extraction rate, computing the input element and computing the food processing element before the balancing process.</p>
+<div id="extraction-rates" class="section level3">
+<h3><span class="header-section-number">2.2.1</span> Extraction rates</h3>
+<p>The function to compute extraction rates has 4 parameters:</p>
+<ul>
+<li><p><strong>data</strong>: the current structure of the SUA.</p></li>
+<li><p><strong>tree</strong>: the standard commodity tree with default extraction rates</p></li>
+<li><p><strong>oldEr</strong>: previous extraction rate figures pulled from the validated dataset</p></li>
+<li><p><strong>years</strong>: the time series selected</p></li>
+</ul>
+<p>In the shiny app there is also the ‘primary’ parameters, a vector containing the code of the primary items. The functions goes gradually from the best way to calculating the extraction rate, to the default value contained in the commodity tree.</p>
+<p>Firstly the function checks if there are input elements available. If so, the extraction rate is calculated as a ration between the production and the input figures, flagged (I, i). If no input value is available then only zero missing values can be assigned to the object <code>input2Er</code> used in the following steps.</p>
+<p>The code then checks if there is a non-null and non-empty object with past extraction rates. If values are available for the time series then the value is assigned, otherwise the extraction rates are used to perform a carry-forward process, i.e. missing extraction rates are imputed equal to the previous year one and flagged (E, t). These value are stored into the <code>ErFromData</code> object. If no information was retrieved for either of the previous attempts the default extraction rate contained into the commodity tree is assigned.</p>
+<p>The computed extraction rates are appended to the rest of the data.</p>
+<pre><code>eRcomputation &lt;- function(data,  tree,
+                          oldEr = NULL, years){
+
+  newYear &lt;- max(as.numeric(years))
+  ## the principal ingredient to compute the foodProcessing is the extraction rates
+  ## for those items that already have a protected figures for 31 the default extractio rate
+  ## in the commodity tree has to be updated:
+
+  dataProd &lt;- data[measuredElementSuaFbs==&quot;5510&quot;]
+  dataInput &lt;- data[measuredElementSuaFbs==&quot;5302&quot;]
+
+  # Take all secondary products
+  Er0 &lt;- unique(data[ !measuredItemFaostat_L2 %in% primary, .(geographicAreaM49_fi, timePointYears,  measuredItemFaostat_L2, availability)])
+  Er0[ , measuredElementSuaFbs := &#39;5423&#39;]
+
+  if(nrow(dataInput) &gt; 0){
+    computeExtractionRate &lt;- merge(dataProd, dataInput,
+                                   by = c(&quot;geographicAreaM49_fi&quot;, &quot;timePointYears&quot;,
+                                          &quot;measuredItemFaostat_L2&quot;, &quot;availability&quot;),
+                                   suffixes = c(&quot;_prod&quot;,&quot;_input&quot;))
+    computeExtractionRate[ , extraction_rate_C := Value_prod/Value_input]
+
+    setnames(computeExtractionRate,c(&quot;extraction_rate_C&quot;), &quot;Value&quot;)
+    computeExtractionRate &lt;- computeExtractionRate[, .(geographicAreaM49_fi, timePointYears, measuredItemFaostat_L2, availability, Value)]
+    computeExtractionRate[ , &#39;:=&#39; (flagObservationStatus = &quot;I&quot;, flagMethod = &quot;i&quot; ) ]
+
+    input2Er &lt;- merge(Er0, computeExtractionRate, by = c(&quot;geographicAreaM49_fi&quot;, &quot;timePointYears&quot;,
+                                                          &quot;measuredItemFaostat_L2&quot;, &quot;availability&quot;), all.x = TRUE)
+  } else {
+    # If no Input then nothing happens
+    input2Er &lt;- Er0[ , &#39;:=&#39; (Value = 0, flagObservationStatus = &quot;M&quot;, flagMethod = &quot;u&quot; ) ]
+  }
+
+  # Historical data
+  if(!is.null(oldEr)){
+
+    if(nrow(oldEr) &gt; 0){
+
+    old2newEr &lt;- merge(input2Er, oldEr, by = c(&#39;geographicAreaM49_fi&#39;, &#39;measuredElementSuaFbs&#39;,
+                                            &#39;measuredItemFaostat_L2&#39;, &#39;timePointYears&#39;),
+                       all.x = TRUE, suffixes = c(&#39;&#39;, &#39;Series&#39;))
+
+    old2newEr[is.na(Value) | Value == 0, c(&#39;Value&#39;,
+                                           &#39;flagObservationStatus&#39;,
+                                           &#39;flagMethod&#39;) := list(ValueSeries,
+                                                                 flagObservationStatusSeries,
+                                                                 flagMethodSeries)]
+
+    old2newEr[ , c(&quot;ValueSeries&quot;, &quot;flagObservationStatusSeries&quot;,
+                 &quot;flagMethodSeries&quot;, &quot;availabilitySeries&quot;) := NULL]
+
+    # Carry forward are flagged as (E, t)
+    carryforward &lt;- data.table()
+    for(i in 1:length(years)){
+      previous &lt;- oldEr[timePointYears == as.character(as.numeric(years[i])-1)]
+      missing &lt;- old2newEr[timePointYears == years[i]][is.na(Value) | Value == 0]
+
+      # Only previous available values taken
+      carryforward2append &lt;- merge(previous, missing, by = c(&#39;geographicAreaM49_fi&#39;,
+                                                             &#39;measuredElementSuaFbs&#39;,
+                                                             &#39;measuredItemFaostat_L2&#39;),
+                                   suffixes = c(&#39;Prev&#39;, &#39;&#39;))
+      carryforward2append[ , c(&#39;Value&#39;,
+                               &#39;flagObservationStatus&#39;,
+                               &#39;flagMethod&#39;) := list(ValuePrev,
+                                                     flagObservationStatusPrev,
+                                                     flagMethodPrev)]
+      carryforward2append[ , names(carryforward2append)[grepl(&#39;Prev&#39;, names(carryforward2append))] := NULL]
+
+      carryforward &lt;- rbind(carryforward, carryforward2append)
+      }
+
+    ErFromData &lt;- merge(old2newEr, carryforward, by = c(&#39;geographicAreaM49_fi&#39;,
+                                                        &#39;measuredElementSuaFbs&#39;,
+                                                        &#39;measuredItemFaostat_L2&#39;,
+                                                        &#39;timePointYears&#39;,
+                                                        &#39;availability&#39;),
+                        all.x = TRUE, suffixes = c(&#39;&#39;, &#39;CF&#39;))
+
+    ErFromData[is.na(Value) | Value == 0, c(&#39;Value&#39;,
+                                            &#39;flagObservationStatus&#39;,
+                                            &#39;flagMethod&#39;) := list(ValueCF,
+                                                                  &#39;E&#39;, &#39;t&#39;)]
+    ErFromData[ , names(ErFromData)[grepl(&#39;CF&#39;, names(ErFromData))] := NULL]
+
+
+    } else {
+    ErFromData &lt;- input2Er
+  }
+
+  } else{
+    ErFromData &lt;- input2Er
+  }
+
+  # Add default Er if still any missing
+  DefEr &lt;- merge(ErFromData, tree[!is.na(extraction_rate) , .(child, extraction_rate)],
+                       by.x = c(&quot;measuredItemFaostat_L2&quot;), by.y = c(&quot;child&quot;), all.x = TRUE)
+  # Flag for default extraction rate is (I, c) = Imputed, Copied from elsewhere in the working system
+  DefEr[is.na(Value) | Value == 0, c(&#39;Value&#39;,
+                                         &#39;flagObservationStatus&#39;,
+                                         &#39;flagMethod&#39;) := list(extraction_rate,
+                                                               &#39;I&#39;, &#39;c&#39;)]
+  DefEr[ , extraction_rate := NULL]
+
+  eRadded &lt;- DefEr[!is.na(Value)]
+  setkey(eRadded)
+  eRadded &lt;- unique(eRadded)
+  dataEr &lt;- rbind(data[measuredElementSuaFbs != &#39;5423&#39;], eRadded)
+  setkey(dataEr)
+  dataEr &lt;- unique(dataEr)
+}
+</code></pre>
+</div>
+<div id="input" class="section level3">
+<h3><span class="header-section-number">2.2.2</span> Input</h3>
+<p>The ‘inputComputation’ takes as unique input the data just returned by the ‘eRcomputation’ function. Once the extraction rates have been calculated, also the input elements can be. The process to compute the input element is opposite to the extraction rate. If <em>Er = Prod/Input</em> , <em>Input = Prod/Er</em> . If there are official input data they are taken aside. The input element is calculated for all products and then merged with the official ones. The official prevail on the calculated one and then the complete input data are appended to the other data.</p>
+<pre><code>
+# -- Input calculation ----
+
+inputComputation &lt;- function(data){ #, treeNewER){
+
+  # Isolate needed elements
+  # Previous input available
+  input &lt;-  data[ !measuredItemFaostat_L2 %in% primary &amp; measuredElementSuaFbs == &#39;5302&#39;, ]
+
+  #Er and production needed to compute input if no previous data
+  Er &lt;- data[ !measuredItemFaostat_L2 %in% primary &amp; measuredElementSuaFbs == &#39;5423&#39;, ]
+  Prod &lt;- data[ !measuredItemFaostat_L2 %in% primary &amp; measuredElementSuaFbs == &#39;5510&#39;, ]
+
+  # Calculate Input
+  InputCalc &lt;- merge(Prod, Er, by = c(&quot;geographicAreaM49_fi&quot;,
+                                      &quot;timePointYears&quot;, &quot;measuredItemFaostat_L2&quot;,
+                                      &quot;availability&quot;), suffixes = c(&quot;_prod&quot;, &quot;_Er&quot;))
+  InputCalc &lt;- InputCalc[!is.na(Value_Er)]
+  if(nrow(InputCalc[is.na(Value_Er)]) &gt; 0 ){
+  message(&#39;Missing extraction rates for some Ics groups&#39;)
+  }
+
+  InputCalc[ , input := Value_prod / Value_Er]
+
+  data_compute31 &lt;- melt(InputCalc,
+                       id.vars = c(&quot;geographicAreaM49_fi&quot;, &quot;timePointYears&quot;,  &quot;measuredItemFaostat_L2&quot;, &quot;availability&quot;),
+                       measure.vars = &quot;input&quot;,
+                       value.name = &quot;Value&quot; ,
+                       variable.name = &quot;measuredElementSuaFbs&quot;, variable.factor = FALSE)
+
+
+  data_compute31[measuredElementSuaFbs==&quot;input&quot;,measuredElementSuaFbs:=&quot;5302&quot;]
+  data_compute31[ , &#39;:=&#39;(flagObservationStatus = &#39;I&#39;, flagMethod = &#39;i&#39;, FBSsign = 0)]
+
+  # See if any official input
+  comp31 &lt;- merge(data_compute31, input, by = c(&quot;geographicAreaM49_fi&quot;,
+                                &quot;timePointYears&quot;,
+                                &quot;measuredItemFaostat_L2&quot;,
+                                &quot;availability&quot;,
+                                &quot;measuredElementSuaFbs&quot;), all = TRUE,
+                  suff = c(&#39;&#39;, &#39;Official&#39;))
+
+  # If previous data is not NA then it is assigned as input
+  # Note: the Er should have been computed as ratio between Production and Input
+  comp31[!is.na(ValueOfficial), c(&#39;Value&#39;,&#39;flagObservationStatus&#39;,&#39;flagMethod&#39;):= list(ValueOfficial,
+                                                                                       flagObservationStatusOfficial,
+                                                                                       flagMethodOfficial)]
+
+  comp31 &lt;- comp31[ , c(&#39;ValueOfficial&#39;, &#39;flagObservationStatusOfficial&#39;,
+                       &#39;flagMethodOfficial&#39;) := NULL]
+
+  # Remove all input data from the original data and add the only data31 part
+  # existing data are included as computed with computed extraction rates
+  # other input data are computed starting from given extraction rates
+  dataNo31 &lt;- data[measuredElementSuaFbs!=&quot;5302&quot;]
+  SUAinput &lt;- rbind(dataNo31, comp31[,.(geographicAreaM49_fi, timePointYears,  measuredItemFaostat_L2, availability, measuredElementSuaFbs, Value, flagObservationStatus, flagMethod)]) #rbind(data, data_compute31) #
+  return(SUAinput)
+  }
+</code></pre>
+</div>
+<div id="food-processing" class="section level3">
+<h3><span class="header-section-number">2.2.3</span> Food Processing</h3>
+<p>The food processing function proceed by step, assigning the input to the highest rank product until the availability allows for. It takes as input the data with the calculated input, the new commodity tree with the updated extraction rates and the primary ICS code vector.</p>
+<p>Fist of all, it calculates the whole quantity to cover in terms of primary equivalent by summing all the input elements by parent and compare the total with the availability of the correspondent primary product (or primary parent). If the total processing to cover is higher than the primary availability, then the processing for the primary parent is set equal to the availability.</p>
+<pre><code>
+# -- Food processing calculation ----
+
+foodProcessingComputation &lt;- function(SUAinput, treeNewER, primary){
+
+  # -- Primary processing ----
+
+  # Tree only with primary
+  treePrimary &lt;- treeNewER[parent %in%  primary]
+  treePrimary[, child:=as.character(child)]
+
+  data_compute131 &lt;- copy(SUAinput)
+  setnames(data_compute131, &quot;measuredItemFaostat_L2&quot;, &quot;child&quot;)
+  data_compute131tree &lt;- merge(data_compute131, treePrimary, by=c(&quot;geographicAreaM49_fi&quot;, &quot;timePointYears&quot;, &quot;child&quot;))
+
+  # sum all the inputs
+  data_compute131tree[ measuredElementSuaFbs==&quot;5302&quot; , processing:=sum(Value, na.rm = TRUE), by=c(&quot;geographicAreaM49_fi&quot;,
+                                                                                                  &quot;timePointYears&quot;,
+                                                                                                  &quot;parent&quot;)]
+
+  # processing is unique for each primary parent so take only these values
+  # data_compute131processing = Total input 5302 by parent
+  setkey(data_compute131tree)
+  data_compute131processing &lt;- unique(data_compute131tree[!is.na(processing),.(geographicAreaM49_fi, parent, timePointYears, processing)])
+  setnames(data_compute131processing, &quot;parent&quot;, &quot;measuredItemFaostat_L2&quot;)
+
+  ## The total &#39;food processing&#39; (input to cover) has been just computed for any Primary Parent,
+  ## we have to compare the &#39;new component&#39; based on the sum of all the child-input
+  ## with the actual primary availability, in order to be sure that the new availabily
+  ## (computed including the just computed food processing in the primary SUA line) does not produce
+  ## a negative imbalance.
+
+  data131 &lt;- merge(SUAinput, data_compute131processing, by=c( &quot;geographicAreaM49_fi&quot;,&quot;measuredItemFaostat_L2&quot;,&quot;timePointYears&quot;), all.x = TRUE)
+
+  # take only the processing to check availability
+  setkey(data131)
+  data131 &lt;- unique(data131[!is.na(processing),.(geographicAreaM49_fi, measuredItemFaostat_L2, timePointYears, availability, processing)])
+
+  ## SeconLevelProcessing variable is computed to evaluate which primary availabilities are lower than the
+  ## food processing.
+  # secondLevelProcessing &lt; 0 quantity left to cover (Not enough primary for all processing)
+  # secondLevelProcessing &gt; 0 primary availability exceeding processing
+  data131[, secondLevelProcessing := availability-processing]
+
+  # If not enough availability then the processing imputable to primary parent is put equal to the availability
+  data131[secondLevelProcessing &lt; 0, processing := availability]
+</code></pre>
+<p>The object <code>secondLevelProcessing</code> is created containing the data for products the primary availability alone was not enough. The function controls the primary availability covers at least the rank 1 secondary parent. When this condition is not fulfilled the data are stored in the <code>rank1availCheck</code> object and will be reported to the user in the shiny app and in the final email.</p>
+<p>Another check stored in the <code>insufficiency</code> object. In this object are stored products where the sum of all secondary availability is not enough to store the uncovered quantity. All the comparison need to be done in primary equivalent otherwise quantities <em>tel-quel</em> cannot be compared.</p>
+<p>The products having enough availability are stored in a different object (<code>toDeviateCovered</code>) and processed.</p>
+<pre><code>  # Primary measuredItemFaostat_L2 from which not enough availability to cover processing
+  secondLevelProcessing &lt;- data131[secondLevelProcessing &lt; 0]
+  setnames(secondLevelProcessing, &quot;measuredItemFaostat_L2&quot;, &quot;parent&quot;)
+  problems &lt;- list()
+
+  # -- Secondary processing  ----
+
+  if(nrow(secondLevelProcessing) &gt; 0) {
+
+    # merge by parent so that secondary parents can be found
+    # toDeviate has dimensions: (parent_primary, geographicAreaM49_fi, timePointYears,
+    #   availability, processing, secondLevelProcessing, parent_secondary, weight, extraction_rate, rank)
+
+    toDeviate &lt;- merge(secondLevelProcessing, treeNewER[weight != FALSE], by=c(&quot;geographicAreaM49_fi&quot;, &quot;timePointYears&quot;, &quot;parent&quot;), allow.cartesian = TRUE)
+    setnames(toDeviate, c(&quot;parent&quot;,&quot;child&quot;), c(&quot;parent_primary&quot;,&quot;parent_secondary&quot;))
+
+    # compare imbalance with rank 1 parent availability
+    toDeviate2proc &lt;- merge(toDeviate, SUAinput, by.x = c(&quot;geographicAreaM49_fi&quot;, &quot;timePointYears&quot;,  &quot;parent_secondary&quot;),
+                            by.y = c(&quot;geographicAreaM49_fi&quot;, &quot;timePointYears&quot;,  &quot;measuredItemFaostat_L2&quot;), suffixes = c(&#39;_primary&#39;,&#39;_secondary&#39;))
+
+    # Make sure primary availability covers at least the rank 1 child
+    rank1availCheck &lt;- toDeviate2proc[parent_secondary %in%  unique(treeNewER[rank == 1 ]$parent) &amp;
+                                        measuredElementSuaFbs == &#39;5302&#39; &amp;
+                                        Value &gt; availability_primary ]
+
+    if(nrow(rank1availCheck) &gt; 0){
+      msg1 &lt;- paste(&#39;Not enough primary availability for groups: &#39;, paste(unique(rank1availCheck$parent_primary), collapse = &quot;,&quot;),
+                    &#39;for years: &#39;, paste(unique(rank1availCheck$timePointYears), collapse = &quot;,&quot;),
+                    &#39;and country&#39;, paste(unique(rank1availCheck$geographicAreaM49_fi), collapse = &quot;,&quot;))
+      message(msg1)
+      rank1availCheck
+
+    }
+
+    msg1 &lt;- ifelse(nrow(rank1availCheck) &gt; 0, msg1, &#39;Primary products cover at least first rank children (see commodity tree).&#39;)
+    toDeviate2proc2 &lt;- unique(toDeviate2proc[, .( geographicAreaM49_fi, timePointYears, parent_secondary, parent_primary,
+                                                  availability_primary, processing, secondLevelProcessing, weight,
+                                                  extraction_rate, availability_secondary)])
+
+    problems$primary &lt;- rank1availCheck[ , .(geographicAreaM49_fi,
+                                             timePointYears,
+                                             parent_secondary,
+                                             parent_primary,
+                                             availability_primary,
+                                             Value)]
+
+    # Check if enough secondary availability to cover unbalance
+    toDeviate2proc2[extraction_rate != 0 &amp; !is.na(extraction_rate), availability_secondary_primEq := availability_secondary/extraction_rate ]
+    toDeviate2proc2[parent_secondary %in% unique(treeNewER$parent), availability_secondary_primEq_tot := sum(availability_secondary_primEq, na.rm = TRUE), by = list(geographicAreaM49_fi,
+                                                                                                                                                                     timePointYears,
+                                                                                                                                                                     parent_primary) ]
+    checkingTab &lt;- unique(toDeviate2proc2[ , .(geographicAreaM49_fi, timePointYears, parent_primary, availability_primary,
+                                               secondLevelProcessing, availability_secondary_primEq_tot)])
+
+    # -- General insufficiency ----
+    insufficiency &lt;- checkingTab[availability_secondary_primEq_tot &lt; (-1)*secondLevelProcessing ]
+
+    if(nrow(insufficiency) &gt; 0){
+
+      problem &lt;- &#39;PROBLEM! Not enough secondary availability to cover production!&#39;
+      msg2 &lt;- list(problem,insufficiency)
+
+    }
+    msg2 &lt;- ifelse(nrow(insufficiency) &gt; 0, msg2, &#39;Total secondary availability can cover remaining secondary production. Level by level availability to be checked.&#39;)
+
+    problems$secondaryTot &lt;- insufficiency[ , .(geographicAreaM49_fi,
+                                                timePointYears,
+                                                parent_primary,
+                                                AvailableQuantity = (availability_secondary_primEq_tot),
+                                                Quantity2cover = (secondLevelProcessing)*(-1))]
+
+    # Exclude the products that cannot be covered
+    toDeviateCovered &lt;- merge(toDeviate2proc2[, .(geographicAreaM49_fi,
+                                                  timePointYears,
+                                                  parent_primary,
+                                                  parent_secondary,
+                                                  secondLevelProcessing,
+                                                  extraction_rate,
+                                                  availability_secondary,
+                                                  availability_secondary_primEq)],
+                              insufficiency[ , .(geographicAreaM49_fi, timePointYears, parent_primary, availability_primary)],
+                              by = c(&#39;geographicAreaM49_fi&#39;, &#39;timePointYears&#39;, &#39;parent_primary&#39;), all = TRUE)
+
+    toDeviateCovered &lt;- toDeviateCovered[is.na(availability_primary)]
+    toDeviateCovered[ , availability_primary := NULL]
+    setkey(toDeviateCovered)
+    toDeviateCovered &lt;- unique(toDeviateCovered)
+</code></pre>
+<p>The data to process will go through the four level of possible parent (the rank is a parameter included in the commodity tree). The <code>secondaryFP</code> object is created and the function goes ranks by rank, allocating the maximum input elements to the highest rank parent until the end of the input quantity.</p>
+<p>At each level, the function checks if there is at least enough availability for one parent to cover the following products in rank, if not this is stored in the <code>problems</code> list. Each time from primary equivalent the food processing element is transformed into specific product weight with the extraction rates.</p>
+<pre><code>    # Consider all ICS product that can be parent
+    secondaryFP &lt;-  merge(unique(treeNewER[, .(parent, rank)]), toDeviateCovered,
+                          by.x = c(&quot;parent&quot;),
+                          by.y = c(&quot;parent_secondary&quot;))
+
+    # transform in secondary equivalent the excess of processing not covered by the primary
+    secondaryFP[, secondLevelProcessing:= (secondLevelProcessing)*(-1)]
+    setkey(secondaryFP)
+    secondaryFP &lt;- unique(secondaryFP)
+
+    # Maximum level of processing is 4 so creating space for it
+    secondaryFP[ , &#39;:=&#39; (rank1Processing = 0, thirdLevelProcessing = 0,
+                         rank2Processing = 0, fourthLevelProcessing = 0,
+                         rank3Processing = 0, fifthLevelProcessing = 0, rank4Processing = 0)]
+
+
+    # -- Rank 1 secondary parent ----
+
+    # Calculation of first secondary parent food processing already in secondary equivalent
+    # rank1Processing = quantity of input covered by rank 1 parent
+    secondaryFP[ rank == 1, rank1Processing := ifelse(availability_secondary_primEq  &gt; secondLevelProcessing,
+                                                      secondLevelProcessing*extraction_rate , availability_secondary) ]
+
+    # Where there is need of second secondary parent
+    rank2needed &lt;- unique(secondaryFP[rank == 1 &amp; availability_secondary_primEq  &lt; secondLevelProcessing, .(geographicAreaM49_fi, parent, timePointYears, parent_primary, secondLevelProcessing, availability_secondary_primEq) ])
+
+    # -- Rank 2 secondary parent ----
+
+    if(nrow(rank2needed) &gt; 0){
+      rank2needed[ , thirdLevelProcessing := secondLevelProcessing - (availability_secondary_primEq )]
+
+      # Merge to put the right third level processing
+      secondaryFPneeded &lt;- merge(secondaryFP[ rank == 2], rank2needed,
+                                 by = c(&quot;geographicAreaM49_fi&quot;, &quot;timePointYears&quot;, &quot;parent_primary&quot;), all = TRUE, suffixes = c(&#39;_available&#39;, &#39;_needed&#39;))
+
+      secondaryFPneeded[ is.na(thirdLevelProcessing_needed), thirdLevelProcessing_needed := 0 ]
+
+      unavailable &lt;- secondaryFPneeded[is.na(parent_available)]
+
+      if(nrow(unavailable) &gt; 0){
+        msg3 &lt;- paste(&#39;Not enough product to cover processing for primary group(s)&#39;, paste(unique(unavailable$parent_primary), collapse = &quot;, &quot;),
+                      &quot;at level 2, for country&quot;, paste(unique(unavailable$geographicAreaM49_fi), collapse = &quot;, &quot;) )
+        message(msg3)
+      }
+      msg3 &lt;- ifelse(nrow(unavailable) &gt; 0, msg3, &#39;Enough rank 2 secondary parent to cover rank 3 children (see commodity tree).&#39;)
+
+      problems$secondary &lt;- unavailable[ , .(geographicAreaM49_fi,
+                                             timePointYears,
+                                             parent_primary,
+                                             parent_needed,
+                                             Quantity2cover = (thirdLevelProcessing_needed))]
+
+      secondaryFP2 &lt;- copy(secondaryFPneeded)
+      secondaryFP2[is.na(parent_available), availability_secondary_primEq_available := 0]
+
+
+      secondaryFP2 &lt;- secondaryFP2[ ,rank2Processing := ifelse(availability_secondary_primEq_available  &gt; thirdLevelProcessing_needed,
+                                                               thirdLevelProcessing_needed *extraction_rate,
+                                                               availability_secondary_primEq_available *extraction_rate)]
+
+      secondaryFP2 &lt;- secondaryFP2[  , .(geographicAreaM49_fi, timePointYears, parent_primary, parent_available, rank,
+                                         secondLevelProcessing_available, extraction_rate, availability_secondary,
+                                         availability_secondary_primEq_available, rank1Processing,
+                                         rank2Processing, fourthLevelProcessing, rank3Processing, fifthLevelProcessing, rank4Processing,
+                                         thirdLevelProcessing_needed)]
+      setnames(secondaryFP2, names(secondaryFP2), gsub(&quot;_available&quot;, &quot;&quot;, names(secondaryFP2)))
+      setnames(secondaryFP2, &#39;thirdLevelProcessing_needed&#39;, &#39;thirdLevelProcessing&#39;)
+      secondaryFP2 &lt;- rbind(secondaryFP2, secondaryFP[rank != 2, ])
+      secondaryFP &lt;- secondaryFP2
+      # Where there is need of third secondary parent
+
+      rank3needed &lt;- unique(secondaryFP2[rank == 2 &amp; availability_secondary_primEq  &lt; thirdLevelProcessing, .(geographicAreaM49_fi, parent, timePointYears, parent_primary, thirdLevelProcessing, availability_secondary_primEq) ])
+
+      # -- Rank 3 secondary parent ----
+
+      if(nrow(rank3needed) &gt; 0){
+        rank3needed[ , fourthLevelProcessing := thirdLevelProcessing - (availability_secondary_primEq )]
+
+        tertiaryFPneeded &lt;- merge(secondaryFP2[ rank == 3], rank3needed,
+                                  by = c(&quot;geographicAreaM49_fi&quot;, &quot;timePointYears&quot;, &quot;parent_primary&quot;), all = TRUE, suffixes = c(&#39;_available&#39;, &#39;_needed&#39;))
+
+        tertiaryFPneeded[is.na(fourthLevelProcessing_needed), fourthLevelProcessing_needed := 0 ]
+
+        unavailable3 &lt;- tertiaryFPneeded[is.na(parent_available)]
+
+        if(nrow(unavailable3) &gt; 0){
+          msg4 &lt;- paste(&#39;Not enough product to cover processing for primary group(s)&#39;, paste(unique(unavailable3$parent_primary), collapse = &quot;, &quot;),
+                        &quot;at level 3, for country &quot;, paste(unique(unavailable3$geographicAreaM49_fi ), collapse = &quot;, &quot;))
+          message(msg4)
+        }
+        msg4 &lt;- ifelse(nrow(unavailable3) &gt; 0, msg4, &#39;Enough rank 3 secondary parent to cover rank 4 children (see commodity tree).&#39;)
+
+        problems$tertiary &lt;- unavailable3[ , .(geographicAreaM49_fi,
+                                               timePointYears,
+                                               parent_primary,
+                                               parent_needed,
+                                               Quantity2cover = (fourthLevelProcessing_needed))]
+
+
+        secondaryFP3 &lt;- copy(tertiaryFPneeded)
+
+        secondaryFP3[is.na(parent_available), availability_secondary_primEq_available := 0]
+
+        secondaryFP3 &lt;- secondaryFP3[ ,rank3Processing := ifelse(availability_secondary_primEq_available  &gt; fourthLevelProcessing_needed,
+                                                                 fourthLevelProcessing_needed *extraction_rate,
+                                                                 availability_secondary_primEq_available *extraction_rate)]
+
+        secondaryFP3 &lt;- secondaryFP3[  , .(geographicAreaM49_fi, timePointYears, parent_primary, parent_available, rank,
+                                           secondLevelProcessing, extraction_rate, availability_secondary,
+                                           availability_secondary_primEq_available, rank1Processing, thirdLevelProcessing_available,
+                                           rank2Processing, rank3Processing, fifthLevelProcessing, rank4Processing,
+                                           fourthLevelProcessing_needed)]
+        setnames(secondaryFP3, names(secondaryFP3), gsub(&quot;_available&quot;, &quot;&quot;, names(secondaryFP3)))
+        setnames(secondaryFP3, &#39;fourthLevelProcessing_needed&#39;, &#39;fourthLevelProcessing&#39;)
+        secondaryFP3 &lt;- rbind(secondaryFP3, secondaryFP2[rank != 3, ])
+        secondaryFP &lt;- secondaryFP3
+
+        # Where there is need of fourth secondary parent
+
+        rank4needed &lt;- unique(secondaryFP3[rank == 3 &amp; availability_secondary_primEq  &lt; fourthLevelProcessing, .(geographicAreaM49_fi, parent, timePointYears, parent_primary, fourthLevelProcessing, availability_secondary_primEq) ])
+
+        # -- Rank 4 secondary parent ----
+        if(nrow(rank4needed) &gt; 0 ){
+          rank4needed[ , fifthLevelProcessing := fourthLevelProcessing - (availability_secondary_primEq )]
+
+          quaternaryFPneeded &lt;- merge(secondaryFP3[ rank == 4], rank4needed,
+                                      by = c(&quot;geographicAreaM49_fi&quot;, &quot;timePointYears&quot;, &quot;parent_primary&quot;), all = TRUE, suffixes = c(&#39;_available&#39;, &#39;_needed&#39;))
+
+          quaternaryFPneeded[ is.na(fifthLevelProcessing_needed), fifthLevelProcessing_needed := 0 ]
+
+          unavailable4 &lt;- quaternaryFPneeded[is.na(parent_available)]
+
+          if(nrow(unavailable4) &gt; 0){
+            msg5 &lt;- paste(&#39;Not enough product to cover processing for primary group(s)&#39;, paste(unique(unavailable4$parent_primary), collapse = &quot;, &quot;),
+                          &quot;at level 4, for country &quot;, paste(unique(unavailable4$geographicAreaM49_fi), collapse = &quot;, &quot;))
+            message(msg5)
+          }
+          msg5 &lt;- ifelse(nrow(unavailable4) &gt; 0, msg5, &#39;Enough rank 4 secondary parent to cover remaining children (see commodity tree).&#39;)
+
+          problems$quaternary &lt;- unavailable4[ , .(geographicAreaM49_fi,
+                                                   timePointYears,
+                                                   parent_primary,
+                                                   parent_needed,
+                                                   Quantity2cover = (fifthLevelProcessing_needed))]
+
+
+          secondaryFP4 &lt;- copy(quaternaryFPneeded)
+          secondaryFP4[is.na(parent_available), availability_secondary_primEq_available := 0]
+
+          secondaryFP4 &lt;- secondaryFP4[ ,rank4Processing := ifelse(availability_secondary_primEq_available  &gt; fifthLevelProcessing_needed,
+                                                                   fifthLevelProcessing_needed *extraction_rate,
+                                                                   availability_secondary_primEq_available *extraction_rate)]
+
+          secondaryFP4 &lt;- secondaryFP4[  , .(geographicAreaM49_fi, timePointYears, parent_primary, parent_available, rank,
+                                             secondLevelProcessing, extraction_rate, availability_secondary,
+                                             availability_secondary_primEq_available, rank1Processing, thirdLevelProcessing,
+                                             rank2Processing, fourthLevelProcessing_available, rank3Processing,
+                                             fifthLevelProcessing_needed, rank4Processing)]
+          setnames(secondaryFP4, names(secondaryFP4), gsub(&quot;_available&quot;, &quot;&quot;, names(secondaryFP4)))
+          setnames(secondaryFP4, &#39;fifthLevelProcessing_needed&#39;, &#39;fifthLevelProcessing&#39;)
+          secondaryFP4 &lt;- rbind(secondaryFP4, secondaryFP3[rank != 4, ])
+          secondaryFP &lt;- secondaryFP4
+
+
+          rank5needed &lt;- unique(secondaryFP4[rank == 4 &amp; availability_secondary_primEq  &lt; fifthLevelProcessing,  ])
+
+        }
+
+      }
+
+    }
+</code></pre>
+<p>At the end of the process all the <code>secondaryFP</code> object is processed so to be appended to the other data and the uncovered data are stored in the <code>problems</code> list in the <code>NotCovered</code> table.</p>
+<pre><code>    # -- Organising data ----
+
+    processingLevelsComputed &lt;-  melt(secondaryFP,
+                                      id.vars = c(&quot;parent&quot;,
+                                                  &quot;rank&quot;, &quot;geographicAreaM49_fi&quot;,
+                                                  &quot;timePointYears&quot;, &quot;parent_primary&quot;,
+                                                  &quot;secondLevelProcessing&quot;, &quot;extraction_rate&quot;,
+                                                  &quot;availability_secondary&quot;, &quot;availability_secondary_primEq&quot;),
+                                      measure.vars = c(&quot;rank1Processing&quot;, &quot;rank2Processing&quot;, &quot;rank3Processing&quot;, &quot;rank4Processing&quot;),
+                                      value.name = &quot;foodProcessingSecondary&quot;,
+                                      variable.name = &quot;levelOfProcessing&quot;)
+
+    NotCovered &lt;- processingLevelsComputed[ , .(geographicAreaM49_fi, parent_primary, timePointYears, secondLevelProcessing, extraction_rate, foodProcessingSecondary)]
+    setkey(NotCovered)
+    NotCovered &lt;- unique(NotCovered)
+    if(nrow(NotCovered) &gt; 0){
+      NotCovered[ , foodProcessingSecondary_primEq := foodProcessingSecondary/extraction_rate ]
+      NotCovered[ , c(&#39;secondLevelProcessing&#39;,  &#39;foodProcessingSecondary_primEq&#39;) := list(secondLevelProcessing,
+                                                                                          sum(foodProcessingSecondary_primEq)),
+                  by = c(&#39;geographicAreaM49_fi&#39;, &#39;parent_primary&#39;, &#39;timePointYears&#39;)]
+      NotCovered[ , UncoveredQuantity := secondLevelProcessing - foodProcessingSecondary_primEq]
+      NotCovered &lt;- NotCovered[secondLevelProcessing &gt; foodProcessingSecondary_primEq]
+    }
+
+    if(nrow(NotCovered) &gt; 0){
+      NotCovered &lt;- NotCovered[ , c(&#39;secondLevelProcessing&#39;,  &#39;foodProcessingSecondary&#39;, &#39;extraction_rate&#39;, &#39;foodProcessingSecondary_primEq&#39;) := NULL]
+      setkey(NotCovered)
+      NotCovered &lt;- unique(NotCovered)
+      problems$NotCovered &lt;- NotCovered
+    } else {
+      problems$NotCovered &lt;- data.table()
+    }
+
+    processingLevelsAssigned &lt;- processingLevelsComputed[foodProcessingSecondary != 0]
+
+    processingLevelsAssigned &lt;- processingLevelsAssigned[ , .(geographicAreaM49_fi, parent, timePointYears,
+                                                              availability_secondary, foodProcessingSecondary)]
+
+    setnames(processingLevelsAssigned, c(&quot;parent&quot;, &quot;availability_secondary&quot;, &quot;foodProcessingSecondary&quot;),
+             c(&quot;measuredItemFaostat_L2&quot;, &quot;availability&quot;, &quot;processing&quot;))
+
+    data131full &lt;- rbind(data131[ , secondLevelProcessing := NULL], processingLevelsAssigned)
+  } else {
+
+    data131full &lt;- data131[ , secondLevelProcessing := NULL]
+
+  }
+
+
+  data131full[, measuredElementSuaFbs:=&quot;5023&quot;]
+  setnames(data131full, &quot;processing&quot;, &quot;Value&quot;)
+
+
+
+  return(list(result = data131full,
+              problems = problems
+  )
+  )
+
+}
+</code></pre>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="PluginDes.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="ShinyDes.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
