@@ -8,7 +8,7 @@ The shiny app reads the data from the sessions the fi_SUA-FBS plugin has compile
 The application has a top-bottom approach. It starts from the FBS results and allows the user to check how results have been calculated by going more and more into details in the previous datasets. Starting from the FBS
 results the user can check SUAs throughout and proceed until Global Production and Commodity datasets from which all the other figures derive.
 
-The R Shiny application is available at <http://hqlprsws1.hq.un.fao.org:3838/shinyFisheriesSUAFBS/> and the very first panel is shown in figure \@ref(fig:shiny0).
+The R Shiny application is available at <http://hqlprsws1.hq.un.fao.org:3838/shinyFi_SUAFBS_temp5/> and the very first panel is shown in figure \@ref(fig:shiny0).
 
 ```{r  shiny0, echo=FALSE, out.width="100%", fig.cap='First tab appearing when opening the shiny app.'}
 knitr::include_graphics("img/shiny0.png")
@@ -127,6 +127,15 @@ Sometimes flows have to be deviated as a whole from one ICS product to another. 
 
 ```{r  shinyLink, echo=FALSE, out.width="100%", fig.cap='Overview of the _Link table_ tab.'}
 knitr::include_graphics("img/shinyLink.png")
+```
+
+##**Balancing Elements tab**
+
+This tab has similar structure to the 'link tab' but it refers to balancing elements.
+If there is a new product or the balancing element needs to be changed, the user can do it directly from the shiny respecting the structure of the datatable as in figure \@ref(fig:shinyBalEl).
+
+```{r  shinyBalEl, echo=FALSE, out.width="100%", fig.cap='Overview of the _Balancing elements_ tab.'}
+knitr::include_graphics("img/shinyBalEl.png")
 ```
 
 

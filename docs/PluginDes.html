@@ -1,14 +1,16 @@
 <!DOCTYPE html>
-<html lang="" xml:lang="">
+<html >
+
 <head>
 
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 1 SUA-FBS compilation process | Migration of Fishery SUA and FBS compilation into the SWS</title>
-  <meta name="description" content="This online book describes the migration of the statistical processes performed by the FAO Fisheries and Aquaculture Department into the Corporate Statistical Working System (SWS) for the compilation of Supply Utilization Accounts (SUAs) and Food Balance Sheets (FBSs) ." />
-  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Migration of Fishery SUA and FBS compilation into the SWS</title>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <meta name="description" content="This online book describes the migration of the statistical processes performed by the FAO Fisheries and Aquaculture Department into the Corporate Statistical Working System (SWS) for the compilation of Supply Utilization Accounts (SUAs) and Food Balance Sheets (FBSs) .">
+  <meta name="generator" content="bookdown 0.3 and GitBook 2.6.7">
 
-  <meta property="og:title" content="Chapter 1 SUA-FBS compilation process | Migration of Fishery SUA and FBS compilation into the SWS" />
+  <meta property="og:title" content="Migration of Fishery SUA and FBS compilation into the SWS" />
   <meta property="og:type" content="book" />
   
   
@@ -16,33 +18,30 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 1 SUA-FBS compilation process | Migration of Fishery SUA and FBS compilation into the SWS" />
+  <meta name="twitter:title" content="Migration of Fishery SUA and FBS compilation into the SWS" />
   
   <meta name="twitter:description" content="This online book describes the migration of the statistical processes performed by the FAO Fisheries and Aquaculture Department into the Corporate Statistical Working System (SWS) for the compilation of Supply Utilization Accounts (SUAs) and Food Balance Sheets (FBSs) ." />
   
 
-<meta name="author" content="Charlotte Taglioni (Statistician, ESSD - Methodological Innovation Team)" />
+<meta name="author" content="Charlotte Taglioni (Statistician, ESSD - Methodological Innovation Team)">
 
 
-<meta name="date" content="2020-03-31" />
+<meta name="date" content="2020-10-26">
 
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="index.html"/>
-<link rel="next" href="PluginCode.html"/>
+<link rel="prev" href="index.html">
+<link rel="next" href="PluginCode.html">
+
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
-
-
 
 
 
@@ -59,33 +58,13 @@
 <body>
 
 
-
   <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
 
     <div class="book-summary">
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="index.html#introduction"><strong>Introduction</strong></a><ul>
-<li><a href="index.html#migration-actors"><strong>Migration actors</strong></a></li>
-<li><a href="index.html#new-fias-methodology"><strong>New FIAS methodology</strong></a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>SUAs/FBS for fish and fish products (based on FIAS documentation)</a><ul>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#working-system-of-fao-fias-for-the-calculation-of-suas-and-fbs"><i class="fa fa-check"></i>Working system of FAO FIAS for the calculation of SUAs and FBS</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#standardization-to-fbs"><i class="fa fa-check"></i>Standardization to FBS</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#fias-processed-production-in-sws-proposed-workflow"><i class="fa fa-check"></i>FIAS processed production in SWS: proposed workflow</a></li>
-</ul></li>
-<li><a href="index.html#sws-resources"><strong>SWS resources</strong></a><ul>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#code-lists"><i class="fa fa-check"></i>Code lists</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#data-tables"><i class="fa fa-check"></i>Data tables</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#datasets"><i class="fa fa-check"></i>Datasets</a></li>
-</ul></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#definition-and-conversion-of-sua-fbs-elements"><i class="fa fa-check"></i>Definition and conversion of SUA-FBS Elements</a><ul>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#sua-element-conversion"><i class="fa fa-check"></i>SUA element conversion</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#fias-standardized-fbs-element-conversion"><i class="fa fa-check"></i>FIAS standardized FBS element conversion</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#faostat-standardized-fbs-element-conversion"><i class="fa fa-check"></i>Faostat standardized FBS element conversion</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#flag-conversion"><i class="fa fa-check"></i>Flag conversion</a></li>
-</ul></li>
-</ul></li>
+<li><a href="index.html#introduction"><strong>Introduction</strong></a></li>
 <li class="chapter" data-level="1" data-path="PluginDes.html"><a href="PluginDes.html"><i class="fa fa-check"></i><b>1</b> <strong>SUA-FBS compilation process</strong></a><ul>
 <li class="chapter" data-level="1.1" data-path="PluginDes.html"><a href="PluginDes.html#initiate-plugin"><i class="fa fa-check"></i><b>1.1</b> Initiate plugin</a></li>
 <li class="chapter" data-level="1.2" data-path="PluginDes.html"><a href="PluginDes.html#pull-data-to-sua"><i class="fa fa-check"></i><b>1.2</b> Pull data to SUA</a></li>
@@ -96,57 +75,9 @@
 <li class="chapter" data-level="1.4" data-path="PluginDes.html"><a href="PluginDes.html#sua-with-nutrients"><i class="fa fa-check"></i><b>1.4</b> SUA with nutrients</a></li>
 <li class="chapter" data-level="1.5" data-path="PluginDes.html"><a href="PluginDes.html#standardization"><i class="fa fa-check"></i><b>1.5</b> Standardization</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="PluginCode.html"><a href="PluginCode.html"><i class="fa fa-check"></i><b>2</b> <strong>fi_SUA-FBS plugin R code</strong></a><ul>
-<li class="chapter" data-level="2.1" data-path="PluginCode.html"><a href="PluginCode.html#main-file"><i class="fa fa-check"></i><b>2.1</b> Main file</a></li>
-<li class="chapter" data-level="2.2" data-path="PluginCode.html"><a href="PluginCode.html#external-functions"><i class="fa fa-check"></i><b>2.2</b> <strong>External functions</strong></a><ul>
-<li class="chapter" data-level="2.2.1" data-path="PluginCode.html"><a href="PluginCode.html#extraction-rates"><i class="fa fa-check"></i><b>2.2.1</b> Extraction rates</a></li>
-<li class="chapter" data-level="2.2.2" data-path="PluginCode.html"><a href="PluginCode.html#input"><i class="fa fa-check"></i><b>2.2.2</b> Input</a></li>
-<li class="chapter" data-level="2.2.3" data-path="PluginCode.html"><a href="PluginCode.html#food-processing"><i class="fa fa-check"></i><b>2.2.3</b> Food Processing</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="3" data-path="ShinyDes.html"><a href="ShinyDes.html"><i class="fa fa-check"></i><b>3</b> <strong>SUA-FBS Validation Shiny application</strong></a><ul>
-<li class="chapter" data-level="3.1" data-path="ShinyDes.html"><a href="ShinyDes.html#token-tab"><i class="fa fa-check"></i><b>3.1</b> <strong>Token tab</strong></a></li>
-<li class="chapter" data-level="3.2" data-path="ShinyDes.html"><a href="ShinyDes.html#overview-tab"><i class="fa fa-check"></i><b>3.2</b> <strong>Overview tab</strong></a></li>
-<li class="chapter" data-level="3.3" data-path="ShinyDes.html"><a href="ShinyDes.html#sua-compare-tab"><i class="fa fa-check"></i><b>3.3</b> <strong>SUA compare tab</strong></a></li>
-<li class="chapter" data-level="3.4" data-path="ShinyDes.html"><a href="ShinyDes.html#sua-imbalance-tab"><i class="fa fa-check"></i><b>3.4</b> <strong>SUA imbalance tab</strong></a></li>
-<li class="chapter" data-level="3.5" data-path="ShinyDes.html"><a href="ShinyDes.html#fbs-by-ics-tab"><i class="fa fa-check"></i><b>3.5</b> <strong>FBS by ICS tab</strong></a></li>
-<li class="chapter" data-level="3.6" data-path="ShinyDes.html"><a href="ShinyDes.html#ics-by-element-tab"><i class="fa fa-check"></i><b>3.6</b> <strong>ICS by element tab</strong></a></li>
-<li class="chapter" data-level="3.7" data-path="ShinyDes.html"><a href="ShinyDes.html#global-production-tab"><i class="fa fa-check"></i><b>3.7</b> <strong>Global Production tab</strong></a></li>
-<li class="chapter" data-level="3.8" data-path="ShinyDes.html"><a href="ShinyDes.html#commodities-tab"><i class="fa fa-check"></i><b>3.8</b> <strong>Commodities tab</strong></a></li>
-<li class="chapter" data-level="3.9" data-path="ShinyDes.html"><a href="ShinyDes.html#link-table-tab"><i class="fa fa-check"></i><b>3.9</b> <strong>Link table tab</strong></a></li>
-<li class="chapter" data-level="3.10" data-path="ShinyDes.html"><a href="ShinyDes.html#extraction-rates-tab"><i class="fa fa-check"></i><b>3.10</b> <strong>Extraction rates tab</strong></a></li>
-<li class="chapter" data-level="3.11" data-path="ShinyDes.html"><a href="ShinyDes.html#data-validation-tab"><i class="fa fa-check"></i><b>3.11</b> <strong>Data validation tab</strong></a></li>
-<li class="chapter" data-level="3.12" data-path="ShinyDes.html"><a href="ShinyDes.html#data-update-tab"><i class="fa fa-check"></i><b>3.12</b> <strong>Data update tab</strong></a></li>
-<li class="chapter" data-level="3.13" data-path="ShinyDes.html"><a href="ShinyDes.html#data-saving-tab"><i class="fa fa-check"></i><b>3.13</b> <strong>Data saving tab</strong></a></li>
-</ul></li>
-<li class="chapter" data-level="4" data-path="ShinyCode.html"><a href="ShinyCode.html"><i class="fa fa-check"></i><b>4</b> <strong>The Fisheries SUA-FBS Shiny R code</strong></a><ul>
-<li class="chapter" data-level="4.1" data-path="ShinyCode.html"><a href="ShinyCode.html#global.r-file"><i class="fa fa-check"></i><b>4.1</b> <strong>‘global.R’ file</strong></a></li>
-<li class="chapter" data-level="4.2" data-path="ShinyCode.html"><a href="ShinyCode.html#ui.r-file"><i class="fa fa-check"></i><b>4.2</b> <strong>‘ui.R’ file</strong></a></li>
-<li class="chapter" data-level="4.3" data-path="ShinyCode.html"><a href="ShinyCode.html#server.r-file"><i class="fa fa-check"></i><b>4.3</b> <strong>‘server.R’ file</strong></a><ul>
-<li class="chapter" data-level="4.3.1" data-path="ShinyCode.html"><a href="ShinyCode.html#overview-tab-1"><i class="fa fa-check"></i><b>4.3.1</b> ‘Overview’ tab</a></li>
-<li class="chapter" data-level="4.3.2" data-path="ShinyCode.html"><a href="ShinyCode.html#sua-compare-tab-1"><i class="fa fa-check"></i><b>4.3.2</b> ‘SUA compare’ tab</a></li>
-<li class="chapter" data-level="4.3.3" data-path="ShinyCode.html"><a href="ShinyCode.html#sua-imbalance-tab-1"><i class="fa fa-check"></i><b>4.3.3</b> ‘SUA imbalance’ tab</a></li>
-<li class="chapter" data-level="4.3.4" data-path="ShinyCode.html"><a href="ShinyCode.html#fbs-by-ics-tab-1"><i class="fa fa-check"></i><b>4.3.4</b> ‘FBS by ICS’ tab</a></li>
-<li class="chapter" data-level="4.3.5" data-path="ShinyCode.html"><a href="ShinyCode.html#ics-by-element-tab-1"><i class="fa fa-check"></i><b>4.3.5</b> ‘ICS by Element’ tab</a></li>
-<li class="chapter" data-level="4.3.6" data-path="ShinyCode.html"><a href="ShinyCode.html#global-production-tab-1"><i class="fa fa-check"></i><b>4.3.6</b> ‘Global production’ tab</a></li>
-<li class="chapter" data-level="4.3.7" data-path="ShinyCode.html"><a href="ShinyCode.html#commodities-tab-1"><i class="fa fa-check"></i><b>4.3.7</b> ‘Commodities’ tab</a></li>
-<li class="chapter" data-level="4.3.8" data-path="ShinyCode.html"><a href="ShinyCode.html#link-table-tab-1"><i class="fa fa-check"></i><b>4.3.8</b> ‘Link table’ tab</a></li>
-<li class="chapter" data-level="4.3.9" data-path="ShinyCode.html"><a href="ShinyCode.html#extraction-rates-tab-1"><i class="fa fa-check"></i><b>4.3.9</b> ‘Extraction rates’ tab</a></li>
-<li class="chapter" data-level="4.3.10" data-path="ShinyCode.html"><a href="ShinyCode.html#data-validation-tab-1"><i class="fa fa-check"></i><b>4.3.10</b> ‘Data validation’ tab</a></li>
-<li class="chapter" data-level="4.3.11" data-path="ShinyCode.html"><a href="ShinyCode.html#data-update-tab-1"><i class="fa fa-check"></i><b>4.3.11</b> ‘Data update’ tab</a></li>
-<li class="chapter" data-level="4.3.12" data-path="ShinyCode.html"><a href="ShinyCode.html#data-saving-tab-1"><i class="fa fa-check"></i><b>4.3.12</b> ‘Data saving’ tab</a></li>
-</ul></li>
-<li class="chapter" data-level="4.4" data-path="ShinyCode.html"><a href="ShinyCode.html#external-functions-1"><i class="fa fa-check"></i><b>4.4</b> External functions</a><ul>
-<li class="chapter" data-level="4.4.1" data-path="ShinyCode.html"><a href="ShinyCode.html#gprecalc"><i class="fa fa-check"></i><b>4.4.1</b> GPrecalc</a></li>
-<li class="chapter" data-level="4.4.2" data-path="ShinyCode.html"><a href="ShinyCode.html#cdbrecalc"><i class="fa fa-check"></i><b>4.4.2</b> CDBrecalc</a></li>
-<li class="chapter" data-level="4.4.3" data-path="ShinyCode.html"><a href="ShinyCode.html#suaunbalcalc"><i class="fa fa-check"></i><b>4.4.3</b> SUAunbalCalc</a></li>
-<li class="chapter" data-level="4.4.4" data-path="ShinyCode.html"><a href="ShinyCode.html#suabalcalc"><i class="fa fa-check"></i><b>4.4.4</b> SUAbalCalc</a></li>
-<li class="chapter" data-level="4.4.5" data-path="ShinyCode.html"><a href="ShinyCode.html#suanutrcalc"><i class="fa fa-check"></i><b>4.4.5</b> SUAnutrCalc</a></li>
-<li class="chapter" data-level="4.4.6" data-path="ShinyCode.html"><a href="ShinyCode.html#fbscalc"><i class="fa fa-check"></i><b>4.4.6</b> FBScalc</a></li>
-<li class="chapter" data-level="4.4.7" data-path="ShinyCode.html"><a href="ShinyCode.html#reloaddata"><i class="fa fa-check"></i><b>4.4.7</b> reloadData</a></li>
-<li class="chapter" data-level="4.4.8" data-path="ShinyCode.html"><a href="ShinyCode.html#reloaddatatoken"><i class="fa fa-check"></i><b>4.4.8</b> reloadDataToken</a></li>
-</ul></li>
-</ul></li>
+<li class="chapter" data-level="2" data-path="PluginCode.html"><a href="PluginCode.html"><i class="fa fa-check"></i><b>2</b> <strong>fi_SUA-FBS plugin R code</strong></a></li>
+<li class="chapter" data-level="3" data-path="ShinyDes.html"><a href="ShinyDes.html"><i class="fa fa-check"></i><b>3</b> <strong>SUA-FBS Validation Shiny application</strong></a></li>
+<li class="chapter" data-level="4" data-path="ShinyCode.html"><a href="ShinyCode.html"><i class="fa fa-check"></i><b>4</b> <strong>The Fisheries SUA-FBS Shiny R code</strong></a></li>
 </ul>
 
       </nav>
@@ -349,30 +280,27 @@ Figure 1.7: Filling SUA. From SUA unbalance to SUA balanced.
         </div>
       </div>
 <a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="PluginCode.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
-    </div>
-  </div>
+<a href="PluginCode.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
+
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
-<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
 <script>
-gitbook.require(["gitbook"], function(gitbook) {
+require(["gitbook"], function(gitbook) {
 gitbook.start({
 "sharing": {
 "github": false,
 "facebook": true,
 "twitter": true,
-"linkedin": false,
+"google": false,
 "weibo": false,
-"instapaper": false,
+"instapper": false,
 "vk": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -380,14 +308,6 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": null,
-"text": null
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
 "link": null,
 "text": null
 },

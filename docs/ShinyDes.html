@@ -1,14 +1,16 @@
 <!DOCTYPE html>
-<html lang="" xml:lang="">
+<html >
+
 <head>
 
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 3 SUA-FBS Validation Shiny application | Migration of Fishery SUA and FBS compilation into the SWS</title>
-  <meta name="description" content="This online book describes the migration of the statistical processes performed by the FAO Fisheries and Aquaculture Department into the Corporate Statistical Working System (SWS) for the compilation of Supply Utilization Accounts (SUAs) and Food Balance Sheets (FBSs) ." />
-  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Migration of Fishery SUA and FBS compilation into the SWS</title>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <meta name="description" content="This online book describes the migration of the statistical processes performed by the FAO Fisheries and Aquaculture Department into the Corporate Statistical Working System (SWS) for the compilation of Supply Utilization Accounts (SUAs) and Food Balance Sheets (FBSs) .">
+  <meta name="generator" content="bookdown 0.3 and GitBook 2.6.7">
 
-  <meta property="og:title" content="Chapter 3 SUA-FBS Validation Shiny application | Migration of Fishery SUA and FBS compilation into the SWS" />
+  <meta property="og:title" content="Migration of Fishery SUA and FBS compilation into the SWS" />
   <meta property="og:type" content="book" />
   
   
@@ -16,33 +18,30 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 3 SUA-FBS Validation Shiny application | Migration of Fishery SUA and FBS compilation into the SWS" />
+  <meta name="twitter:title" content="Migration of Fishery SUA and FBS compilation into the SWS" />
   
   <meta name="twitter:description" content="This online book describes the migration of the statistical processes performed by the FAO Fisheries and Aquaculture Department into the Corporate Statistical Working System (SWS) for the compilation of Supply Utilization Accounts (SUAs) and Food Balance Sheets (FBSs) ." />
   
 
-<meta name="author" content="Charlotte Taglioni (Statistician, ESSD - Methodological Innovation Team)" />
+<meta name="author" content="Charlotte Taglioni (Statistician, ESSD - Methodological Innovation Team)">
 
 
-<meta name="date" content="2020-03-31" />
+<meta name="date" content="2020-10-26">
 
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="PluginCode.html"/>
-<link rel="next" href="ShinyCode.html"/>
+<link rel="prev" href="PluginCode.html">
+<link rel="next" href="ShinyCode.html">
+
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
-
-
 
 
 
@@ -59,51 +58,15 @@
 <body>
 
 
-
   <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
 
     <div class="book-summary">
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="index.html#introduction"><strong>Introduction</strong></a><ul>
-<li><a href="index.html#migration-actors"><strong>Migration actors</strong></a></li>
-<li><a href="index.html#new-fias-methodology"><strong>New FIAS methodology</strong></a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>SUAs/FBS for fish and fish products (based on FIAS documentation)</a><ul>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#working-system-of-fao-fias-for-the-calculation-of-suas-and-fbs"><i class="fa fa-check"></i>Working system of FAO FIAS for the calculation of SUAs and FBS</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#standardization-to-fbs"><i class="fa fa-check"></i>Standardization to FBS</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#fias-processed-production-in-sws-proposed-workflow"><i class="fa fa-check"></i>FIAS processed production in SWS: proposed workflow</a></li>
-</ul></li>
-<li><a href="index.html#sws-resources"><strong>SWS resources</strong></a><ul>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#code-lists"><i class="fa fa-check"></i>Code lists</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#data-tables"><i class="fa fa-check"></i>Data tables</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#datasets"><i class="fa fa-check"></i>Datasets</a></li>
-</ul></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#definition-and-conversion-of-sua-fbs-elements"><i class="fa fa-check"></i>Definition and conversion of SUA-FBS Elements</a><ul>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#sua-element-conversion"><i class="fa fa-check"></i>SUA element conversion</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#fias-standardized-fbs-element-conversion"><i class="fa fa-check"></i>FIAS standardized FBS element conversion</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#faostat-standardized-fbs-element-conversion"><i class="fa fa-check"></i>Faostat standardized FBS element conversion</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#flag-conversion"><i class="fa fa-check"></i>Flag conversion</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="1" data-path="PluginDes.html"><a href="PluginDes.html"><i class="fa fa-check"></i><b>1</b> <strong>SUA-FBS compilation process</strong></a><ul>
-<li class="chapter" data-level="1.1" data-path="PluginDes.html"><a href="PluginDes.html#initiate-plugin"><i class="fa fa-check"></i><b>1.1</b> Initiate plugin</a></li>
-<li class="chapter" data-level="1.2" data-path="PluginDes.html"><a href="PluginDes.html#pull-data-to-sua"><i class="fa fa-check"></i><b>1.2</b> Pull data to SUA</a></li>
-<li class="chapter" data-level="1.3" data-path="PluginDes.html"><a href="PluginDes.html#fill-sua"><i class="fa fa-check"></i><b>1.3</b> Fill SUA</a><ul>
-<li class="chapter" data-level="1.3.1" data-path="PluginDes.html"><a href="PluginDes.html#extraction-rate-and-input-calculation"><i class="fa fa-check"></i><b>1.3.1</b> Extraction rate and input calculation</a></li>
-<li class="chapter" data-level="1.3.2" data-path="PluginDes.html"><a href="PluginDes.html#food-processing-calculation-and-balancing"><i class="fa fa-check"></i><b>1.3.2</b> Food processing calculation and balancing</a></li>
-</ul></li>
-<li class="chapter" data-level="1.4" data-path="PluginDes.html"><a href="PluginDes.html#sua-with-nutrients"><i class="fa fa-check"></i><b>1.4</b> SUA with nutrients</a></li>
-<li class="chapter" data-level="1.5" data-path="PluginDes.html"><a href="PluginDes.html#standardization"><i class="fa fa-check"></i><b>1.5</b> Standardization</a></li>
-</ul></li>
-<li class="chapter" data-level="2" data-path="PluginCode.html"><a href="PluginCode.html"><i class="fa fa-check"></i><b>2</b> <strong>fi_SUA-FBS plugin R code</strong></a><ul>
-<li class="chapter" data-level="2.1" data-path="PluginCode.html"><a href="PluginCode.html#main-file"><i class="fa fa-check"></i><b>2.1</b> Main file</a></li>
-<li class="chapter" data-level="2.2" data-path="PluginCode.html"><a href="PluginCode.html#external-functions"><i class="fa fa-check"></i><b>2.2</b> External functions</a><ul>
-<li class="chapter" data-level="2.2.1" data-path="PluginCode.html"><a href="PluginCode.html#extraction-rates"><i class="fa fa-check"></i><b>2.2.1</b> Extraction rates</a></li>
-<li class="chapter" data-level="2.2.2" data-path="PluginCode.html"><a href="PluginCode.html#input"><i class="fa fa-check"></i><b>2.2.2</b> Input</a></li>
-<li class="chapter" data-level="2.2.3" data-path="PluginCode.html"><a href="PluginCode.html#food-processing"><i class="fa fa-check"></i><b>2.2.3</b> Food Processing</a></li>
-</ul></li>
-</ul></li>
+<li><a href="index.html#introduction"><strong>Introduction</strong></a></li>
+<li class="chapter" data-level="1" data-path="PluginDes.html"><a href="PluginDes.html"><i class="fa fa-check"></i><b>1</b> <strong>SUA-FBS compilation process</strong></a></li>
+<li class="chapter" data-level="2" data-path="PluginCode.html"><a href="PluginCode.html"><i class="fa fa-check"></i><b>2</b> <strong>fi_SUA-FBS plugin R code</strong></a></li>
 <li class="chapter" data-level="3" data-path="ShinyDes.html"><a href="ShinyDes.html"><i class="fa fa-check"></i><b>3</b> <strong>SUA-FBS Validation Shiny application</strong></a><ul>
 <li class="chapter" data-level="3.1" data-path="ShinyDes.html"><a href="ShinyDes.html#token-tab"><i class="fa fa-check"></i><b>3.1</b> <strong>Token tab</strong></a></li>
 <li class="chapter" data-level="3.2" data-path="ShinyDes.html"><a href="ShinyDes.html#overview-tab"><i class="fa fa-check"></i><b>3.2</b> <strong>Overview tab</strong></a></li>
@@ -114,39 +77,13 @@
 <li class="chapter" data-level="3.7" data-path="ShinyDes.html"><a href="ShinyDes.html#global-production-tab"><i class="fa fa-check"></i><b>3.7</b> <strong>Global Production tab</strong></a></li>
 <li class="chapter" data-level="3.8" data-path="ShinyDes.html"><a href="ShinyDes.html#commodities-tab"><i class="fa fa-check"></i><b>3.8</b> <strong>Commodities tab</strong></a></li>
 <li class="chapter" data-level="3.9" data-path="ShinyDes.html"><a href="ShinyDes.html#link-table-tab"><i class="fa fa-check"></i><b>3.9</b> <strong>Link table tab</strong></a></li>
-<li class="chapter" data-level="3.10" data-path="ShinyDes.html"><a href="ShinyDes.html#extraction-rates-tab"><i class="fa fa-check"></i><b>3.10</b> <strong>Extraction rates tab</strong></a></li>
-<li class="chapter" data-level="3.11" data-path="ShinyDes.html"><a href="ShinyDes.html#data-validation-tab"><i class="fa fa-check"></i><b>3.11</b> <strong>Data validation tab</strong></a></li>
-<li class="chapter" data-level="3.12" data-path="ShinyDes.html"><a href="ShinyDes.html#data-update-tab"><i class="fa fa-check"></i><b>3.12</b> <strong>Data update tab</strong></a></li>
-<li class="chapter" data-level="3.13" data-path="ShinyDes.html"><a href="ShinyDes.html#data-saving-tab"><i class="fa fa-check"></i><b>3.13</b> <strong>Data saving tab</strong></a></li>
+<li class="chapter" data-level="3.10" data-path="ShinyDes.html"><a href="ShinyDes.html#balancing-elements-tab"><i class="fa fa-check"></i><b>3.10</b> <strong>Balancing Elements tab</strong></a></li>
+<li class="chapter" data-level="3.11" data-path="ShinyDes.html"><a href="ShinyDes.html#extraction-rates-tab"><i class="fa fa-check"></i><b>3.11</b> <strong>Extraction rates tab</strong></a></li>
+<li class="chapter" data-level="3.12" data-path="ShinyDes.html"><a href="ShinyDes.html#data-validation-tab"><i class="fa fa-check"></i><b>3.12</b> <strong>Data validation tab</strong></a></li>
+<li class="chapter" data-level="3.13" data-path="ShinyDes.html"><a href="ShinyDes.html#data-update-tab"><i class="fa fa-check"></i><b>3.13</b> <strong>Data update tab</strong></a></li>
+<li class="chapter" data-level="3.14" data-path="ShinyDes.html"><a href="ShinyDes.html#data-saving-tab"><i class="fa fa-check"></i><b>3.14</b> <strong>Data saving tab</strong></a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="ShinyCode.html"><a href="ShinyCode.html"><i class="fa fa-check"></i><b>4</b> <strong>The Fisheries SUA-FBS Shiny R code</strong></a><ul>
-<li class="chapter" data-level="4.1" data-path="ShinyCode.html"><a href="ShinyCode.html#global.r-file"><i class="fa fa-check"></i><b>4.1</b> <strong>‘global.R’ file</strong></a></li>
-<li class="chapter" data-level="4.2" data-path="ShinyCode.html"><a href="ShinyCode.html#ui.r-file"><i class="fa fa-check"></i><b>4.2</b> <strong>‘ui.R’ file</strong></a></li>
-<li class="chapter" data-level="4.3" data-path="ShinyCode.html"><a href="ShinyCode.html#server.r-file"><i class="fa fa-check"></i><b>4.3</b> <strong>‘server.R’ file</strong></a><ul>
-<li class="chapter" data-level="4.3.1" data-path="ShinyCode.html"><a href="ShinyCode.html#overview-tab-1"><i class="fa fa-check"></i><b>4.3.1</b> ‘Overview’ tab</a></li>
-<li class="chapter" data-level="4.3.2" data-path="ShinyCode.html"><a href="ShinyCode.html#sua-compare-tab-1"><i class="fa fa-check"></i><b>4.3.2</b> ‘SUA compare’ tab</a></li>
-<li class="chapter" data-level="4.3.3" data-path="ShinyCode.html"><a href="ShinyCode.html#sua-imbalance-tab-1"><i class="fa fa-check"></i><b>4.3.3</b> ‘SUA imbalance’ tab</a></li>
-<li class="chapter" data-level="4.3.4" data-path="ShinyCode.html"><a href="ShinyCode.html#fbs-by-ics-tab-1"><i class="fa fa-check"></i><b>4.3.4</b> ‘FBS by ICS’ tab</a></li>
-<li class="chapter" data-level="4.3.5" data-path="ShinyCode.html"><a href="ShinyCode.html#ics-by-element-tab-1"><i class="fa fa-check"></i><b>4.3.5</b> ‘ICS by Element’ tab</a></li>
-<li class="chapter" data-level="4.3.6" data-path="ShinyCode.html"><a href="ShinyCode.html#global-production-tab-1"><i class="fa fa-check"></i><b>4.3.6</b> ‘Global production’ tab</a></li>
-<li class="chapter" data-level="4.3.7" data-path="ShinyCode.html"><a href="ShinyCode.html#commodities-tab-1"><i class="fa fa-check"></i><b>4.3.7</b> ‘Commodities’ tab</a></li>
-<li class="chapter" data-level="4.3.8" data-path="ShinyCode.html"><a href="ShinyCode.html#link-table-tab-1"><i class="fa fa-check"></i><b>4.3.8</b> ‘Link table’ tab</a></li>
-<li class="chapter" data-level="4.3.9" data-path="ShinyCode.html"><a href="ShinyCode.html#extraction-rates-tab-1"><i class="fa fa-check"></i><b>4.3.9</b> ‘Extraction rates’ tab</a></li>
-<li class="chapter" data-level="4.3.10" data-path="ShinyCode.html"><a href="ShinyCode.html#data-validation-tab-1"><i class="fa fa-check"></i><b>4.3.10</b> ‘Data validation’ tab</a></li>
-<li class="chapter" data-level="4.3.11" data-path="ShinyCode.html"><a href="ShinyCode.html#data-update-tab-1"><i class="fa fa-check"></i><b>4.3.11</b> ‘Data update’ tab</a></li>
-<li class="chapter" data-level="4.3.12" data-path="ShinyCode.html"><a href="ShinyCode.html#data-saving-tab-1"><i class="fa fa-check"></i><b>4.3.12</b> ‘Data saving’ tab</a></li>
-</ul></li>
-<li class="chapter" data-level="4.4" data-path="ShinyCode.html"><a href="ShinyCode.html#external-functions-1"><i class="fa fa-check"></i><b>4.4</b> External functions</a><ul>
-<li class="chapter" data-level="4.4.1" data-path="ShinyCode.html"><a href="ShinyCode.html#gprecalc"><i class="fa fa-check"></i><b>4.4.1</b> GPrecalc</a></li>
-<li class="chapter" data-level="4.4.2" data-path="ShinyCode.html"><a href="ShinyCode.html#cdbrecalc"><i class="fa fa-check"></i><b>4.4.2</b> CDBrecalc</a></li>
-<li class="chapter" data-level="4.4.3" data-path="ShinyCode.html"><a href="ShinyCode.html#suaunbalcalc"><i class="fa fa-check"></i><b>4.4.3</b> SUAunbalCalc</a></li>
-<li class="chapter" data-level="4.4.4" data-path="ShinyCode.html"><a href="ShinyCode.html#suabalcalc"><i class="fa fa-check"></i><b>4.4.4</b> SUAbalCalc</a></li>
-<li class="chapter" data-level="4.4.5" data-path="ShinyCode.html"><a href="ShinyCode.html#suanutrcalc"><i class="fa fa-check"></i><b>4.4.5</b> SUAnutrCalc</a></li>
-<li class="chapter" data-level="4.4.6" data-path="ShinyCode.html"><a href="ShinyCode.html#fbscalc"><i class="fa fa-check"></i><b>4.4.6</b> FBScalc</a></li>
-<li class="chapter" data-level="4.4.7" data-path="ShinyCode.html"><a href="ShinyCode.html#reloaddata"><i class="fa fa-check"></i><b>4.4.7</b> reloadData</a></li>
-<li class="chapter" data-level="4.4.8" data-path="ShinyCode.html"><a href="ShinyCode.html#reloaddatatoken"><i class="fa fa-check"></i><b>4.4.8</b> reloadDataToken</a></li>
-</ul></li>
-</ul></li>
+<li class="chapter" data-level="4" data-path="ShinyCode.html"><a href="ShinyCode.html"><i class="fa fa-check"></i><b>4</b> <strong>The Fisheries SUA-FBS Shiny R code</strong></a></li>
 </ul>
 
       </nav>
@@ -169,7 +106,7 @@
 <p>The SUA-FBS shiny application aims to complete the workflow started with the plugin described in section (PluginDes). The shiny app is both an imputation and validation tool for the SUA and FBS compiled by the plugin. Instead of directly accessing the SWS the user has in the shiny app all the supporting information to review plugin results. The shiny app requirements have been initially stated in the document ‘Required for FBS’ available in the share Point at url <a href="https://unfao.sharepoint.com/sites/tssws/SitePages/Home.aspx?RootFolder=%2Fsites%2Ftssws%2FShared%20Documents%2F03%2E%20Statistical%20Documentation%2F02%2E%20Statistical%20Processes%2F09%2E%20FIAS%2FFIAS%20Incorporate%20Fisheries%20into%20FBS%2FFIAS%20Team%20Documentation&amp;FolderCTID=0x012000D903F3EDDBA1B04FB8975A2D03E2388F&amp;View=%7B1025F27D%2DBD2A%2D408B%2D9598%2DD7A041C0B505%7D">https://unfao.sharepoint.com/sites/tssws/SitePages/Home.aspx?RootFolder=%2Fsites%2Ftssws%2FShared%20Documents%2F03%2E%20Statistical%20Documentation%2F02%2E%20Statistical%20Processes%2F09%2E%20FIAS%2FFIAS%20Incorporate%20Fisheries%20into%20FBS%2FFIAS%20Team%20Documentation&amp;FolderCTID=0x012000D903F3EDDBA1B04FB8975A2D03E2388F&amp;View=%7B1025F27D%2DBD2A%2D408B%2D9598%2DD7A041C0B505%7D</a>. Requirements and additional features have been agreed with FIAS unit during the development process.</p>
 <p>The shiny app reads the data from the sessions the fi_SUA-FBS plugin has compiled and saves validated data in the corresponding validated datasets.</p>
 <p>The application has a top-bottom approach. It starts from the FBS results and allows the user to check how results have been calculated by going more and more into details in the previous datasets. Starting from the FBS results the user can check SUAs throughout and proceed until Global Production and Commodity datasets from which all the other figures derive.</p>
-<p>The R Shiny application is available at <a href="http://hqlprsws1.hq.un.fao.org:3838/shinyFisheriesSUAFBS/" class="uri">http://hqlprsws1.hq.un.fao.org:3838/shinyFisheriesSUAFBS/</a> and the very first panel is shown in figure <a href="ShinyDes.html#fig:shiny0">3.1</a>.</p>
+<p>The R Shiny application is available at <a href="http://hqlprsws1.hq.un.fao.org:3838/shinyFi_SUAFBS_temp5/" class="uri">http://hqlprsws1.hq.un.fao.org:3838/shinyFi_SUAFBS_temp5/</a> and the very first panel is shown in figure <a href="ShinyDes.html#fig:shiny0">3.1</a>.</p>
 <div class="figure"><span id="fig:shiny0"></span>
 <img src="img/shiny0.PNG" alt="First tab appearing when opening the shiny app." width="100%" />
 <p class="caption">
@@ -285,25 +222,35 @@ Figure 3.10: Overview of the <em>Link table</em> tab.
 </p>
 </div>
 </div>
+<div id="balancing-elements-tab" class="section level2">
+<h2><span class="header-section-number">3.10</span> <strong>Balancing Elements tab</strong></h2>
+<p>This tab has similar structure to the ‘link tab’ but it refers to balancing elements. If there is a new product or the balancing element needs to be changed, the user can do it directly from the shiny respecting the structure of the datatable as in figure <a href="ShinyDes.html#fig:shinyBalEl">3.11</a>.</p>
+<div class="figure"><span id="fig:shinyBalEl"></span>
+<img src="img/shinyBalEl.png" alt="Overview of the _Balancing elements_ tab." width="100%" />
+<p class="caption">
+Figure 3.11: Overview of the <em>Balancing elements</em> tab.
+</p>
+</div>
+</div>
 <div id="extraction-rates-tab" class="section level2">
-<h2><span class="header-section-number">3.10</span> <strong>Extraction rates tab</strong></h2>
-<p>The ‘Extraction rates’ tab has been requested to perform block or single extraction rate updates and not to make year and product detailed operations. It has been conceived as a way to do updates that applies to more than one cell avoiding changing cells one by one. In this tab, figure <a href="ShinyDes.html#fig:shinyEr">3.11</a>, the user can change the figures for the extraction values and see the current values for the time series selected. Depending on the choice the user makes selecting the ‘Update type’ from the left-side menu, the modification can apply to single years or to the selected time series. Once the modification is validated (‘Update’ button in the left-side menu), the new figure appear in the ‘Data validation’ tab and will be applied during the new recalculations.</p>
+<h2><span class="header-section-number">3.11</span> <strong>Extraction rates tab</strong></h2>
+<p>The ‘Extraction rates’ tab has been requested to perform block or single extraction rate updates and not to make year and product detailed operations. It has been conceived as a way to do updates that applies to more than one cell avoiding changing cells one by one. In this tab, figure <a href="ShinyDes.html#fig:shinyEr">3.12</a>, the user can change the figures for the extraction values and see the current values for the time series selected. Depending on the choice the user makes selecting the ‘Update type’ from the left-side menu, the modification can apply to single years or to the selected time series. Once the modification is validated (‘Update’ button in the left-side menu), the new figure appear in the ‘Data validation’ tab and will be applied during the new recalculations.</p>
 <div class="figure"><span id="fig:shinyEr"></span>
 <img src="img/shinyEr.PNG" alt="Overview of the _Extraction rates_ tab." width="100%" />
 <p class="caption">
-Figure 3.11: Overview of the <em>Extraction rates</em> tab.
+Figure 3.12: Overview of the <em>Extraction rates</em> tab.
 </p>
 </div>
 </div>
 <div id="data-validation-tab" class="section level2">
-<h2><span class="header-section-number">3.11</span> <strong>Data validation tab</strong></h2>
+<h2><span class="header-section-number">3.12</span> <strong>Data validation tab</strong></h2>
 <p>The data validation tab is the most interactive and the only true working tab of the shiny. From the left-side menu the user has to select the major groups, the products and the elements to visualize SUA for. The modification can be done in two ways:</p>
 <ol style="list-style-type: decimal">
 <li>Directly on the tab</li>
 <li>Uploading a <strong>CSV</strong> file (<strong>CAUTION!</strong>)</li>
 </ol>
 <p>In the case of file uploading the advice is to first download the whole SUA in <strong>CSV format</strong>, to modify figures in this file and to upload this same file which has already the right template to be processed by the shiny. Depending on the user’s choice the ‘Update to consider’ button must be selected accordingly.</p>
-<p>The button to download and upload the file are in the upper part of the tab, figure <a href="ShinyDes.html#fig:shiny7up">3.14</a>. The user is allowed to do different kind of modification and, depending on them, to perform different kind of recalculations. First of all many changes concern extraction rates or the insertion of input values coming from publications. For this reason in the left-side menu (figure <a href="ShinyDes.html#fig:shiny7side">3.13</a>) the user has to choose if the recalculation functions have to prioritize the extraction rate or the input. If no official input is available then the better solution is to choose to use the extraction rate. If official input is available from publications, then the user can choose to prioritize the input so that the functions recalculate the extraction rates and flag the input as an official figure from publication. Note that the user has to choose one of the two in order to proceed to the reprocessing. Otherwise the shiny will return a message reminding to choose one option (by default the invalid ‘Null’ option is selected).</p>
+<p>The button to download and upload the file are in the upper part of the tab, figure <a href="ShinyDes.html#fig:shiny7up">3.15</a>. The user is allowed to do different kind of modification and, depending on them, to perform different kind of recalculations. First of all many changes concern extraction rates or the insertion of input values coming from publications. For this reason in the left-side menu (figure <a href="ShinyDes.html#fig:shiny7side">3.14</a>) the user has to choose if the recalculation functions have to prioritize the extraction rate or the input. If no official input is available then the better solution is to choose to use the extraction rate. If official input is available from publications, then the user can choose to prioritize the input so that the functions recalculate the extraction rates and flag the input as an official figure from publication. Note that the user has to choose one of the two in order to proceed to the reprocessing. Otherwise the shiny will return a message reminding to choose one option (by default the invalid ‘Null’ option is selected).</p>
 <p>The user can choose to change some quantities and leave the others be recalculated freely from the functions or to assign all the quantities and define the exact form of the SUA balanced. Depending on the modification the user can also choose what kind or reprocessing the shiny has to perform:</p>
 <ul>
 <li><p>If modifications involve Global production, Commodity or ICS deviations then a ‘Complete’ recalculation is the right choice and, in general, is the one that avoid any unwanted inconsistency.</p></li>
@@ -316,39 +263,39 @@ Figure 3.11: Overview of the <em>Extraction rates</em> tab.
 <div class="figure"><span id="fig:shiny7"></span>
 <img src="img/shiny7.PNG" alt="Overview of the _Data validation_ tab." width="100%" />
 <p class="caption">
-Figure 3.12: Overview of the <em>Data validation</em> tab.
+Figure 3.13: Overview of the <em>Data validation</em> tab.
 </p>
 </div>
 <div class="figure"><span id="fig:shiny7side"></span>
 <img src="img/shiny7side.png" alt="Side manu of the _Data validation_ tab." width="60%" />
 <p class="caption">
-Figure 3.13: Side manu of the <em>Data validation</em> tab.
+Figure 3.14: Side manu of the <em>Data validation</em> tab.
 </p>
 </div>
 <div class="figure"><span id="fig:shiny7up"></span>
 <img src="img/shiny7up.PNG" alt="Upper part of the _Data validation_ tab." width="100%" />
 <p class="caption">
-Figure 3.14: Upper part of the <em>Data validation</em> tab.
+Figure 3.15: Upper part of the <em>Data validation</em> tab.
 </p>
 </div>
 </div>
 <div id="data-update-tab" class="section level2">
-<h2><span class="header-section-number">3.12</span> <strong>Data update tab</strong></h2>
-<p>The ‘Data update’ tab is a copy of the ‘Overview’ tab but shows the FBS resulting from the recalculations of the previous tab. The user can compare the results (example in figure <a href="ShinyDes.html#fig:shiny8">3.15</a>) with the ‘Overview’ tab that keeps on storing the original values and decide if to validate and save back this new SUA and FBS back into the SWS. If the user is satisfied of the results,or just do not want to lose the work so far the data have to be saved int the following tab and transfer all the figures for the country to the SWS.</p>
+<h2><span class="header-section-number">3.13</span> <strong>Data update tab</strong></h2>
+<p>The ‘Data update’ tab is a copy of the ‘Overview’ tab but shows the FBS resulting from the recalculations of the previous tab. The user can compare the results (example in figure <a href="ShinyDes.html#fig:shiny8">3.16</a>) with the ‘Overview’ tab that keeps on storing the original values and decide if to validate and save back this new SUA and FBS back into the SWS. If the user is satisfied of the results,or just do not want to lose the work so far the data have to be saved int the following tab and transfer all the figures for the country to the SWS.</p>
 <div class="figure"><span id="fig:shiny8"></span>
 <img src="img/shiny8.PNG" alt="Overview of the _Data update_ tab." width="100%" />
 <p class="caption">
-Figure 3.15: Overview of the <em>Data update</em> tab.
+Figure 3.16: Overview of the <em>Data update</em> tab.
 </p>
 </div>
 </div>
 <div id="data-saving-tab" class="section level2">
-<h2><span class="header-section-number">3.13</span> <strong>Data saving tab</strong></h2>
+<h2><span class="header-section-number">3.14</span> <strong>Data saving tab</strong></h2>
 <p>This last tab is similar to the first tab ( <em>Token</em> tab) but the required tokens refer to the <em>validated</em> datasets corresponding to the modified datasets (figure @ref{fig:shinysave}). As with the other tokens the user needs to save them only once and they sessions will be saved. Once the user is satisfied with the modifications and does not need the previous data anymore the new values can be saved through the button ‘Update SWS’. The shiny will update BOTH the working sessions and the validated sessions so when restarting the work the user can start form where he/she was. In the unlikely (impossible?) case a non-reversible error is committed somehow and initial data cannot be retrieved the user can always re-run the ‘fi_SUA-FBS’ plugin for the country he/she lost data for.</p>
 <div class="figure"><span id="fig:shinysave"></span>
 <img src="img/shinysave.png" alt="Overview of the _Data update_ tab." width="100%" />
 <p class="caption">
-Figure 3.16: Overview of the <em>Data update</em> tab.
+Figure 3.17: Overview of the <em>Data update</em> tab.
 </p>
 </div>
 <p>A message after the saving of all the dataset will notify the user the process has run correctly. It is important that after the update the user checks that the values have been saved in the session of the validated datasets and, ONLY when the final result are ready for the country, the data are saved from the session to the dataset.</p>
@@ -361,30 +308,27 @@ Figure 3.16: Overview of the <em>Data update</em> tab.
         </div>
       </div>
 <a href="PluginCode.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="ShinyCode.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
-    </div>
-  </div>
+<a href="ShinyCode.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
+
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
-<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
 <script>
-gitbook.require(["gitbook"], function(gitbook) {
+require(["gitbook"], function(gitbook) {
 gitbook.start({
 "sharing": {
 "github": false,
 "facebook": true,
 "twitter": true,
-"linkedin": false,
+"google": false,
 "weibo": false,
-"instapaper": false,
+"instapper": false,
 "vk": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -392,14 +336,6 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": null,
-"text": null
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
 "link": null,
 "text": null
 },

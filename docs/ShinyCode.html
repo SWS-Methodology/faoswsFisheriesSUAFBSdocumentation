@@ -1,14 +1,16 @@
 <!DOCTYPE html>
-<html lang="" xml:lang="">
+<html >
+
 <head>
 
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 4 The Fisheries SUA-FBS Shiny R code | Migration of Fishery SUA and FBS compilation into the SWS</title>
-  <meta name="description" content="This online book describes the migration of the statistical processes performed by the FAO Fisheries and Aquaculture Department into the Corporate Statistical Working System (SWS) for the compilation of Supply Utilization Accounts (SUAs) and Food Balance Sheets (FBSs) ." />
-  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Migration of Fishery SUA and FBS compilation into the SWS</title>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <meta name="description" content="This online book describes the migration of the statistical processes performed by the FAO Fisheries and Aquaculture Department into the Corporate Statistical Working System (SWS) for the compilation of Supply Utilization Accounts (SUAs) and Food Balance Sheets (FBSs) .">
+  <meta name="generator" content="bookdown 0.3 and GitBook 2.6.7">
 
-  <meta property="og:title" content="Chapter 4 The Fisheries SUA-FBS Shiny R code | Migration of Fishery SUA and FBS compilation into the SWS" />
+  <meta property="og:title" content="Migration of Fishery SUA and FBS compilation into the SWS" />
   <meta property="og:type" content="book" />
   
   
@@ -16,33 +18,30 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 4 The Fisheries SUA-FBS Shiny R code | Migration of Fishery SUA and FBS compilation into the SWS" />
+  <meta name="twitter:title" content="Migration of Fishery SUA and FBS compilation into the SWS" />
   
   <meta name="twitter:description" content="This online book describes the migration of the statistical processes performed by the FAO Fisheries and Aquaculture Department into the Corporate Statistical Working System (SWS) for the compilation of Supply Utilization Accounts (SUAs) and Food Balance Sheets (FBSs) ." />
   
 
-<meta name="author" content="Charlotte Taglioni (Statistician, ESSD - Methodological Innovation Team)" />
+<meta name="author" content="Charlotte Taglioni (Statistician, ESSD - Methodological Innovation Team)">
 
 
-<meta name="date" content="2020-03-31" />
+<meta name="date" content="2020-10-26">
 
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="ShinyDes.html"/>
+<link rel="prev" href="ShinyDes.html">
+
 
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
-
-
 
 
 
@@ -59,84 +58,35 @@
 <body>
 
 
-
   <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
 
     <div class="book-summary">
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="index.html#introduction"><strong>Introduction</strong></a><ul>
-<li><a href="index.html#migration-actors"><strong>Migration actors</strong></a></li>
-<li><a href="index.html#new-fias-methodology"><strong>New FIAS methodology</strong></a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>SUAs/FBS for fish and fish products (based on FIAS documentation)</a><ul>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#working-system-of-fao-fias-for-the-calculation-of-suas-and-fbs"><i class="fa fa-check"></i>Working system of FAO FIAS for the calculation of SUAs and FBS</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#standardization-to-fbs"><i class="fa fa-check"></i>Standardization to FBS</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#fias-processed-production-in-sws-proposed-workflow"><i class="fa fa-check"></i>FIAS processed production in SWS: proposed workflow</a></li>
-</ul></li>
-<li><a href="index.html#sws-resources"><strong>SWS resources</strong></a><ul>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#code-lists"><i class="fa fa-check"></i>Code lists</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#data-tables"><i class="fa fa-check"></i>Data tables</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#datasets"><i class="fa fa-check"></i>Datasets</a></li>
-</ul></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#definition-and-conversion-of-sua-fbs-elements"><i class="fa fa-check"></i>Definition and conversion of SUA-FBS Elements</a><ul>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#sua-element-conversion"><i class="fa fa-check"></i>SUA element conversion</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#fias-standardized-fbs-element-conversion"><i class="fa fa-check"></i>FIAS standardized FBS element conversion</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#faostat-standardized-fbs-element-conversion"><i class="fa fa-check"></i>Faostat standardized FBS element conversion</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#flag-conversion"><i class="fa fa-check"></i>Flag conversion</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="1" data-path="PluginDes.html"><a href="PluginDes.html"><i class="fa fa-check"></i><b>1</b> <strong>SUA-FBS compilation process</strong></a><ul>
-<li class="chapter" data-level="1.1" data-path="PluginDes.html"><a href="PluginDes.html#initiate-plugin"><i class="fa fa-check"></i><b>1.1</b> Initiate plugin</a></li>
-<li class="chapter" data-level="1.2" data-path="PluginDes.html"><a href="PluginDes.html#pull-data-to-sua"><i class="fa fa-check"></i><b>1.2</b> Pull data to SUA</a></li>
-<li class="chapter" data-level="1.3" data-path="PluginDes.html"><a href="PluginDes.html#fill-sua"><i class="fa fa-check"></i><b>1.3</b> Fill SUA</a><ul>
-<li class="chapter" data-level="1.3.1" data-path="PluginDes.html"><a href="PluginDes.html#extraction-rate-and-input-calculation"><i class="fa fa-check"></i><b>1.3.1</b> Extraction rate and input calculation</a></li>
-<li class="chapter" data-level="1.3.2" data-path="PluginDes.html"><a href="PluginDes.html#food-processing-calculation-and-balancing"><i class="fa fa-check"></i><b>1.3.2</b> Food processing calculation and balancing</a></li>
-</ul></li>
-<li class="chapter" data-level="1.4" data-path="PluginDes.html"><a href="PluginDes.html#sua-with-nutrients"><i class="fa fa-check"></i><b>1.4</b> SUA with nutrients</a></li>
-<li class="chapter" data-level="1.5" data-path="PluginDes.html"><a href="PluginDes.html#standardization"><i class="fa fa-check"></i><b>1.5</b> Standardization</a></li>
-</ul></li>
-<li class="chapter" data-level="2" data-path="PluginCode.html"><a href="PluginCode.html"><i class="fa fa-check"></i><b>2</b> <strong>fi_SUA-FBS plugin R code</strong></a><ul>
-<li class="chapter" data-level="2.1" data-path="PluginCode.html"><a href="PluginCode.html#main-file"><i class="fa fa-check"></i><b>2.1</b> Main file</a></li>
-<li class="chapter" data-level="2.2" data-path="PluginCode.html"><a href="PluginCode.html#external-functions"><i class="fa fa-check"></i><b>2.2</b> External functions</a><ul>
-<li class="chapter" data-level="2.2.1" data-path="PluginCode.html"><a href="PluginCode.html#extraction-rates"><i class="fa fa-check"></i><b>2.2.1</b> Extraction rates</a></li>
-<li class="chapter" data-level="2.2.2" data-path="PluginCode.html"><a href="PluginCode.html#input"><i class="fa fa-check"></i><b>2.2.2</b> Input</a></li>
-<li class="chapter" data-level="2.2.3" data-path="PluginCode.html"><a href="PluginCode.html#food-processing"><i class="fa fa-check"></i><b>2.2.3</b> Food Processing</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="3" data-path="ShinyDes.html"><a href="ShinyDes.html"><i class="fa fa-check"></i><b>3</b> <strong>SUA-FBS Validation Shiny application</strong></a><ul>
-<li class="chapter" data-level="3.1" data-path="ShinyDes.html"><a href="ShinyDes.html#token-tab"><i class="fa fa-check"></i><b>3.1</b> <strong>Token tab</strong></a></li>
-<li class="chapter" data-level="3.2" data-path="ShinyDes.html"><a href="ShinyDes.html#overview-tab"><i class="fa fa-check"></i><b>3.2</b> <strong>Overview tab</strong></a></li>
-<li class="chapter" data-level="3.3" data-path="ShinyDes.html"><a href="ShinyDes.html#sua-compare-tab"><i class="fa fa-check"></i><b>3.3</b> <strong>SUA compare tab</strong></a></li>
-<li class="chapter" data-level="3.4" data-path="ShinyDes.html"><a href="ShinyDes.html#sua-imbalance-tab"><i class="fa fa-check"></i><b>3.4</b> <strong>SUA imbalance tab</strong></a></li>
-<li class="chapter" data-level="3.5" data-path="ShinyDes.html"><a href="ShinyDes.html#fbs-by-ics-tab"><i class="fa fa-check"></i><b>3.5</b> <strong>FBS by ICS tab</strong></a></li>
-<li class="chapter" data-level="3.6" data-path="ShinyDes.html"><a href="ShinyDes.html#ics-by-element-tab"><i class="fa fa-check"></i><b>3.6</b> <strong>ICS by element tab</strong></a></li>
-<li class="chapter" data-level="3.7" data-path="ShinyDes.html"><a href="ShinyDes.html#global-production-tab"><i class="fa fa-check"></i><b>3.7</b> <strong>Global Production tab</strong></a></li>
-<li class="chapter" data-level="3.8" data-path="ShinyDes.html"><a href="ShinyDes.html#commodities-tab"><i class="fa fa-check"></i><b>3.8</b> <strong>Commodities tab</strong></a></li>
-<li class="chapter" data-level="3.9" data-path="ShinyDes.html"><a href="ShinyDes.html#link-table-tab"><i class="fa fa-check"></i><b>3.9</b> <strong>Link table tab</strong></a></li>
-<li class="chapter" data-level="3.10" data-path="ShinyDes.html"><a href="ShinyDes.html#extraction-rates-tab"><i class="fa fa-check"></i><b>3.10</b> <strong>Extraction rates tab</strong></a></li>
-<li class="chapter" data-level="3.11" data-path="ShinyDes.html"><a href="ShinyDes.html#data-validation-tab"><i class="fa fa-check"></i><b>3.11</b> <strong>Data validation tab</strong></a></li>
-<li class="chapter" data-level="3.12" data-path="ShinyDes.html"><a href="ShinyDes.html#data-update-tab"><i class="fa fa-check"></i><b>3.12</b> <strong>Data update tab</strong></a></li>
-<li class="chapter" data-level="3.13" data-path="ShinyDes.html"><a href="ShinyDes.html#data-saving-tab"><i class="fa fa-check"></i><b>3.13</b> <strong>Data saving tab</strong></a></li>
-</ul></li>
+<li><a href="index.html#introduction"><strong>Introduction</strong></a></li>
+<li class="chapter" data-level="1" data-path="PluginDes.html"><a href="PluginDes.html"><i class="fa fa-check"></i><b>1</b> <strong>SUA-FBS compilation process</strong></a></li>
+<li class="chapter" data-level="2" data-path="PluginCode.html"><a href="PluginCode.html"><i class="fa fa-check"></i><b>2</b> <strong>fi_SUA-FBS plugin R code</strong></a></li>
+<li class="chapter" data-level="3" data-path="ShinyDes.html"><a href="ShinyDes.html"><i class="fa fa-check"></i><b>3</b> <strong>SUA-FBS Validation Shiny application</strong></a></li>
 <li class="chapter" data-level="4" data-path="ShinyCode.html"><a href="ShinyCode.html"><i class="fa fa-check"></i><b>4</b> <strong>The Fisheries SUA-FBS Shiny R code</strong></a><ul>
 <li class="chapter" data-level="4.1" data-path="ShinyCode.html"><a href="ShinyCode.html#global.r-file"><i class="fa fa-check"></i><b>4.1</b> <strong>‘global.R’ file</strong></a></li>
 <li class="chapter" data-level="4.2" data-path="ShinyCode.html"><a href="ShinyCode.html#ui.r-file"><i class="fa fa-check"></i><b>4.2</b> <strong>‘ui.R’ file</strong></a></li>
 <li class="chapter" data-level="4.3" data-path="ShinyCode.html"><a href="ShinyCode.html#server.r-file"><i class="fa fa-check"></i><b>4.3</b> <strong>‘server.R’ file</strong></a><ul>
-<li class="chapter" data-level="4.3.1" data-path="ShinyCode.html"><a href="ShinyCode.html#overview-tab-1"><i class="fa fa-check"></i><b>4.3.1</b> ‘Overview’ tab</a></li>
-<li class="chapter" data-level="4.3.2" data-path="ShinyCode.html"><a href="ShinyCode.html#sua-compare-tab-1"><i class="fa fa-check"></i><b>4.3.2</b> ‘SUA compare’ tab</a></li>
-<li class="chapter" data-level="4.3.3" data-path="ShinyCode.html"><a href="ShinyCode.html#sua-imbalance-tab-1"><i class="fa fa-check"></i><b>4.3.3</b> ‘SUA imbalance’ tab</a></li>
-<li class="chapter" data-level="4.3.4" data-path="ShinyCode.html"><a href="ShinyCode.html#fbs-by-ics-tab-1"><i class="fa fa-check"></i><b>4.3.4</b> ‘FBS by ICS’ tab</a></li>
-<li class="chapter" data-level="4.3.5" data-path="ShinyCode.html"><a href="ShinyCode.html#ics-by-element-tab-1"><i class="fa fa-check"></i><b>4.3.5</b> ‘ICS by Element’ tab</a></li>
-<li class="chapter" data-level="4.3.6" data-path="ShinyCode.html"><a href="ShinyCode.html#global-production-tab-1"><i class="fa fa-check"></i><b>4.3.6</b> ‘Global production’ tab</a></li>
-<li class="chapter" data-level="4.3.7" data-path="ShinyCode.html"><a href="ShinyCode.html#commodities-tab-1"><i class="fa fa-check"></i><b>4.3.7</b> ‘Commodities’ tab</a></li>
-<li class="chapter" data-level="4.3.8" data-path="ShinyCode.html"><a href="ShinyCode.html#link-table-tab-1"><i class="fa fa-check"></i><b>4.3.8</b> ‘Link table’ tab</a></li>
-<li class="chapter" data-level="4.3.9" data-path="ShinyCode.html"><a href="ShinyCode.html#extraction-rates-tab-1"><i class="fa fa-check"></i><b>4.3.9</b> ‘Extraction rates’ tab</a></li>
-<li class="chapter" data-level="4.3.10" data-path="ShinyCode.html"><a href="ShinyCode.html#data-validation-tab-1"><i class="fa fa-check"></i><b>4.3.10</b> ‘Data validation’ tab</a></li>
-<li class="chapter" data-level="4.3.11" data-path="ShinyCode.html"><a href="ShinyCode.html#data-update-tab-1"><i class="fa fa-check"></i><b>4.3.11</b> ‘Data update’ tab</a></li>
-<li class="chapter" data-level="4.3.12" data-path="ShinyCode.html"><a href="ShinyCode.html#data-saving-tab-1"><i class="fa fa-check"></i><b>4.3.12</b> ‘Data saving’ tab</a></li>
+<li class="chapter" data-level="4.3.1" data-path="ShinyCode.html"><a href="ShinyCode.html#overview-tab"><i class="fa fa-check"></i><b>4.3.1</b> ‘Overview’ tab</a></li>
+<li class="chapter" data-level="4.3.2" data-path="ShinyCode.html"><a href="ShinyCode.html#sua-compare-tab"><i class="fa fa-check"></i><b>4.3.2</b> ‘SUA compare’ tab</a></li>
+<li class="chapter" data-level="4.3.3" data-path="ShinyCode.html"><a href="ShinyCode.html#sua-imbalance-tab"><i class="fa fa-check"></i><b>4.3.3</b> ‘SUA imbalance’ tab</a></li>
+<li class="chapter" data-level="4.3.4" data-path="ShinyCode.html"><a href="ShinyCode.html#fbs-by-ics-tab"><i class="fa fa-check"></i><b>4.3.4</b> ‘FBS by ICS’ tab</a></li>
+<li class="chapter" data-level="4.3.5" data-path="ShinyCode.html"><a href="ShinyCode.html#ics-by-element-tab"><i class="fa fa-check"></i><b>4.3.5</b> ‘ICS by Element’ tab</a></li>
+<li class="chapter" data-level="4.3.6" data-path="ShinyCode.html"><a href="ShinyCode.html#global-production-tab"><i class="fa fa-check"></i><b>4.3.6</b> ‘Global production’ tab</a></li>
+<li class="chapter" data-level="4.3.7" data-path="ShinyCode.html"><a href="ShinyCode.html#commodities-tab"><i class="fa fa-check"></i><b>4.3.7</b> ‘Commodities’ tab</a></li>
+<li class="chapter" data-level="4.3.8" data-path="ShinyCode.html"><a href="ShinyCode.html#link-table-tab"><i class="fa fa-check"></i><b>4.3.8</b> ‘Link table’ tab</a></li>
+<li class="chapter" data-level="4.3.9" data-path="ShinyCode.html"><a href="ShinyCode.html#balancing-elements-tab"><i class="fa fa-check"></i><b>4.3.9</b> ‘Balancing elements’ tab</a></li>
+<li class="chapter" data-level="4.3.10" data-path="ShinyCode.html"><a href="ShinyCode.html#extraction-rates-tab"><i class="fa fa-check"></i><b>4.3.10</b> ‘Extraction rates’ tab</a></li>
+<li class="chapter" data-level="4.3.11" data-path="ShinyCode.html"><a href="ShinyCode.html#data-validation-tab"><i class="fa fa-check"></i><b>4.3.11</b> ‘Data validation’ tab</a></li>
+<li class="chapter" data-level="4.3.12" data-path="ShinyCode.html"><a href="ShinyCode.html#data-update-tab"><i class="fa fa-check"></i><b>4.3.12</b> ‘Data update’ tab</a></li>
+<li class="chapter" data-level="4.3.13" data-path="ShinyCode.html"><a href="ShinyCode.html#data-saving-tab"><i class="fa fa-check"></i><b>4.3.13</b> ‘Data saving’ tab</a></li>
 </ul></li>
-<li class="chapter" data-level="4.4" data-path="ShinyCode.html"><a href="ShinyCode.html#external-functions-1"><i class="fa fa-check"></i><b>4.4</b> External functions</a><ul>
+<li class="chapter" data-level="4.4" data-path="ShinyCode.html"><a href="ShinyCode.html#external-functions"><i class="fa fa-check"></i><b>4.4</b> External functions</a><ul>
 <li class="chapter" data-level="4.4.1" data-path="ShinyCode.html"><a href="ShinyCode.html#gprecalc"><i class="fa fa-check"></i><b>4.4.1</b> GPrecalc</a></li>
 <li class="chapter" data-level="4.4.2" data-path="ShinyCode.html"><a href="ShinyCode.html#cdbrecalc"><i class="fa fa-check"></i><b>4.4.2</b> CDBrecalc</a></li>
 <li class="chapter" data-level="4.4.3" data-path="ShinyCode.html"><a href="ShinyCode.html#suaunbalcalc"><i class="fa fa-check"></i><b>4.4.3</b> SUAunbalCalc</a></li>
@@ -189,17 +139,15 @@ library(shiny)
 library(shinyWidgets)
 #)}
 
-#setwd(&#39;R:/shiny-app/shinyFisheriesSUAFBS&#39;)
-
 source(&#39;R/recalculateFunctions.R&#39;)
 source(&#39;R/ErCalcReviewed.R&#39;)
 source(&#39;R/InputCalc.R&#39;)
-source(&#39;R/FoodProcCalc.R&#39;)
+source(&#39;R/FoodProcCalcNew.R&#39;)
 source(&#39;R/reloadData.R&#39;)
 
 # token &lt;- as.character(input$btn_token)
 
-localrun &lt;- FALSE
+localrun &lt;- TRUE
 
 #-- Token QA ----
 
@@ -210,12 +158,12 @@ if(localrun){
     R_SWS_SHARE_PATH = SETTINGS[[&quot;share&quot;]]
     SetClientFiles(SETTINGS[[&quot;certdir&quot;]])
     GetTestEnvironment(baseUrl = SETTINGS[[&quot;server&quot;]],
-                       token = &#39;54992801-519f-4d80-89f4-2de4aadada87&#39;)
+                       token = &#39;0211dad4-4c6a-4f66-a2f0-f21a1edef8a2&#39;)
     }
 } else {
   R_SWS_SHARE_PATH = &quot;Z:&quot;
   SetClientFiles(&quot;/srv/shiny-server/.R/QA/&quot;)
-  GetTestEnvironment(baseUrl = &quot;https://hqlqasws1.hq.un.fao.org:8181/sws&quot;,
+  GetTestEnvironment(baseUrl = &quot;https://swsqa.aws.fao.org:8181&quot;,
                      token = &quot;54992801-519f-4d80-89f4-2de4aadada87&quot;)
 }
 #-- Encoding ----
@@ -268,6 +216,7 @@ replaceforeignchars &lt;- function(dat)
   }
   dat
 }
+
 #-- Lists ----
 
 # Tokens plugin
@@ -290,8 +239,8 @@ domainComm &lt;- &#39;FisheriesCommodities&#39;
 
 datasetGP &lt;- &#39;fi_global_production&#39;
 datasetCDB &lt;- &#39;commodities_total&#39;
-datasetSUABfrozen &lt;-&#39;fi_sua_balanced_legacy&#39;
-datasetFBSfrozen &lt;- &#39;fi_fbs_fias_legacy&#39;
+datasetSUABfrozen &lt;-&#39;fi_sua_balanced_validated&#39;
+datasetFBSfrozen &lt;- &#39;fi_fbs_fias_validated&#39;
 datasetSUAUlive &lt;- &#39;fi_sua_unbalanced&#39;
 datasetSUABlive &lt;-&#39;fi_sua_balanced&#39;
 datasetFBSlive &lt;- &#39;fi_fbs_fias&#39;
@@ -302,7 +251,7 @@ datasetSUABval &lt;-&#39;fi_sua_balanced_validated&#39;
 datasetFBSval &lt;- &#39;fi_fbs_fias_validated&#39;
 datasetFBSfaostatval &lt;- &#39;fi_fbs_faostat_validated&#39;
 
-primaryEl &lt;- c(&#39;5302&#39;, &#39;5510&#39;, &#39;5610&#39;, &#39;5910&#39;)
+primaryEl &lt;- c(&#39;5510&#39;, &#39;5610&#39;, &#39;5910&#39;)
 NutrientsEl &lt;- c(&#39;261&#39;, &#39;264&#39;, &#39;271&#39;, &#39;274&#39;, &#39;281&#39;, &#39;284&#39;)
 SUAel &lt;- c(&#39;5302&#39;, &#39;5423&#39;, &#39;5510&#39;, &#39;5610&#39;, &#39;5071&#39;, &#39;5910&#39;,
            &#39;5520&#39;, &#39;5525&#39;, &#39;5023&#39;, &#39;5141&#39;, &#39;5153&#39;, &#39;5166&#39;)
@@ -367,10 +316,15 @@ setnames(map_isscfc, c(&quot;ics&quot;,&quot;measured_item_isscfc&quot;), c(&quo
 
 elkeyNot2consider &lt;- c(&#39;261&#39;, &#39;264&#39;, &#39;271&#39;, &#39;274&#39;, &#39;281&#39;, &#39;284&#39;, &#39;511&#39;)
 
+updated_mappings &lt;- reactiveValues(GP = data.table(),
+                                   CDB = data.table())
 # Name of file to read
 filename &lt;- &#39;&#39; 
 
-FPfile &lt;- list()
+FPfile &lt;&lt;- list(primary = data.table(), secondary = data.table(),
+                secondaryTot = data.table(), tertiary = data.table(),
+                quaternary = data.table(), NotCovered = data.table())
+
 
 </code></pre>
 </div>
@@ -378,7 +332,8 @@ FPfile &lt;- list()
 <h2><span class="header-section-number">4.2</span> <strong>‘ui.R’ file</strong></h2>
 <p>The <code>ui.R</code> file contains the interface structure of the Shiny app with the outputs of the <code>server.R</code> file. Each <code>tabPanel</code> functions is a tab containing different objects (buttons, graphs, table).</p>
 <p>Few buttons are defined directly into this file as they are simple buttons.</p>
-<pre><code>ui = fluidPage(
+<pre><code>
+ui = fluidPage(
   title = &quot;SUA-FBS Tools&quot;,
   br(),
   column(12,
@@ -546,6 +501,21 @@ FPfile &lt;- list()
                        
                        
               ),
+              tabPanel(&quot;Balancing elements&quot;, fluid = TRUE,
+                       column(12,
+                              br(),
+                              br(),
+                              column(2,
+                                     actionBttn(&quot;updBal&quot;, label = &quot;Update table&quot;,
+                                                color = &quot;danger&quot;,
+                                                style = &quot;gradient&quot;)),
+                              column(10,
+                                     rHandsontableOutput(&#39;balancingelements&#39;)
+                              )
+                       )
+                       
+                       
+              ),
               tabPanel(&quot;Extraction rates&quot;, fluid = TRUE,
                        column(12,
                               br(),
@@ -563,8 +533,8 @@ FPfile &lt;- list()
                                                 color = &quot;danger&quot;,
                                                 style = &quot;gradient&quot;)),
                               column(10,
-                                     h4(&#39;Note this tab is to perform block or single extraction rate updates.
-                              Update the series of each product (measuredItemFaostat_L2) only with one value when choosing selected or whole time series updates.&#39;),
+                                     h4(&quot;Note this tab is to perform block or single extraction rate updates.
+                              Update the series of each product (measuredItemFaostat_L2) only with one value when choosing &#39;selected series&#39; updates.&quot;),
                                      h5(&#39;In general, avoid to put different values for different years. Use the data validation tab for this detailed operations.&#39;),
                                      rHandsontableOutput(&#39;extrR&#39;)
                               )
@@ -632,6 +602,10 @@ FPfile &lt;- list()
                                      br(),
                                      DT::dataTableOutput(&#39;FPtab1&#39;),
                                      br(),
+                                     h4(&quot;Insufficient secondary availability:&quot;),
+                                     br(),
+                                     DT::dataTableOutput(&#39;FPinsuff&#39;),
+                                     br(),
                                      h4(&quot;Level by level availability problems:&quot;),
                                      br(),
                                      DT::dataTableOutput(&#39;FPsecPar&#39;), 
@@ -685,14 +659,17 @@ FPfile &lt;- list()
               )
   )
 )
+
 </code></pre>
 </div>
 <div id="server.r-file" class="section level2">
 <h2><span class="header-section-number">4.3</span> <strong>‘server.R’ file</strong></h2>
 <p>The server file contains the most of the buttons used into the app, the <code>reactiveValue</code> elements and some data loading function. Also, to avoid a too long and complex file, there are connections to external file containing the code to build each tab.</p>
 <p>This firs part contains the ‘Token’ tab with the token update process and the year buttons.</p>
-<pre><code>shinyServer(function(input, output, session) {
+<pre><code>
+shinyServer(function(input, output, session) {
   
+
   # -- Insert token ---- 
   output$btn_token1 &lt;- renderUI({
     textInput(inputId = &#39;btn_token1&#39;, label = &quot;Insert the &#39;SUA unbalanced&#39; session token&quot;, value = NA)
@@ -755,6 +732,10 @@ FPfile &lt;- list()
     
   })
   
+  # -- Update button ----
+  # Check what production to update and which to keep official and manage imbalance by stocks!
+  
+  
   #-- Selected year button ----
   output$btn_year  &lt;- renderUI({
     
@@ -799,9 +780,12 @@ FPfile &lt;- list()
                   # selected = &#39;2014&#39;
       )
     }
-  })</code></pre>
+  })
+  
+</code></pre>
 <p>The frozen and live FBS dataset are fully pulled from the SWS for the selected years and country.</p>
-<pre><code>  # -- Load FBS frozen ----
+<pre><code>
+ # -- Load FBS frozen ----
   
   frozen_data &lt;- reactiveValues(FBS = data.table(),
                                 SUA = data.table())
@@ -836,8 +820,12 @@ FPfile &lt;- list()
                      incProgress(0.95)
                    })
       
-      frozen_data$FBS &lt;- FBSfrozen[geographicAreaM49_fi == sel_country]
+      validate(
+        need(nrow(FBSfrozen) &gt; 0, &#39;No frozen FBS data for these country and years.&#39;)
+      )
       
+      frozen_data$FBS &lt;- FBSfrozen[geographicAreaM49_fi == sel_country]
+     
       if(localrun){
         if(CheckDebug()){
           library(faoswsModules)
@@ -850,7 +838,7 @@ FPfile &lt;- list()
       } else {
         R_SWS_SHARE_PATH = &quot;Z:&quot;
         SetClientFiles(&quot;/srv/shiny-server/.R/QA/&quot;)
-        GetTestEnvironment(baseUrl = &quot;https://hqlqasws1.hq.un.fao.org:8181/sws&quot;,
+        GetTestEnvironment(baseUrl = &quot;https://swsqa.aws.fao.org:8181&quot;,
                            token = tokenFbs)
       }
       
@@ -871,25 +859,40 @@ FPfile &lt;- list()
                      Sys.sleep(0.25)
                      incProgress(0.95)
                    })
-      
+     
+     
       live_data$FBS &lt;- FBSfias[geographicAreaM49_fi == sel_country]
- ```
+      
+      validate(need(nrow(live_data$FBS) &gt; 0, &#39;No FIAS FBS data for these country and years.&#39;))
+</code></pre>
+<p>The datatable filled by the plugin for food processing inconsistencies are loaded.</p>
+<pre><code> 
+ # Name of the datatable to read for FP (only when country has been chosen)
  
-
-The file created by the plugin for food processing inconsistencies is also loaded from the R-shared server.
-
- 
- ```
- # Name of the file to read for FP (only when country has been chosen)
- 
- filename &lt;&lt;- paste(&#39;FoodProcessingFeedback_&#39;, sel_country,&#39;.rds&#39;, sep = &#39;&#39;)
- if(localrun){
- FPfile &lt;&lt;- readRDS(filename)
- } else {
- FPfile &lt;&lt;- readRDS(file.path(&#39;/work&#39;, &#39;SWS_R_Share&#39;, &quot;FisherySUAFBS&quot;, filename))
- }
+       if(localrun){
+          sel_country &lt;- country_input[country_input$label == input$btn_country, code]
+        # FPfile &lt;&lt;- readRDS(filename)
+          FPfile &lt;&lt;- list(primary = ReadDatatable(&#39;fi_fp_imb_primary&#39;, where = paste(&quot;geographicaream49_fi = &#39;&quot;, sel_country, &quot;&#39;&quot;, sep = &#39;&#39;)),
+                          secondary = ReadDatatable(&#39;fi_fp_imb_sec&#39;, where = paste(&quot;geographicaream49_fi = &#39;&quot;, sel_country, &quot;&#39;&quot;, sep = &#39;&#39;)),
+                          secondaryTot = ReadDatatable(&#39;fi_fp_imb_sec_tot&#39;, where = paste(&quot;geographicaream49_fi = &#39;&quot;, sel_country, &quot;&#39;&quot;, sep = &#39;&#39;)), 
+                          tertiary = ReadDatatable(&#39;fi_fp_imb_ter&#39;, where = paste(&quot;geographicaream49_fi = &#39;&quot;, sel_country, &quot;&#39;&quot;, sep = &#39;&#39;)),
+                          quaternary = ReadDatatable(&#39;fi_fp_imb_quat&#39;, where = paste(&quot;geographicaream49_fi = &#39;&quot;, sel_country, &quot;&#39;&quot;, sep = &#39;&#39;)), 
+                          NotCovered = ReadDatatable(&#39;fi_fp_not_covered&#39;, where = paste(&quot;geographicaream49_fi = &#39;&quot;, sel_country, &quot;&#39;&quot;, sep = &#39;&#39;)))
+        } else {
+          sel_country &lt;- country_input[country_input$label == input$btn_country, code]
+          
+          # FPfile &lt;&lt;- readRDS(file.path(&#39;/work&#39;, &#39;SWS_R_Share&#39;, &quot;FisherySUAFBS&quot;, filename))
+          FPfile &lt;&lt;- list(primary = ReadDatatable(&#39;fi_fp_imb_primary&#39;, where = paste(&quot;geographicaream49_fi = &#39;&quot;, sel_country, &quot;&#39;&quot;, sep = &#39;&#39;)),
+                          secondary = ReadDatatable(&#39;fi_fp_imb_sec&#39;, where = paste(&quot;geographicaream49_fi = &#39;&quot;, sel_country, &quot;&#39;&quot;, sep = &#39;&#39;)),
+                          secondaryTot = ReadDatatable(&#39;fi_fp_imb_sec_tot&#39;, where = paste(&quot;geographicaream49_fi = &#39;&quot;, sel_country, &quot;&#39;&quot;, sep = &#39;&#39;)), 
+                          tertiary = ReadDatatable(&#39;fi_fp_imb_ter&#39;, where = paste(&quot;geographicaream49_fi = &#39;&quot;, sel_country, &quot;&#39;&quot;, sep = &#39;&#39;)),
+                          quaternary = ReadDatatable(&#39;fi_fp_imb_quat&#39;, where = paste(&quot;geographicaream49_fi = &#39;&quot;, sel_country, &quot;&#39;&quot;, sep = &#39;&#39;)), 
+                          NotCovered = ReadDatatable(&#39;fi_fp_not_covered&#39;, where = paste(&quot;geographicaream49_fi = &#39;&quot;, sel_country, &quot;&#39;&quot;, sep = &#39;&#39;)))
+          
+          }
     }
   })
+  
   </code></pre>
 <p>The last (Element) button of the upper menu is created and the link to the ‘Overview’ tab file is inserted.</p>
 <pre><code>  #-- Element button ----
@@ -910,11 +913,11 @@ The file created by the plugin for food processing inconsistencies is also loade
   })
   
   
-  #++ 1 Overview tab ----
+  #++ 1 Description tab ----
   source(&quot;tabs/descriptionTab1.R&quot;, local = TRUE)
   </code></pre>
 <p>After the FBS visualization tab, the SUAs must be pulled from the SWS in both, balanced and unbalanced, frozen and live versions for the selected years and country.</p>
-<pre><code>  #-- Load SUA balanced ----
+<pre><code>  #-- Load SUA frozen ----
   
   observeEvent(input$tabs, {
     req(input$btn_start_year != &#39;&#39;)
@@ -923,8 +926,7 @@ The file created by the plugin for food processing inconsistencies is also loade
     sel_years &lt;- as.character(as.numeric(input$btn_start_year):as.numeric(input$btn_year))
     
     if(input$tabs == &quot;SUA compare&quot;){
-    
-    # SUA balanced frozen
+      
       frozenB &lt;- reloadData(data = frozen_data$SUA, 
                             keycountry = sel_country, 
                             minyear = input$btn_start_year, 
@@ -936,7 +938,8 @@ The file created by the plugin for food processing inconsistencies is also loade
         frozen_data$SUA &lt;- frozenB
       }
       
-      # SUA balanced live
+      validate(need(nrow(frozen_data$SUA) &gt; 0, &#39;No frozen SUA data for these country and years.&#39;))
+      
       liveB &lt;- reloadDataToken(data = live_data$SUAb, 
                                keycountry = sel_country, 
                                minyear = input$btn_start_year, 
@@ -950,18 +953,19 @@ The file created by the plugin for food processing inconsistencies is also loade
         liveBval &lt;- copy(liveB)
         liveBval &lt;- liveBval[measuredElementSuaFbs %in% ValueElements]
         live_data$SUAbVal &lt;- liveBval
-        liveB &lt;- liveB[!measuredElementSuaFbs %in% ValueElements]
+       # liveB &lt;- liveB[!measuredElementSuaFbs %in% ValueElements]
         live_data$SUAb &lt;- liveB
       }
+      
+      validate(need(nrow(live_data$SUAb) &gt; 0, &#39;No data in SUA balanced for these country and years.&#39;))
       
     }
   })
   
-  #-- Load SUA unbalanced ----
   observeEvent(input$tabs, {
     
     req(input$btn_start_year)
-    
+    req(input$btn_start_year != &#39;&#39;)
     sel_country &lt;- country_input[country_input$label == input$btn_country, code]
     sel_years &lt;- as.character(as.numeric(input$btn_start_year):as.numeric(input$btn_year))
     
@@ -976,19 +980,23 @@ The file created by the plugin for food processing inconsistencies is also loade
       
       if(!is.null(liveU)){
         ValueElements &lt;- c(&#39;5922&#39;, &#39;5930&#39;, &#39;5622&#39;, &#39;5630&#39;)
-        liveU &lt;- liveU[!measuredElementSuaFbs %in% ValueElements]
+       # liveU &lt;- liveU[!measuredElementSuaFbs %in% ValueElements]
         live_data$SUAu &lt;- liveU
       }
+      
+      validate(need(nrow(live_data$SUAu) &gt; 0,&#39;No SUA unbalanced data for these country and years.&#39;))
     }
-  })</code></pre>
+  })
+  </code></pre>
 <p>After data are ready the building of the second tab starts with the buttons and the recall to the second and third tab. The third tab is merely descriptive and no interactive feature is inserted.</p>
-<pre><code>  #-- FBS group button ----
+<pre><code>
+   #-- FBS group button ----
   
   output$btn_group_fbs &lt;- renderUI({
     
     # Country and year buttons required
     req(input$btn_country)
-    
+    req(input$btn_start_year != &#39;&#39;)
     fbs_group_input &lt;- merge(data.table(code = as.character(c(seq(10, 90, by = 10), 99))), 
                              groups_input , by = &#39;code&#39;)
     # selectInput
@@ -1004,6 +1012,7 @@ The file created by the plugin for food processing inconsistencies is also loade
     
     # Country and year buttons required
     req(input$btn_country) #, input$btn_group_fbs)
+    req(input$btn_start_year != &#39;&#39;)
     sel_country &lt;- country_input[country_input$label == input$btn_country, code]
     
     if(sel_country != &quot;-&quot;) {
@@ -1021,7 +1030,7 @@ The file created by the plugin for food processing inconsistencies is also loade
   output$btn_element_sua &lt;- renderUI({
     # Country and year buttons required
     req(input$btn_country, input$btn_element_group)
-    
+    req(input$btn_start_year != &#39;&#39;)
     if(input$btn_element_group == &#39;All&#39;){
       
       chosen &lt;- sua_element_input$label
@@ -1056,13 +1065,14 @@ The file created by the plugin for food processing inconsistencies is also loade
   source(&quot;tabs/imbalanceTab2.R&quot;, local = TRUE)
   </code></pre>
 <p>The fourth and fifth tab are now introduced (please note in the code these tabs are called ‘tab 3’ and ‘tab 4’ as the ‘SUA imbalances’ is an additional tab not planned in the first version). The shiny allows the user to start from any tab and to have the data loaded the first time they are required through the functions <code>reloadData</code> and <code>reloadDataToken</code>, i.e. if the user skip the first natural tab where the SUA should be loaded (SUA compare tab) and goes directly to any other tab, the shiny checks for the data loaded and their parameters (country and years) and if necessary loads the data otherwise it keeps using the already loaded ones.</p>
-<pre><code>  #-- FBS group button Tab3 ----
+<pre><code>
+  #-- FBS group button Tab3 ----
   
   output$btn_group_fbs_tab3 &lt;- renderUI({
     
     # Country and year buttons required
     req(input$btn_country)
-    
+    req(input$btn_start_year != &#39;&#39;)
     fbs_group_input &lt;- merge(data.table(code = as.character(c(seq(10, 90, by = 10), 99))), groups_input , by = &#39;code&#39;)
     
     selectInput(inputId = &quot;btn_group_fbs_tab3&quot;,
@@ -1078,6 +1088,7 @@ The file created by the plugin for food processing inconsistencies is also loade
     
     # Country and year buttons required
     req(input$btn_country, input$btn_group_fbs_tab3)
+    req(input$btn_start_year != &#39;&#39;)
     # code of FBS group chosen
     group_sel &lt;- groups_input[ label == input$btn_group_fbs_tab3]$code
     # ICS product in the chosen FBS group
@@ -1100,7 +1111,7 @@ The file created by the plugin for food processing inconsistencies is also loade
     
     # Country and year buttons required
     req( input$btn_country, input$btn_year, input$btn_start_year)
-    
+    req(input$btn_start_year != &#39;&#39;)
     fbs_group_input &lt;- merge( data.table(code = as.character(c(seq(10, 90, by = 10), 99))), groups_input , by = &#39;code&#39;)
     
     selectInput(inputId = &quot;btn_group_fbs_tab4&quot;,
@@ -1116,7 +1127,7 @@ The file created by the plugin for food processing inconsistencies is also loade
     
     # Country and year buttons required
     req(input$btn_country, input$btn_group_fbs_tab4, input$btn_year, input$btn_start_year)
-    
+    req(input$btn_start_year != &#39;&#39;)
     # code of FBS group chosen
     group_sel &lt;- groups_input[ label == input$btn_group_fbs_tab4]$code
     # ICS product in the chosen FBS group
@@ -1132,7 +1143,7 @@ The file created by the plugin for food processing inconsistencies is also loade
   #-- If SUA not loaded yet ----
   observeEvent(input$btn_ics_prod_tab4, {
     req(input$btn_start_year)
-    
+    req(input$btn_start_year != &#39;&#39;)
     sel_country &lt;- country_input[country_input$label == input$btn_country, code]
     sel_years &lt;- as.character(as.numeric(input$btn_start_year):as.numeric(input$btn_year))
     
@@ -1147,6 +1158,7 @@ The file created by the plugin for food processing inconsistencies is also loade
       frozen_data$SUA &lt;- frozenB
     }
     
+    validate(need(nrow(frozen_data$SUA) &gt; 0, &#39;No forzen SUA data for these country and years.&#39;))
   })
   
   #-- SUA element group Tab4 ---- 
@@ -1154,6 +1166,7 @@ The file created by the plugin for food processing inconsistencies is also loade
   output$btn_element_group_tab4 &lt;- renderUI({
     
     # Country and year buttons required
+    req(input$btn_start_year != &#39;&#39;)
     # req(input$btn_ics_prod_tab4)
     sel_country &lt;- country_input[country_input$label == input$btn_country, code]
     
@@ -1173,6 +1186,7 @@ The file created by the plugin for food processing inconsistencies is also loade
     
     # Country and year buttons required
     req(input$btn_country, input$btn_year, input$btn_element_group_tab4) #, input$btn_ics_prod_tab4)
+    req(input$btn_start_year != &#39;&#39;)
     SUAfrozen &lt;- frozen_data$SUA
     SUAelem_input &lt;- sua_element_input[ code %in% unique(SUAfrozen$measuredElementSuaFbs), ]
     
@@ -1205,28 +1219,32 @@ The file created by the plugin for food processing inconsistencies is also loade
   
   #++ 4 SUA element Tab4 ----
   source(&quot;tabs/elementTab4.R&quot;, local = TRUE)
- </code></pre>
+</code></pre>
 <p>The ‘Global production’ tab is the first tab where the user can start active interaction and update SWS information. For this reason also new elements to store old and new objects are created: <code>updated_data</code> where to store the updated versions of SUAs and FBSs, <code>updated_mappings</code> to store new mappings for species and commodities and <code>updated_table</code> to store new imbalances.</p>
-<pre><code>  #-- Place for updated datasets ----
+<pre><code>
+  #-- Place for updated datasets ----
   updated_data &lt;- reactiveValues(SUAunbal = data.table(),
                                  SUAbal = data.table(),
                                  FBSfias = data.table(),
                                  FBSfaostat = data.table())
+  # live_data &lt;- reactiveValues(FBS = data.table(),
+  #                             SUAb = data.table(),
+  #                             SUAu = data.table())
   
-  updated_mappings &lt;- reactiveValues(GP = data.table(),
-                                     CDB = data.table())
   
   updated_table &lt;- reactiveValues(NegAv = data.table(),
                                   FPproblems = data.table())
+  
 </code></pre>
-<p>The ‘Global production and the ’Commodities tab’ with the corresponding buttons follow with the <code>InitialDatasets</code> reactiveValue element where they are stored. The ‘Link table’ and the ‘Extraction rates’ are additional tabs introduced after the first version.</p>
-<pre><code>  #-- FBS group button Tab5 ----
+<p>The ‘Global production and the ’Commodities tab’ with the corresponding buttons follow with the <code>InitialDatasets</code> reactiveValue element where they are stored. The ‘Link table’, the ‘Balancing elelements’ and the ‘Extraction rates’ are additional working tabs where the user can modify the SWS datatables directly from the shiny.</p>
+<pre><code>
+  #-- FBS group button Tab5 ----
   
   output$btn_group_fbs_tab5 &lt;- renderUI({
     
     # Country and year buttons required
     req(input$btn_country, input$btn_year, input$btn_start_year)
-    
+    req(input$btn_start_year != &#39;&#39;)
     fbs_group_input &lt;- merge(data.table(code = as.character(c(seq(10, 90, by = 10), 99))), groups_input , by = &#39;code&#39;)
     
     selectInput(inputId = &quot;btn_group_fbs_tab5&quot;,
@@ -1250,7 +1268,7 @@ The file created by the plugin for food processing inconsistencies is also loade
     
     # Country and year buttons required
     req(input$btn_country, input$btn_year, input$btn_start_year)
-    
+    req(input$btn_start_year != &#39;&#39;)
     fbs_group_input &lt;- merge(data.table(code = as.character(c(seq(10, 90, by = 10), 99))), groups_input , by = &#39;code&#39;)
     
     selectInput(inputId = &quot;btn_group_fbs_tab6&quot;,
@@ -1268,6 +1286,7 @@ The file created by the plugin for food processing inconsistencies is also loade
     # Country and year buttons required
     req(input$btn_country, input$btn_year, input$btn_start_year,
         input$btn_group_fbs_tab6)
+    req(input$btn_start_year != &#39;&#39;)
     # code of FBS group chosen
     group_sel &lt;- groups_input[ label %in% input$btn_group_fbs_tab6]$code
     # ICS product in the chosen FBS group
@@ -1287,6 +1306,7 @@ The file created by the plugin for food processing inconsistencies is also loade
     
     # Country and year buttons required
     req(input$btn_country, input$btn_year, input$btn_start_year) #, input$btn_ics_prod_tab6)
+    req(input$btn_start_year != &#39;&#39;)
     SUAfrozen &lt;- frozen_data$SUA
     SUAelem_input &lt;- sua_element_input[ code %in% c(&#39;5510&#39;, &#39;5610&#39;, &#39;5910&#39;, &#39;5912&#39;, &#39;5922&#39;, &#39;5930&#39;, &#39;5622&#39;, &#39;5630&#39;), ]
     # NOTE one of &#39;5951&#39;, &#39;5912&#39; has to be changed!!!
@@ -1301,19 +1321,20 @@ The file created by the plugin for food processing inconsistencies is also loade
   ##++ 6 Commodity Tab6  ----
   source(&quot;tabs/cdbTab6.R&quot;, local = TRUE)
   
-
-
   source(&quot;tabs/linktable.R&quot;, local = TRUE)
   
-  source(&quot;tabs/extrRates.R&quot;, local = TRUE)</code></pre>
+  source(&quot;tabs/balancingelements.R&quot;, local = TRUE)
+  
+  source(&quot;tabs/extrRates.R&quot;, local = TRUE)
+</code></pre>
 <p>The ‘Data validation’ tab is the main and most complex tab of the shiny app described in the corresponding sub-paragraph. In the ‘server.R’ file there are only buttons and recall to the file for this tab. The recall to file for the ‘Data update’ and ‘Data saving’ tab follow.</p>
-<pre><code>  #-- FBS group button Tab7 ----
+<pre><code>   #-- FBS group button Tab7 ----
   
   output$btn_group_fbs_tab7 &lt;- renderUI({
     
     # Country and year buttons required
     req(input$btn_country, input$btn_year, input$btn_start_year)
-    
+    req(input$btn_start_year != &#39;&#39;)
     fbs_group_input &lt;- merge(data.table(code = as.character(c(seq(10, 90, by = 10), 99))), groups_input , by = &#39;code&#39;)
     
     selectInput(inputId = &quot;btn_group_fbs_tab7&quot;,
@@ -1330,6 +1351,7 @@ The file created by the plugin for food processing inconsistencies is also loade
     
     # Country and year buttons required
     req(input$btn_country, input$btn_year, input$btn_start_year) #, input$btn_group_fbs_tab7)
+    req(input$btn_start_year != &#39;&#39;)
     # code of FBS group chosen
     # if(!is.null(input$btn_group_fbs_tab7)){
     group_sel &lt;- groups_input[ label %in% input$btn_group_fbs_tab7]$code
@@ -1352,6 +1374,7 @@ The file created by the plugin for food processing inconsistencies is also loade
     
     # Country and year buttons required
     rep(input$btn_country) # req(input$btn_ics_prod_tab7)
+    req(input$btn_start_year != &#39;&#39;)
     #if(!is.null(input$btn_group_fbs_tab7)){
     sel_country &lt;- country_input[country_input$label == input$btn_country, code]
     
@@ -1370,6 +1393,7 @@ The file created by the plugin for food processing inconsistencies is also loade
     
     # Country and year buttons required
     req(input$btn_element_group_tab7)
+    req(input$btn_start_year != &#39;&#39;)
     # if(!is.null(input$btn_group_fbs_tab7)){
     if(input$btn_element_group_tab7 == &#39;All&#39;){
       
@@ -1410,8 +1434,9 @@ The file created by the plugin for food processing inconsistencies is also loade
   source(&quot;tabs/savingTab.R&quot;, local = TRUE)
   
 })
+
 </code></pre>
-<div id="overview-tab-1" class="section level3">
+<div id="overview-tab" class="section level3">
 <h3><span class="header-section-number">4.3.1</span> ‘Overview’ tab</h3>
 <p>The ‘Overview’ tab contains the comparison between the ‘live’ and ‘frozen’ FBS by major group and grand total. Both table and plots are available. In this first chunk the two datasets are recalled, merged and the difference between values in computed. If no value is available for only one of the two then a zero is imputed and difference is calculated.</p>
 <pre><code># First tab, Description tab
@@ -1425,14 +1450,17 @@ overviewTab_reac &lt;- reactive({
   sel_elements_fbs &lt;- as.character(element_input[label == input$btn_element_fbs]$code)
   sel_fbs_groups &lt;- as.character(c(seq(10, 90, by = 10), 99))
   
+  validate(
+    need(nrow(frozen_data$FBS) &gt; 0, &quot;No frozen FBS data for this country. Please select another country.&quot;)
+  )
+  
+  validate(
+    need(nrow(live_data$FBS) &gt; 0, &quot;No FBS data for this country. Please select another country.&quot;)
+  )
+  
   FBSfias &lt;- live_data$FBS[measuredElementSuaFbs == sel_elements_fbs  ]
   
   FBSfrozen &lt;- frozen_data$FBS
-  
-  validate(
-    need(nrow(FBSfrozen) &gt; 0, &quot;No data for this country. Please select another country.&quot;)
-  )
-  
   
   FBSfrozen &lt;- FBSfrozen[measuredElementSuaFbs == sel_elements_fbs]
   # Now only showing value present both in frozen and live, CHANGE?
@@ -1488,7 +1516,8 @@ overviewTab_reac &lt;- reactive({
   
   return(list(tab = frozenVSlive, plot = data4plot))
   
-  })</code></pre>
+  })
+</code></pre>
 <p>The table and the plot follow now, the grand total is added to the other groups and for differences grater than |0.001| the table insert a red value instead then black.</p>
 <pre><code>output$fbs_fias_tab1 &lt;- DT::renderDataTable( server = FALSE, {
   req(input$btn_country, input$btn_year, input$btn_start_year, input$btn_element_fbs)
@@ -1572,7 +1601,7 @@ output$gg_plot_tab1 &lt;- renderPlot({
 })
 </code></pre>
 </div>
-<div id="sua-compare-tab-1" class="section level3">
+<div id="sua-compare-tab" class="section level3">
 <h3><span class="header-section-number">4.3.2</span> ‘SUA compare’ tab</h3>
 <p>The same rationale used for the first tab is used for the second one but now to compare SUAs. The upload of the SUA data is done in the ‘server.R’ file now ‘live’ and ‘frozen’ SUAs are merged and the difference computed. The SUAs are filtered by major groups and elements. The <code>reactive</code> functions is where the operations are performed and the <code>renderDataTable</code> function structure the output table.</p>
 <pre><code># Second tab, comparing SUA versions tab
@@ -1584,7 +1613,7 @@ SUAcomparingTab_reac &lt;- reactive({
   sel_country &lt;- country_input[country_input$label == input$btn_country, code]
   sel_years &lt;- as.character(as.numeric(input$btn_start_year):as.numeric(input$btn_year))
   
-  if(length(input$btn_group_fbs) == 1 &amp; input$btn_group_fbs == &#39;All&#39;){
+  if(any(input$btn_group_fbs == &#39;All&#39;)){
     sel_group_fbs &lt;- as.character(groups_input$code)
   } else {
   sel_group_fbs &lt;- as.character(groups_input[label %in% input$btn_group_fbs]$code)
@@ -1595,6 +1624,55 @@ SUAcomparingTab_reac &lt;- reactive({
   l2l1 &lt;- ReadDatatable(&#39;ics_l1_2_ics_l2&#39;)
   
   ics2select &lt;- l2l1[code_l1 %in% sel_group_fbs ]$code_l2
+  
+  # if(CheckDebug()){
+  # 
+  #   library(faoswsModules)
+  #   SETTINGS = ReadSettings(&quot;sws.yml&quot;)
+  # 
+  #   ## If you&#39;re not on the system, your settings will overwrite any others
+  #   R_SWS_SHARE_PATH = SETTINGS[[&quot;share&quot;]]
+  # 
+  #   ## Define where your certificates are stored
+  #   SetClientFiles(SETTINGS[[&quot;certdir&quot;]])
+  # 
+  #   ## Get session information from SWS. Token must be obtained from web interface
+  #   GetTestEnvironment(baseUrl = SETTINGS[[&quot;server&quot;]],
+  #                      token = tokenSuaB)
+  # 
+  # }
+  # 
+  # # R_SWS_SHARE_PATH = &quot;Z:&quot;
+  # # SetClientFiles(&quot;/srv/shiny-server/shinyFisheriesCommodities&quot;)
+  # # GetTestEnvironment(baseUrl = &quot;https://hqlqasws1.hq.un.fao.org:8181/sws&quot;,
+  # #                      token = tokenSuaB)
+  #   
+  # 
+  # KeySUAbal &lt;- DatasetKey(domain = &quot;FisheriesCommodities&quot;, dataset = &quot;fi_sua_balanced&quot;, dimensions = list(
+  #   geographicAreaM49_fi = Dimension(name = &quot;geographicAreaM49_fi&quot;, keys = sel_country),
+  #   measuredElementSuaFbs = Dimension(name = &quot;measuredElementSuaFbs&quot;, 
+  #                                     keys = sel_element_sua), # Or, if all elements, GetCodeList(&quot;FisheriesCommodities&quot;, &quot;fi_fbs_fias_control&quot;,&quot;measuredElementSuaFbs&quot; )[,code])
+  #   measuredItemFaostat_L2 = Dimension(name = &quot;measuredItemFaostat_L2&quot;, 
+  #                                      keys = ics2select),
+  #   timePointYears = Dimension(name = &quot;timePointYears&quot;, keys = sel_years )))
+  # 
+  # withProgress(message = &#39;SUA balanced data loading in progress&#39;,
+  #              value = 0, {
+  #                
+  #                Sys.sleep(0.25)
+  #                incProgress(0.25)
+  #                SUAbal &lt;- GetData(KeySUAbal)
+  #                Sys.sleep(0.75)
+  #                incProgress(0.95)
+  #              })
+  
+  validate(
+    need(nrow(frozen_data$SUA) &gt; 0, &quot;No frozen SUA data for this country. Please select another country.&quot;)
+  )
+  
+  validate(
+    need(nrow(live_data$SUAb) &gt; 0, &quot;No SUA data for this country. Please select another country.&quot;)
+  )
   
   SUAbal &lt;- live_data$SUAb[measuredElementSuaFbs %in% sel_element_sua &amp; measuredItemFaostat_L2 %in% ics2select]
   
@@ -1611,7 +1689,7 @@ SUAcomparingTab_reac &lt;- reactive({
   SUAfrozenVSlive[is.na(ValueFrozen), ValueFrozen := 0]
   SUAfrozenVSlive[is.na(ValueLive), ValueLive := 0]
   
-  SUAfrozenVSlive[measuredElementSuaFbs == &#39;5423&#39;, ValueLive := ValueLive * 10000]
+  SUAfrozenVSlive[measuredElementSuaFbs == &#39;5423&#39;, ValueLive := ValueLive]
   frozen2show &lt;- SUAfrozenVSlive[measuredElementSuaFbs %in% sel_element_sua]
   
   frozen2show &lt;- merge(frozen2show, l2l1[ , .(code_l1, code_l2)], 
@@ -1648,7 +1726,7 @@ output$sua_comp_tab2 &lt;- DT::renderDataTable( server = FALSE, {
 
 </code></pre>
 </div>
-<div id="sua-imbalance-tab-1" class="section level3">
+<div id="sua-imbalance-tab" class="section level3">
 <h3><span class="header-section-number">4.3.3</span> ‘SUA imbalance’ tab</h3>
 <p>The imbalance tab is, again, only a descriptive tab. Both SUA balanced and unbalanced are loaded and combined to show:</p>
 <ol style="list-style-type: lower-roman">
@@ -1777,7 +1855,7 @@ output$sua_prod_diff_tab2 &lt;- DT::renderDataTable( server = FALSE, {
 })
 </code></pre>
 </div>
-<div id="fbs-by-ics-tab-1" class="section level3">
+<div id="fbs-by-ics-tab" class="section level3">
 <h3><span class="header-section-number">4.3.4</span> ‘FBS by ICS’ tab</h3>
 <p>This table recalls the SUA balanced and loads it is needed. It filters the element chosen from the upper menu and displays, both in tab and graph, the corresponding element of each SUA product belonging to the selected major group. The user can then see the time series of each element. The table updates when the element chosen in the upper menu changes. By default all the ICS products belonging to the selected major group are selected. The user can deselect any group and the plot is updated on the fly.</p>
 <pre><code># Third tab, FBS groups by ICS product tab
@@ -1862,7 +1940,7 @@ output$gg_plot_tab3 &lt;- renderPlot({
 })
 </code></pre>
 </div>
-<div id="ics-by-element-tab-1" class="section level3">
+<div id="ics-by-element-tab" class="section level3">
 <h3><span class="header-section-number">4.3.5</span> ‘ICS by Element’ tab</h3>
 <p>This tab has exactly the same structure as the previous one but filter all the element for the selected ICS product. By default all the elements are selected, the user can deselect any element and the tab is updated on the fly.</p>
 <pre><code># Fourth tab, ICS product by element tab
@@ -1893,7 +1971,7 @@ SUAelemTab_reac &lt;- reactive({
     } else {
       R_SWS_SHARE_PATH = &quot;Z:&quot;
       SetClientFiles(&quot;/srv/shiny-server/.R/QA/&quot;)
-      GetTestEnvironment(baseUrl = &quot;https://hqlqasws1.hq.un.fao.org:8181/sws&quot;,
+      GetTestEnvironment(baseUrl = &quot;https://swsqa.aws.fao.org:8181&quot;,
                          token = tokenSuaB)
     }
   
@@ -1986,7 +2064,7 @@ output$gg_plot_tab4 &lt;- renderPlot({
 })
 </code></pre>
 </div>
-<div id="global-production-tab-1" class="section level3">
+<div id="global-production-tab" class="section level3">
 <h3><span class="header-section-number">4.3.6</span> ‘Global production’ tab</h3>
 <p>The ‘Global production’ tab load the ‘Global production’ dataset and the corresponding mapping tab for the country and years selected and then filters the data according to the chosen major group.</p>
 <pre><code># Fifth tab, Global production by species tab
@@ -2062,23 +2140,28 @@ gpTab_reac &lt;- reactive({
                                by.x = &#39;ICSProd&#39;, by.y = &#39;code_l2&#39;)
   
   # globalProductionMapping[ , c(&#39;Ratio&#39;, &#39;Selection&#39;) := list(1, TRUE)]
-  gp_map &lt;- ReadDatatable(&#39;gp_mapping&#39;, where = paste(&quot;country = &#39;&quot;, sel_country, &quot;&#39;&quot;, sep = &#39;&#39;))#data.table(Country = &#39;&#39;, Asfis = &#39;&#39;, from = &#39;&#39;, to = &#39;&#39;, start = &#39;&#39;, end = &#39;&#39;, ratio = &#39;&#39;) 
+  # gp_map &lt;- ReadDatatable(&#39;gp_mapping&#39;, where = paste(&quot;country = &#39;&quot;, sel_country, &quot;&#39;&quot;, sep = &#39;&#39;))#data.table(Country = &#39;&#39;, Asfis = &#39;&#39;, from = &#39;&#39;, to = &#39;&#39;, start = &#39;&#39;, end = &#39;&#39;, ratio = &#39;&#39;) 
+  # 
+  # if(nrow(gp_map) == 0 ){
+  #   
+  #   gp_map &lt;-  data.table(country = sel_country, asfis = &#39;&#39;,
+  #                          from_code = &#39;&#39;, to_code = &#39;&#39;, 
+  #                          start_year = input$btn_year, end_year = &#39;LAST&#39;, ratio = &#39;1&#39;) 
+  # }
   
-  if(nrow(gp_map) == 0 ){
-    
-    gp_map &lt;-  data.table(country = sel_country, asfis = &#39;&#39;,
-                           from_code = &#39;&#39;, to_code = &#39;&#39;, 
-                           start_year = input$btn_year, end_year = &#39;LAST&#39;, ratio = &#39;1&#39;) 
-  }
+  validate(need(nrow(globalProductionMapping) &gt;0,
+                &#39;No GP data to show.&#39;))
   
-  return(list(GP = globalProductionMapping, 
-              newMap = gp_map))
+  return(list(GP = globalProductionMapping))
   
 })
 
 output$gp_tab5 &lt;-  DT::renderDataTable( server = FALSE, {
   
   gp_tab &lt;- copy(gpTab_reac()$GP)
+  
+  validate(need(nrow(gp_tab) &gt;0,
+           &#39;No GP data to show.&#39;))
   
   setnames(gp_tab, c(&quot;geographicAreaM49_fi&quot;, &quot;fisheriesAsfis&quot;,
                          &quot;timePointYears&quot;,
@@ -2094,11 +2177,36 @@ output$gp_tab5 &lt;-  DT::renderDataTable( server = FALSE, {
                 rownames = FALSE, options = list(pageLength = 25,
                                                  dom = &#39;Bfrtip&#39;,
                                                  buttons = c(&#39;csv&#39;, &#39;excel&#39;, &#39;pdf&#39;)))
-})</code></pre>
-<p>The mapping table is also loaded for the chosen country and the save buttons modifies the data table directly in SWS adding the links the user put.</p>
-<pre><code>output$gp_map_tab5 &lt;-  renderRHandsontable({
+})
+
+
+gpMap_reac &lt;- reactive({
   
-  gp_map &lt;- gpTab_reac()$newMap
+  req(input$btn_country)
+
+  sel_country &lt;- country_input[country_input$label == input$btn_country, code]
+  
+  gp_map &lt;- ReadDatatable(&#39;gp_mapping&#39;, where = paste(&quot;country = &#39;&quot;, sel_country, &quot;&#39;&quot;, sep = &#39;&#39;))#data.table(Country = &#39;&#39;, Asfis = &#39;&#39;, from = &#39;&#39;, to = &#39;&#39;, start = &#39;&#39;, end = &#39;&#39;, ratio = &#39;&#39;) 
+  
+  updated_mappings$GP &lt;- gp_map
+  
+  if(nrow(gp_map) == 0 ){
+    
+    gp_map &lt;-  data.table(country = sel_country, asfis = &#39;&#39;,
+                          from_code = &#39;&#39;, to_code = &#39;&#39;, 
+                          start_year = input$btn_year, end_year = &#39;LAST&#39;, ratio = &#39;1&#39;) 
+  }
+  
+  return(list(newMap = gp_map))
+
+})
+
+</code></pre>
+<p>The mapping table is also loaded for the chosen country and the save buttons modifies the data table directly in SWS adding the links the user put.</p>
+<pre><code>
+output$gp_map_tab5 &lt;-  renderRHandsontable({
+  
+  gp_map &lt;- gpMap_reac()$newMap
   rhandsontable(gp_map, rowHeaders = NULL, width = &#39;auto&#39;, height = &#39;auto&#39;)
   
 })
@@ -2131,7 +2239,7 @@ observeEvent(input$saveGP, {
 })
 </code></pre>
 </div>
-<div id="commodities-tab-1" class="section level3">
+<div id="commodities-tab" class="section level3">
 <h3><span class="header-section-number">4.3.7</span> ‘Commodities’ tab</h3>
 <p>The tab for the Commodity dataset is similar to the ‘Global production’ tab but the user can choose the ICS product code in addition to the major group and also the elements can be filtered. The command to save the changes to the ISSCFC deviations are the same as for the ‘Global production’ tab.</p>
 <pre><code># Sixth tab, trade by commodity tab
@@ -2219,17 +2327,16 @@ setnames(cdbDescr, c(&quot;geographicAreaM49_fi&quot;, &quot;measuredItemISSCFC&
                      &quot;flagMethod&quot;, &quot;code_l1&quot;),
          c(&#39;Country&#39;, &#39;ISSCFC&#39;, &#39;Year&#39;, &#39;Element&#39;, &#39;F1&#39;, &#39;F2&#39;, &#39;FBSgroup&#39;))
 # -- Process CDB data ----
-cdb_map &lt;- ReadDatatable(&#39;cdb_mapping&#39;, where = paste(&quot;country = &#39;&quot;, sel_country, &quot;&#39;&quot;, sep = &#39;&#39;))  #data.table(Country = &#39;&#39;, Isscfc = &#39;&#39;, Element = &#39;&#39;, from = &#39;&#39;, to = &#39;&#39;, start = &#39;&#39;, end = &#39;&#39;, ratio = &#39;&#39;) 
-
-if(nrow(cdb_map) == 0 ){
-  
-  cdb_map &lt;-  data.table(country = sel_country, isscfc = &#39;&#39;, element = &#39;&#39;, 
-                         from_code = &#39;&#39;, to_code = &#39;&#39;, 
-                         start_year = input$btn_year, end_year = &#39;LAST&#39;, ratio = &#39;1&#39;) 
-}
-
-return(list(CDB = cdbDescr,
-            newMapCDB = cdb_map))
+# cdb_map &lt;- ReadDatatable(&#39;cdb_mapping&#39;, where = paste(&quot;country = &#39;&quot;, sel_country, &quot;&#39;&quot;, sep = &#39;&#39;))  #data.table(Country = &#39;&#39;, Isscfc = &#39;&#39;, Element = &#39;&#39;, from = &#39;&#39;, to = &#39;&#39;, start = &#39;&#39;, end = &#39;&#39;, ratio = &#39;&#39;) 
+# 
+# if(nrow(cdb_map) == 0 ){
+#   
+#   cdb_map &lt;-  data.table(country = sel_country, isscfc = &#39;&#39;, element = &#39;&#39;, 
+#                          from_code = &#39;&#39;, to_code = &#39;&#39;, 
+#                          start_year = input$btn_year, end_year = &#39;LAST&#39;, ratio = &#39;1&#39;) 
+# }
+# 
+ return(list(CDB = cdbDescr))
 
 })
 
@@ -2252,9 +2359,28 @@ output$cdb_tab6 &lt;-  DT::renderDataTable( server = FALSE, {
                                                  buttons = c(&#39;csv&#39;, &#39;excel&#39;, &#39;pdf&#39;)))
 })
 
+
+
+cdbMap_reac &lt;- reactive({
+  
+  req(input$btn_country)
+  sel_country &lt;- country_input[country_input$label == input$btn_country, code]
+  cdb_map &lt;- ReadDatatable(&#39;cdb_mapping&#39;, where = paste(&quot;country = &#39;&quot;, sel_country, &quot;&#39;&quot;, sep = &#39;&#39;))  #data.table(Country = &#39;&#39;, Isscfc = &#39;&#39;, Element = &#39;&#39;, from = &#39;&#39;, to = &#39;&#39;, start = &#39;&#39;, end = &#39;&#39;, ratio = &#39;&#39;) 
+  
+  if(nrow(cdb_map) == 0 ){
+    
+    cdb_map &lt;-  data.table(country = sel_country, isscfc = &#39;&#39;, element = &#39;&#39;, 
+                           from_code = &#39;&#39;, to_code = &#39;&#39;, 
+                           start_year = input$btn_year, end_year = &#39;LAST&#39;, ratio = &#39;1&#39;) 
+  }
+  
+  return(list(newMapCDB = cdb_map))
+  
+})
+
 output$cdb_map_tab6 &lt;-  renderRHandsontable({
   
-  cdb_map &lt;- copy(cdbTab_reac()$newMapCDB)
+  cdb_map &lt;- copy(cdbMap_reac()$newMapCDB)
   rhandsontable(cdb_map, rowHeaders = NULL, width = &#39;auto&#39;, height = &#39;auto&#39;) 
 })
 
@@ -2290,11 +2416,12 @@ observeEvent(input$saveCDB, {
   ))
   
 })
+
 </code></pre>
 </div>
-<div id="link-table-tab-1" class="section level3">
+<div id="link-table-tab" class="section level3">
 <h3><span class="header-section-number">4.3.8</span> ‘Link table’ tab</h3>
-<p>The ‘Link table’ tab is very simple it pulls the data table <code>link_table</code> from the SWS and updates it when the user click the ‘Update table button’.</p>
+<p>The ‘Link table’ tab is very simple, it pulls the SWS data table <code>link_table</code> and updates it when the user click the ‘Update table button’.</p>
 <pre><code># link table recall
 linktable_reac &lt;- reactive({
   req(input$btn_year, input$btn_country, input$btn_start_year)
@@ -2302,36 +2429,101 @@ linktable_reac &lt;- reactive({
   sel_country &lt;- country_input[country_input$label == input$btn_country, code]
   where &lt;- paste(&quot;geographic_area_m49 = &#39;&quot;, sel_country, &quot;&#39;&quot;, sep = &quot;&quot;)
   linktable &lt;- ReadDatatable(&#39;link_table&#39;, where = where, readOnly = FALSE)
+  linktable$percentage &lt;- as.numeric(linktable$percentage)
+  
+  if(nrow(linktable) == 0){
+    linktable &lt;- rbind(linktable, data.table(geographic_area_m49 =sel_country),
+                       fill = T)
+  }
+  
   return(linktable)
 })
 
 output$linktable &lt;-  renderRHandsontable({
   
   table &lt;- linktable_reac()
-  
+  table$percentage &lt;- as.numeric(table$percentage)
+
   rhandsontable(table, 
                 rowHeaders = NULL, width = &#39;auto&#39;, height = &#39;auto&#39;) %&gt;%
     hot_col(c(&quot;__id&quot;, &quot;__ts&quot;), colWidths = c(rep(0.1,2),rep(150,7)), readOnly = TRUE)
 })
 
 observeEvent(input$updLT, {
-  
-  updLinkTable &lt;- rhandsontable::hot_to_r(input$linktable)
 
-  changeset &lt;- Changeset(&#39;link_table&#39;)
-  AddModifications(changeset, updLinkTable)
+  updLinkTable &lt;- rhandsontable::hot_to_r(input$linktable)
+  updLinkTable &lt;- as.data.table(updLinkTable)
+  
+  if(any(!updLinkTable$flow %in% c(&#39;EXP&#39;, &#39;IMP&#39;, &#39;PRD&#39;, &#39;ALL&#39;, &#39;TRD&#39;))){
+    
+    showModal(modalDialog(
+      title = &quot;Error!&quot; ,
+      sprintf(&quot;Flow must belong to one of these options:
+              &#39;EXP&#39;, &#39;IMP&#39;, &#39;PRD&#39;, &#39;ALL&#39;, &#39;TRD&#39;&quot;)
+    ))
+    
+  } else {
+    changeset &lt;- Changeset(&#39;link_table&#39;)
+    AddModifications(changeset, updLinkTable)
+    Finalise(changeset)
+    
+    showModal(modalDialog(
+      title = &quot;Link table updated.&quot; ,
+      sprintf(&quot;The new version of the link table is now available on the SWS.&quot;)
+    ))  
+    
+  }
+  
+  
+})
+</code></pre>
+</div>
+<div id="balancing-elements-tab" class="section level3">
+<h3><span class="header-section-number">4.3.9</span> ‘Balancing elements’ tab</h3>
+<p>The ‘Balancing elements’ tab replicates the functioning of the ‘Link table’ tab but with the <code>balancing_elements</code> SWS data table.</p>
+<pre><code>
+# link table recall
+
+baltable_reac &lt;- reactive({
+  req(input$btn_year, input$btn_country, input$btn_start_year)
+  sel_country &lt;- country_input[country_input$label == input$btn_country, code]
+  where &lt;- paste(&quot;geographic_area_m49_fi = &#39;&quot;, sel_country, &quot;&#39;&quot;, sep = &quot;&quot;)
+  baltable &lt;- ReadDatatable(&#39;balancing_elements&#39;, where = where, readOnly = FALSE)
+  
+  if(nrow(baltable) == 0){
+    baltable &lt;- rbind(baltable, data.table(geographic_area_m49_fi =sel_country),
+                       fill = T)
+  }
+  
+  return(baltable)
+})
+
+output$balancingelements &lt;-  renderRHandsontable({
+  
+  table &lt;- baltable_reac()
+  
+  rhandsontable(table, 
+                rowHeaders = NULL, width = &#39;auto&#39;, height = &#39;auto&#39;) %&gt;%
+    hot_col(c(&quot;__id&quot;, &quot;__ts&quot;), colWidths = c(rep(0.1,2),rep(150,6)), readOnly = TRUE)
+})
+
+observeEvent(input$updBal, {
+
+  updbalTable &lt;- rhandsontable::hot_to_r(input$balancingelements)
+  changeset &lt;- Changeset(&#39;balancing_elements&#39;)
+  AddModifications(changeset, updbalTable)
   Finalise(changeset)
   
   showModal(modalDialog(
-    title = &quot;Link table updated.&quot; ,
-    sprintf(&quot;The new version of the link table is now available on the SWS.&quot;)
+    title = &quot;Balancing element table updated.&quot; ,
+    sprintf(&quot;The new version of is now available on the SWS.&quot;)
   ))
   
 })
 </code></pre>
 </div>
-<div id="extraction-rates-tab-1" class="section level3">
-<h3><span class="header-section-number">4.3.9</span> ‘Extraction rates’ tab</h3>
+<div id="extraction-rates-tab" class="section level3">
+<h3><span class="header-section-number">4.3.10</span> ‘Extraction rates’ tab</h3>
 <p>In the ‘reactive’ function the extraction rate data are pulled either from the SUA balanced or directly from the SWS. The data are the showed into a table in the tab the user can modify.</p>
 <pre><code># Extraction rates tab
 
@@ -2353,7 +2545,7 @@ extrR_reac &lt;- reactive({
     } else {
       R_SWS_SHARE_PATH = &quot;Z:&quot;
       SetClientFiles(&quot;/srv/shiny-server/.R/QA/&quot;)
-      GetTestEnvironment(baseUrl = &quot;https://hqlqasws1.hq.un.fao.org:8181/sws&quot;,
+      GetTestEnvironment(baseUrl = &quot;https://swsqa.aws.fao.org:8181&quot;,
                          token = tokenSuaB)
     }
 
@@ -2362,7 +2554,7 @@ extrR_reac &lt;- reactive({
     measuredElementSuaFbs = Dimension(name = &quot;measuredElementSuaFbs&quot;, 
                                       keys = &#39;5423&#39;), 
     measuredItemFaostat_L2 = Dimension(name = &quot;measuredItemFaostat_L2&quot;, 
-                                       keys = GetCodeList(&quot;FisheriesCommodities&quot;, &quot;fi_sua_balanced_control&quot;,&quot;measuredItemFaostat_L2&quot; )[,code]),
+                                       keys = GetCodeList(&quot;FisheriesCommodities&quot;, &quot;fi_sua_balanced&quot;,&quot;measuredItemFaostat_L2&quot; )[,code]),
     timePointYears = Dimension(name = &quot;timePointYears&quot;, keys = sel_years )))
   
   withProgress(message = &#39;Extraction rate data loading in progress&#39;,
@@ -2382,6 +2574,19 @@ extrR_reac &lt;- reactive({
   }
   
   
+  if(nrow(SUAbalEr) == 0){
+    
+    ny &lt;- length(sel_years)
+    
+    SUAbalEr &lt;- rbind(SUAbalEr, data.table(geographicAreaM49_fi = rep(sel_country, ny),
+                                           measuredElementSuaFbs = rep(&#39;5423&#39;, ny),
+                                           timePointYears = sel_years,
+                                           flagObservationStatus = rep(&#39;E&#39;, ny),
+                                           flagMethod = rep(&#39;f&#39;, ny)),
+                       fill = T)
+  }
+  
+  
   return(SUAbalEr)
 })
 
@@ -2389,7 +2594,7 @@ output$extrR &lt;-  renderRHandsontable({
   
   table &lt;- extrR_reac()
   
-  rhandsontable(table, rowHeaders = NULL, width = &#39;auto&#39;, height = &#39;auto&#39;) 
+  rhandsontable(table, rowHeaders = NULL, width = &#39;auto&#39;, height = &#39;auto&#39;, digits = 6) 
 })
 </code></pre>
 <p>In order to store the modification a <code>reactiveValue</code> object is created (<code>new_extr_rate</code>) and will be used in the re-processing calculations. Before updating the extraction rates, the user has to choose the type of change to perform: a single year change or a series change. In both cases, when the user presses the ‘Update’ button, the original extraction rates data are pulled from the SWS and compared with the modified table. Also the number of changes is calculated.</p>
@@ -2410,10 +2615,11 @@ observeEvent(input$updER, {
       GetTestEnvironment(baseUrl = SETTINGS[[&quot;server&quot;]],
                          token = tokenSuaB)
     }
-  } else {
+  
+    } else {
     R_SWS_SHARE_PATH = &quot;Z:&quot;
-    SetClientFiles(&quot;/srv/shiny-server/shinyFi_SUAFBS&quot;)
-    GetTestEnvironment(baseUrl = &quot;https://hqlqasws1.hq.un.fao.org:8181/sws&quot;,
+    SetClientFiles(&quot;/srv/shiny-server/.R/QA/&quot;)
+    GetTestEnvironment(baseUrl = &quot;https://swsqa.aws.fao.org:8181&quot;,
                        token = tokenSuaB)
   }
   
@@ -2423,16 +2629,18 @@ observeEvent(input$updER, {
     measuredElementSuaFbs = Dimension(name = &quot;measuredElementSuaFbs&quot;, 
                                       keys = &#39;5423&#39;), 
     measuredItemFaostat_L2 = Dimension(name = &quot;measuredItemFaostat_L2&quot;, 
-                                       keys = GetCodeList(&quot;FisheriesCommodities&quot;, &quot;fi_sua_balanced_control&quot;,&quot;measuredItemFaostat_L2&quot; )[,code]),
+                                       keys = GetCodeList(&quot;FisheriesCommodities&quot;, &quot;fi_sua_balanced&quot;,&quot;measuredItemFaostat_L2&quot; )[,code]),
     timePointYears = Dimension(name = &quot;timePointYears&quot;, keys = sel_years )))
   
   SUAbalEr &lt;- GetData(KeySUAbal)
   
   # copy to compare tables with right decimals number
-  
+
   SUAbalErComp &lt;- copy(SUAbalEr)
-  SUAbalErComp$Value &lt;- round(SUAbalErComp$Value, 4)   
+  SUAbalErComp$Value &lt;- round(SUAbalErComp$Value,2)   
   updER &lt;- rhandsontable::hot_to_r(input$extrR)
+  
+  if(nrow(SUAbalErComp) &gt; 0){
 
   changed &lt;- length(updER[Value != SUAbalErComp$Value, ]$Value)
   
@@ -2445,7 +2653,7 @@ observeEvent(input$updER, {
                                               &#39;measuredItemFaostat_L2&#39;, &#39;timePointYears&#39;),
                    all = TRUE, suffixes = c(&#39;Old&#39;, &#39;New&#39;))
     
-    eRupd[!is.na(ValueNew) &amp; ValueNew != ValueOld, c(&#39;ValueOld&#39;,
+    eRupd[!is.na(ValueNew) | ValueNew != ValueOld, c(&#39;ValueOld&#39;,
                                                      &#39;flagObservationStatusOld&#39;,
                                                      &#39;flagMethodOld&#39;) := list(ValueNew, &#39;E&#39;, &#39;f&#39;)]
     setnames(eRupd, c(&#39;ValueOld&#39;,
@@ -2491,17 +2699,39 @@ observeEvent(input$updER, {
       title = &quot;Extraction rates updated.&quot; ,
       sprintf(&quot;The new figures have been saved.&quot;)
     ))
-    
   
-    } 
- 
+    }
+  
+  
+  } else {
+    
+    if(input$radioErUpdt == 1){
+      eRupd &lt;- updER[!is.na(Value)]
+    } else if(input$radioErUpdt == 2) {
+
+      eRupd &lt;-  updER[rep(seq_len(nrow(updER[!is.na(Value)])), each = length(sel_years)), ]
+      for(i in unique(eRupd$measuredItemFaostat_L2)){
+        eRupd[measuredItemFaostat_L2 == i]$timePointYears &lt;- sel_years
+      }
+      
+    }
+    
+    showModal(modalDialog(
+      title = &quot;Extraction rates updated.&quot; ,
+      sprintf(&quot;The new figures have been saved.&quot;)
+    ))
+  }
+  
+  
   new_extr_rate$eR &lt;- eRupd[timePointYears %in% sel_years]
- 
+  
+  # SaveData(domain = &quot;FisheriesCommodities&quot;, dataset = &quot;fi_sua_balanced&quot;, data = compare)
+  
  })
 </code></pre>
 </div>
-<div id="data-validation-tab-1" class="section level3">
-<h3><span class="header-section-number">4.3.10</span> ‘Data validation’ tab</h3>
+<div id="data-validation-tab" class="section level3">
+<h3><span class="header-section-number">4.3.11</span> ‘Data validation’ tab</h3>
 <p>This tab contains all the possible combination of re-processing operations. The first lines of the file contain the object to store the different version of the SUA: the initial version (or the latest recalculated one), the latest modified one and the uploaded one (if a .csv file has been uploaded). A simple ‘workaround’ object is created to notify if a recalculation has already been performed since the launch of the shiny.</p>
 <p>The SUA table shown in the tab is the result of the last SUA balanced update and filtered according to the major group, ICS product and element buttons. Hence the code checks:</p>
 <ol style="list-style-type: decimal">
@@ -2510,11 +2740,11 @@ observeEvent(input$updER, {
 <li><p>If new extraction rates have been stored and, if available, uses them (the extraction rates can also be changed directly in this table)</p></li>
 </ol>
 <p>The table is prepared and a message appears if no data is available for the data combination.</p>
-<pre><code># Seventh tab, data validation
+<pre><code>
+# Data validation tab
 recalc_value &lt;- reactiveValues(SUAinit = data.table(),
                                SUAmodtab = data.table(),
                                SUAupload = data.table())
-
 
 workaround &lt;- reactiveValues(V = 0)
 
@@ -2533,7 +2763,8 @@ suaTab_reac &lt;- reactive({
   
   if(&#39;All&#39; %in% sel_ics){
     sel_ics_prod &lt;- as.character(l2l1[code_l1 %in% sel_group_fbs ]$code_l2)
-  } else {
+  
+    } else {
     sel_ics_prod &lt;- as.character(groups_input[label %in% sel_ics]$code)
   }
   
@@ -2552,10 +2783,30 @@ suaTab_reac &lt;- reactive({
     
     if(!is.null(SUA0)){
       ValueElements &lt;- c(&#39;5922&#39;, &#39;5930&#39;, &#39;5622&#39;, &#39;5630&#39;)
-      SUA0 &lt;- SUA0[!measuredElementSuaFbs %in% ValueElements]
+      liveBval &lt;- copy(SUA0)
+      liveBval &lt;- liveBval[measuredElementSuaFbs %in% ValueElements]
+      live_data$SUAbVal &lt;- liveBval
+    #  SUA0 &lt;- SUA0[!measuredElementSuaFbs %in% ValueElements]
       live_data$SUAb &lt;- SUA0
       recalc_value$SUAinit &lt;- SUA0
+    
+      
+      if(nrow(live_data$SUAb) == 0){ 
+        showModal(modalDialog(
+          title = &quot;No SUA data for this country. &quot;,
+          sprintf(&#39;Please select another country.&#39;)
+        ))
+        
+      }
+      
     } else {
+      if(nrow(live_data$SUAb) == 0){ 
+        showModal(modalDialog(
+          title = &quot;No SUA data for this country. &quot;,
+          sprintf(&#39;Please select another country.&#39;)
+        ))
+        
+      }
       SUA0 &lt;- live_data$SUAb
       recalc_value$SUAinit &lt;- live_data$SUAb
     }
@@ -2563,25 +2814,97 @@ suaTab_reac &lt;- reactive({
     SUA &lt;- SUA0[measuredItemFaostat_L2 %in% sel_ics_prod &amp; measuredElementSuaFbs %in% sel_element_sua , ]
     
     
-  } else {
+  
+    } else {
+    if(unique(recalc_value$SUAmodtab$geographicAreaM49) == sel_country){
 
     SUA0 &lt;- recalc_value$SUAmodtab
     SUA &lt;- SUA0[geographicAreaM49_fi == sel_country &amp;
                   measuredElementSuaFbs %in% sel_element_sua &amp;
                   measuredItemFaostat_L2 %in% sel_ics_prod &amp;
                   timePointYears %in% sel_years, ]
+    } else{
+      
+      SUA0 &lt;- reloadDataToken(data = live_data$SUAb, 
+                              keycountry = sel_country, 
+                              minyear = input$btn_start_year, 
+                              maxyear = input$btn_year,
+                              keydomain = domainComm, 
+                              keydataset = datasetSUABlive,
+                              keytoken = tokenSuaB)
+      
+      if(!is.null(SUA0)){
+        ValueElements &lt;- c(&#39;5922&#39;, &#39;5930&#39;, &#39;5622&#39;, &#39;5630&#39;)
+        liveBval &lt;- copy(SUA0)
+        liveBval &lt;- liveBval[measuredElementSuaFbs %in% ValueElements]
+        live_data$SUAbVal &lt;- liveBval
+        # SUA0 &lt;- SUA0[!measuredElementSuaFbs %in% ValueElements]
+        live_data$SUAb &lt;- SUA0
+        recalc_value$SUAinit &lt;- SUA0
+        
+        
+        if(nrow(live_data$SUAb) == 0){ 
+          showModal(modalDialog(
+            title = &quot;No SUA data for this country. &quot;,
+            sprintf(&#39;Please select another country.&#39;)
+          ))
+          
+        }
+        
+      } else {
+        if(nrow(live_data$SUAb) == 0){ 
+          showModal(modalDialog(
+            title = &quot;No SUA data for this country. &quot;,
+            sprintf(&#39;Please select another country.&#39;)
+          ))
+          
+        }
+        SUA0 &lt;- live_data$SUAb
+        recalc_value$SUAinit &lt;- live_data$SUAb
+      }
+      
+      SUA &lt;- SUA0[measuredItemFaostat_L2 %in% sel_ics_prod &amp; measuredElementSuaFbs %in% sel_element_sua , ]
+    }
     
   }
   
   tab2show &lt;- merge(SUA, l2l1[ , .(code_l1, code_l2)], 
                     by.x = &#39;measuredItemFaostat_L2&#39;, by.y = &#39;code_l2&#39;)
-  
+ # browser()
   if(nrow(new_extr_rate$eR) &gt; 0){
-    updER &lt;- new_extr_rate$eR[measuredItemFaostat_L2 %in% sel_ics_prod &amp; timePointYears %in% sel_years]
+    updER &lt;- new_extr_rate$eR
+
+    for(i in 1:nrow(updER)){
+     updER[i , code_l1 := l2l1[code_l2 == updER[i,]$measuredItemFaostat_L2]$code_l1 ]
+    }
+
+    if(nrow(tab2show[measuredElementSuaFbs == &#39;5423&#39;,]) &gt; 0){ # == nrow(updER)){
     
-    tab2show[measuredElementSuaFbs == &#39;5423&#39;, c(&quot;Value&quot;, 
-                                                &quot;flagMethod&quot;):= list(updER$Value, updER$flagMethod)]
-  }
+      Er &lt;- merge(tab2show[measuredElementSuaFbs == &#39;5423&#39;,], updER,
+                  by = c(&#39;geographicAreaM49_fi&#39;, &#39;measuredItemFaostat_L2&#39;, 
+                           &#39;measuredElementSuaFbs&#39;, &#39;timePointYears&#39;, 
+                           &#39;code_l1&#39;), all = T, suffixes = c(&#39;&#39;, &#39;Upd&#39;))
+      
+      Er[is.na(Value), Value := ValueUpd ]
+      Er[!is.na(ValueUpd) &amp; !is.na(Value) &amp; Value != ValueUpd, Value := ValueUpd ]
+      Er[, c(&quot;ValueUpd&quot;, 
+             &quot;flagObservationStatusUpd&quot;,
+             &quot;flagMethodUpd&quot;) := NULL]
+      
+      tab2show &lt;- rbind(tab2show[measuredElementSuaFbs != &#39;5423&#39;,], Er[measuredItemFaostat_L2 %in% sel_ics_prod &amp; timePointYears %in% sel_years])
+      
+      
+    # tab2show[measuredElementSuaFbs == &#39;5423&#39;, c(&quot;Value&quot;, 
+    #                                             &quot;flagMethod&quot;):= list(updER$Value, updER$flagMethod)]
+    } else {
+      
+      tab2show &lt;- rbind(tab2show[measuredElementSuaFbs != &#39;5423&#39;,], updER[measuredItemFaostat_L2 %in% sel_ics_prod &amp; timePointYears %in% sel_years])
+      
+      # rbind(tab2show, updER[measuredItemFaostat_L2 %in% sel_ics_prod &amp; timePointYears %in% sel_years])
+      
+    }
+      
+      }
   
   
   setnames(tab2show, c(&#39;geographicAreaM49_fi&#39;, &#39;measuredItemFaostat_L2&#39;, 
@@ -2601,7 +2924,7 @@ suaTab_reac &lt;- reactive({
     nrow(tab2show) &gt; 0,
     &#39;No data to show for this product.&#39;
   ))
-  
+ 
   sua_tab_out &lt;- dcast(tab2show, Country + FBSgroup + ICSprod + idx + Element ~ Year, value.var = c(&quot;Value&quot;, &quot;F&quot;))
   
   
@@ -2622,35 +2945,47 @@ suaTab_reac &lt;- reactive({
 output$sua_tab7 &lt;-  renderRHandsontable({
   req(input$btn_group_fbs_tab7, input$btn_ics_prod_tab7, input$btn_sua_elem_tab7,
       input$btn_country, input$btn_year, input$btn_start_year)
-  
+  sel_country &lt;- country_input[country_input$label == input$btn_country, code]
   sua_tab_out &lt;- suaTab_reac()$sua2show
   
   validate(need(
     nrow(sua_tab_out) &gt; 0,
     &#39;No data to show for this product.&#39;
   ))
-  
+ 
   
   col2hide &lt;-  seq(6, ncol(sua_tab_out), by = 2)
   colvalue &lt;- seq(5, ncol(sua_tab_out) - 1, by = 2)
   
-  rhandsontable(sua_tab_out, rowHeaders = NULL, width = &#39;auto&#39;, height = &#39;auto&#39;) %&gt;%
+  rhandsontable(sua_tab_out, rowHeaders = NULL, width = &#39;auto&#39;, height = &#39;auto&#39;, digits = 6) %&gt;%
     hot_cols(fixedColumnsLeft = 4)  # number of columns to freeze = 4
+  
+  #  , renderer = &quot;
+  # function (instance, td, row, col, prop, value, cellProperties) {
+  #   Handsontable.renderers.NumericRenderer.apply(this, arguments);
+  #   if (value == &#39;&#39;) {
+  #   td.style.background = &#39;lightgreen&#39;;
+  #   }
+  #  }&quot;
+  #   ) 
+  
   
 })
 
 </code></pre>
 <p>The availability table just below the SUA is now built using the same formula as in the plugin, i.e. using the <code>element_sign_table</code> data table. The availability table is reactive and only considers the selected elements, i.e. the results should be zero if the SUA is balanced and all the SUA elements are selected.</p>
-<pre><code># -- Availability table ---- 
+<pre><code>
+# -- Availability table ---- 
 output$textAv &lt;- renderText({
   req(input$btn_group_fbs_tab7,
-      input$btn_ics_prod_tab7) # input$btn_country, input$btn_year, input$btn_start_year,
+      input$btn_ics_prod_tab7, input$btn_country, input$btn_year, input$btn_start_year)
   
   &quot;Availability table:&quot;
 })
 
 output$availability &lt;- renderRHandsontable({
-  
+  req(input$btn_country, input$btn_year, input$btn_start_year,input$btn_group_fbs_tab7,
+      input$btn_ics_prod_tab7)
   if(is.null(input$sua_tab7)) return(NULL)
   
   tab_updated &lt;- rhandsontable::hot_to_r(input$sua_tab7)
@@ -2664,7 +2999,7 @@ output$availability &lt;- renderRHandsontable({
   
   # Now only considering production, import and export to compute availability
   # then after calculations we compare official food processing data with calculations
-
+  # Actually not expanded
   sua_avail &lt;- merge(tab2calc, elementSignTable[ , .(measured_element, sign)], 
                      by.x = &#39;Element&#39;, by.y = &quot;measured_element&quot;, all.x = TRUE)
   
@@ -2675,13 +3010,14 @@ output$availability &lt;- renderRHandsontable({
   avail2show &lt;- unique(sua_avail)
 
   avail2show &lt;- dcast(avail2show, Country + FBSgroup + ICSprod  ~ Year, value.var = c(&quot;availability&quot;))
-  rhandsontable(avail2show, rowHeaders = NULL, width = &#39;auto&#39;, height = &#39;auto&#39;)
+  rhandsontable(avail2show, rowHeaders = NULL, width = &#39;auto&#39;, height = &#39;auto&#39;, digits = 6) # %&gt;%
+  #   hot_col(&#39;availability&#39;, renderer = &#39;green&#39;)
   
 })
-
 </code></pre>
 <p>This next chunk correspond to the upload and the download buttons in the tab. The code is simple as no additional operation is expected. The shiny download the table on the tab <em>tel-quel</em> and upload the file <em>tel-quel</em> it is then important not to modify the column structure of the downloaded file.</p>
-<pre><code># -- Upload/Download ----
+<pre><code>
+# -- Upload/Download ----
 
 output$contents &lt;- renderTable({
   
@@ -2690,11 +3026,15 @@ output$contents &lt;- renderTable({
   if (is.null(inFile))
     return(NULL)
   
+  # req(input$updatedSUA)
+  
   tryCatch(
     {
       df &lt;- read.csv(inFile$datapath,
                      header = TRUE,
-                     colClasses = &quot;character&quot;
+                     colClasses = &quot;character&quot;#input$header #,
+                     #   sep = input$sep,
+                     #  quote = input$quote
       )
     },
     error = function(e) {
@@ -2725,19 +3065,23 @@ output$downloadData &lt;- downloadHandler(
 )
 </code></pre>
 <p>The food processing results stored into the files by the plugin are now displayed in this tab in different tab depending in the level of food processing unbalance. The structure of the code is the same for each part. The stored object is recalled and displayed in a different table. These tables are not updated by the shiny the user has now the complete control of all the imbalances and it is assumed that the user is fixing all the unbalances there is therefore no need to re-update these auxiliary files. In order to not delete all controls the imbalance data tables in SWS will be updated.</p>
-<pre><code># -- FP Feedback ----
+<pre><code>
+# -- FP Feedback ----
 
 feedback &lt;- reactiveValues(FP = list())
 
 output$FPtab1 &lt;- DT::renderDataTable( server = FALSE, {
-  req(input$btn_group_fbs_tab7, input$btn_ics_prod_tab7, input$btn_sua_elem_tab7) #,
-  # input$btn_country, input$btn_year, input$btn_start_year)
-  feedback$FP &lt;- FPfile
-  tab1 &lt;- feedback$FP$primary 
+  req(input$btn_group_fbs_tab7, input$btn_ics_prod_tab7, input$btn_sua_elem_tab7,
+   input$btn_country, input$btn_year, input$btn_start_year)
+
+  # feedback$FP &lt;- FPfile
+  
+  tab1 &lt;- FPfile$primary # feedback$FP$primary$tab
   sel_country &lt;- country_input[country_input$label == input$btn_country, code]
-  if(!is.null(tab1) |nrow(tab1) &gt; 0){
-    tab1$Value &lt;- round(tab1$Value,3)
-    DT::datatable(tab1[geographicAreaM49_fi == sel_country], extensions = &#39;Buttons&#39;, filter = &#39;top&#39;,
+
+  if(nrow(tab1) &gt; 0){
+    tab1$value &lt;- round(tab1$value,3)
+    DT::datatable(tab1[geographicaream49_fi == sel_country], extensions = &#39;Buttons&#39;, filter = &#39;top&#39;,
                   rownames = FALSE, options = list(pageLength = 25,
                                                    dom = &#39;Bfrtip&#39;,
                                                    buttons = c(&#39;csv&#39;, &#39;excel&#39;, &#39;pdf&#39;)))
@@ -2752,72 +3096,81 @@ output$FPtab1 &lt;- DT::renderDataTable( server = FALSE, {
   
 })
 
+output$FPinsuff &lt;- DT::renderDataTable( server = FALSE, {
+  req(input$btn_group_fbs_tab7, input$btn_ics_prod_tab7, input$btn_sua_elem_tab7,
+      input$btn_country, input$btn_year, input$btn_start_year)
+  
+  #feedback$FP &lt;- FPfile
+
+  tab1 &lt;- FPfile$secondaryTot # feedback$FP$
+  tab1$availablequantity &lt;- round(tab1$availablequantity,3)
+  tab1$quantity2cover &lt;- round(tab1$quantity2cover,3)
+  
+  sel_country &lt;- country_input[country_input$label == input$btn_country, code]
+  
+ if(nrow(tab1) &gt; 0){
+    DT::datatable(tab1[geographicaream49_fi == sel_country], extensions = &#39;Buttons&#39;, filter = &#39;top&#39;,
+                  rownames = FALSE, options = list(pageLength = 25,
+                                                   dom = &#39;Bfrtip&#39;,
+                                                   buttons = c(&#39;csv&#39;, &#39;excel&#39;, &#39;pdf&#39;)))
+  } else {
+    
+     DT::datatable(data.table(), extensions = &#39;Buttons&#39;, filter = &#39;top&#39;,
+                   rownames = FALSE, options = list(pageLength = 25,
+                                                    dom = &#39;Bfrtip&#39;,
+                                                    buttons = c(&#39;csv&#39;, &#39;excel&#39;, &#39;pdf&#39;)))
+   }
+  
+})
 
 output$FPsecPar &lt;- DT::renderDataTable( server = FALSE, {
-  req(input$btn_group_fbs_tab7, input$btn_ics_prod_tab7, input$btn_sua_elem_tab7) #,
-  #input$btn_country, input$btn_year, input$btn_start_year)
+  req(input$btn_group_fbs_tab7, input$btn_ics_prod_tab7, input$btn_sua_elem_tab7,
+   input$btn_country, input$btn_year, input$btn_start_year)
   sel_country &lt;- country_input[country_input$label == input$btn_country, code]
   
-  tab2 &lt;- feedback$FP$secondary 
-  tab3 &lt;- feedback$FP$tertiary 
-  tab4 &lt;- feedback$FP$quaternary 
+  tab2 &lt;- FPfile$secondary # feedback$FP$secondary$tab
+  tab3 &lt;- FPfile$tertiary # feedback$FP$tertiary$tab
+  tab4 &lt;- FPfile$quaternary # feedback$FP$quaternary$tab
   
-  if(!is.null(tab4) &amp; !is.null(tab3) &amp; !is.null(tab2)){
+  # if(!is.null(tab4) &amp; !is.null(tab3) &amp; !is.null(tab2)){
     
-    tab &lt;- rbind(tab2, tab3)
-    tab &lt;- rbind(tab, tab4)
-    
-    DT::datatable(tab[geographicAreaM49_fi == sel_country], extensions = &#39;Buttons&#39;, filter = &#39;top&#39;,
+    tab &lt;- rbind(tab2, tab3, tab4)
+    tab$quantity2cover &lt;- round(tab$quantity2cover, 3)
+    # tab &lt;- rbind(tab, tab4)
+  if(nrow(tab) &gt; 0){
+    DT::datatable(tab[geographicaream49_fi == sel_country], extensions = &#39;Buttons&#39;, filter = &#39;top&#39;,
                   rownames = FALSE, options = list(pageLength = 25,
                                                    dom = &#39;Bfrtip&#39;,
                                                    buttons = c(&#39;csv&#39;, &#39;excel&#39;, &#39;pdf&#39;)))
-    
-  } else if(is.null(tab4) &amp; !is.null(tab3) &amp; !is.null(tab2)) {
-    
-    tab &lt;- rbind(tab2, tab3)
-    
-    DT::datatable(tab[geographicAreaM49_fi == sel_country], extensions = &#39;Buttons&#39;, filter = &#39;top&#39;,
-                  rownames = FALSE, options = list(pageLength = 25,
-                                                   dom = &#39;Bfrtip&#39;,
-                                                   buttons = c(&#39;csv&#39;, &#39;excel&#39;, &#39;pdf&#39;)))
-  } else if(is.null(tab4) &amp; is.null(tab3) &amp; !is.null(tab2)) {
-    
-    tab &lt;- tab2
-    
-    DT::datatable(tab[geographicAreaM49_fi == sel_country], extensions = &#39;Buttons&#39;, filter = &#39;top&#39;,
-                  rownames = FALSE, options = list(pageLength = 25,
-                                                   dom = &#39;Bfrtip&#39;,
-                                                   buttons = c(&#39;csv&#39;, &#39;excel&#39;, &#39;pdf&#39;)))
-    
-  } else {
-    
-    DT::datatable(data.table(), extensions = &#39;Buttons&#39;, filter = &#39;top&#39;,
-                  rownames = FALSE, options = list(pageLength = 25,
-                                                   dom = &#39;Bfrtip&#39;,
-                                                   buttons = c(&#39;csv&#39;, &#39;excel&#39;, &#39;pdf&#39;)))
-  }
+   } else {
+     
+     DT::datatable(data.table(), extensions = &#39;Buttons&#39;, filter = &#39;top&#39;,
+                   rownames = FALSE, options = list(pageLength = 25,
+                                                    dom = &#39;Bfrtip&#39;,
+                                                    buttons = c(&#39;csv&#39;, &#39;excel&#39;, &#39;pdf&#39;)))
+   }
 })
 
-
 output$FPtabUncov &lt;- DT::renderDataTable( server = FALSE, {
-  req(input$btn_group_fbs_tab7, input$btn_ics_prod_tab7, input$btn_sua_elem_tab7)
+  req(input$btn_group_fbs_tab7, input$btn_ics_prod_tab7, input$btn_sua_elem_tab7,
+     input$btn_country, input$btn_year, input$btn_start_year)
   sel_country &lt;- country_input[country_input$label == input$btn_country, code]
-  
-  tabUncov &lt;- feedback$FP$NotCovered
-  
+
+  tabUncov &lt;- FPfile$NotCovered
+
   if(nrow(tabUncov) &gt; 0){
-    DT::datatable(tabUncov[geographicAreaM49_fi == sel_country], extensions = &#39;Buttons&#39;, filter = &#39;top&#39;,
+    DT::datatable(tabUncov[geographicaream49_fi == sel_country], extensions = &#39;Buttons&#39;, filter = &#39;top&#39;,
                   rownames = FALSE, options = list(pageLength = 25,
                                                    dom = &#39;Bfrtip&#39;,
                                                    buttons = c(&#39;csv&#39;, &#39;excel&#39;, &#39;pdf&#39;)))
-  } else {
-    
-    DT::datatable(data.table(), extensions = &#39;Buttons&#39;, filter = &#39;top&#39;,
-                  rownames = FALSE, options = list(pageLength = 25,
-                                                   dom = &#39;Bfrtip&#39;,
-                                                   buttons = c(&#39;csv&#39;, &#39;excel&#39;, &#39;pdf&#39;)))
-    
-  }
+   } else {
+     
+     DT::datatable(data.table(), extensions = &#39;Buttons&#39;, filter = &#39;top&#39;,
+                   rownames = FALSE, options = list(pageLength = 25,
+                                                    dom = &#39;Bfrtip&#39;,
+                                                    buttons = c(&#39;csv&#39;, &#39;excel&#39;, &#39;pdf&#39;)))
+     
+   }
   
 })
 
@@ -2844,7 +3197,8 @@ observeEvent(input$save, { # Opening Observe event
 
 </code></pre>
 <p>If calculations can start, the population data are loaded, if not already done.</p>
-<pre><code> # Load population data (almost always useful)
+<pre><code>
+  # Load population data (almost always useful)
   if(nrow(live_data$Pop) == 0)
   {
     elemKeys &lt;- &quot;511&quot;
@@ -2880,9 +3234,10 @@ observeEvent(input$save, { # Opening Observe event
   } else 
   {
     popSWS &lt;- live_data$Pop
-  }</code></pre>
+  }
+  </code></pre>
 <p>The user also have to choose what kind of recalculation to perform. By default the ‘No recalculation’ is selected and if the user starts recalculations without choosing any type of re-calculation a message appears reminding it. The option of ‘Complete’ recalculation must be chosen only in case of modification in the Global production or Commodity datasets.</p>
-<pre><code># -- No recalculation ----
+<pre><code> # -- No recalculation ----
   if(input$reprocess == &#39;No&#39;)
   {# Opening input$reprocess == &#39;No&#39;
     
@@ -2893,16 +3248,18 @@ observeEvent(input$save, { # Opening Observe event
             &#39;Only SUAbalanced&#39; if you want to see changes at SUA level (only in this tab);
             &#39;Since SUAbalanced&#39; if there is no change at GP and CDB level but you want to see effects at FBS level;
             &#39;Only Nutrients &amp; FBS&#39; if you want to take the SUA as it appears in this tab with no change and recalculate nutrients and standardization.&quot;)
-    ))</code></pre>
+    ))
+    </code></pre>
 <p>If the option ‘Complete’ is chosen then the whole process done in the plugin is reproduced in this part with the help of 6 recalculation functions: ‘GPrecalc’, ‘CDBrecalc’, ‘SUAunbalCalc’, ‘SUAbalCalc’, ‘SUAnutrCalc’, ‘FBScalc’ described further on in the documentation. The first step is to load and process the Global production and the Commodity datasets with the updated information from the corresponding tabs.</p>
-<pre><code>    # -- Complete recalculation ----
+<pre><code>
+   # -- Complete recalculation ----
     
   } else if (input$reprocess == &#39;Complete&#39;)
   {  # Closing input$reprocess == &#39;No&#39; &amp; Opening input$reprocess == &#39;Complete&#39;
-    
+  
     newMapGP &lt;- updated_mappings$GP
     newMapCDB &lt;-  updated_mappings$CDB
-    
+ 
     showModal(modalDialog(
       title = &quot;Recalculating!&quot; ,
       sprintf(&quot;Please wait for the calculations to be completed.&quot;)
@@ -2918,12 +3275,12 @@ observeEvent(input$save, { # Opening Observe event
                    map_asfis &lt;- ReadDatatable(&#39;map_asfis&#39;)
                    setnames(map_asfis, c(&quot;asfis&quot;), c(&quot;fisheriesAsfis&quot;))
                    
-                   #-- Needed datasets ----
+                   #++ Needed datasets ----
                    sel_country &lt;- country_input[country_input$label == input$btn_country, code]
                    sel_years &lt;- as.character(as.numeric(input$btn_start_year):as.numeric(input$btn_year))
                    ## Get global production (from Production environment)
                    
-                   #-- Get whole Global production needed ----
+                   #++ Get whole Global production needed ----
                    
                    
                    if(nrow(InitialDatasets$GP) == 0)
@@ -2962,6 +3319,7 @@ observeEvent(input$save, { # Opening Observe event
                    # Aggregate by fisheriesCatchArea
                    # Convert flags into ordinal factor so that simple aggregation is possible
                    # The function aggregateObservationFlag is too slow so flag are transformed into factors
+                   globalProduction[geographicAreaM49_fi %in% c(&#39;830&#39;,&#39;833&#39;), geographicAreaM49_fi := &#39;826&#39;]
                    
                    globalProduction$flagObservationStatus &lt;- factor(globalProduction$flagObservationStatus, 
                                                                     levels = c(&#39;M&#39;, &#39;O&#39;, &#39;N&#39;, &#39;&#39;, &#39;X&#39;, &#39;T&#39;, &#39;E&#39;, &#39;I&#39;), 
@@ -2982,16 +3340,14 @@ observeEvent(input$save, { # Opening Observe event
                    
                    # Hard code change from FI_001 to 5510, both are Production in tonnes.
                    globalProduction$measuredElement &lt;- ifelse(globalProduction$measuredElement == &quot;FI_001&quot;, &quot;5510&quot;, globalProduction$measuredElement)
-
-
-                  #-- Start processing global production ----
+                   
+                   #++ Start processing global production ----
                    
                    newGP &lt;- GPrecalc(GP = globalProduction, map_asfis = map_asfis, new_map_asfis = newMapGP, year = input$btn_year)
-                           
+                   
                    Sys.sleep(0.1)
                    incProgress(0.3) 
-
-                   #-- Get Commodities data ----
+                   #++ Get Commodities data ----
                    
                    if(nrow(InitialDatasets$CDB) == 0)
                    {
@@ -3018,6 +3374,8 @@ observeEvent(input$save, { # Opening Observe event
                                     Sys.sleep(0.75)
                                     incProgress(0.95)
                                   })
+                     
+                     commodityDB[geographicAreaM49_fi %in% c(&#39;830&#39;,&#39;833&#39;), geographicAreaM49_fi := &#39;826&#39;]
                      commodityDB$flagObservationStatus &lt;- factor(commodityDB$flagObservationStatus,
                                                                  levels = c(&#39;M&#39;, &#39;O&#39;, &#39;N&#39;, &#39;&#39;, &#39;X&#39;, &#39;T&#39;, &#39;E&#39;, &#39;I&#39;), 
                                                                  ordered = TRUE)
@@ -3035,7 +3393,7 @@ observeEvent(input$save, { # Opening Observe event
                      # Isolate prices (not entering all the processing)
                      commodityDBValue &lt;- copy(commodityDB)
                      commodityDBValue &lt;- commodityDBValue[measuredElement %in% ValueElements]
-                     commodityDB &lt;- commodityDB[!measuredElement %in% ValueElements]
+                    # commodityDB &lt;- commodityDB[!measuredElement %in% ValueElements]
                      
                      InitialDatasets$CDB &lt;- commodityDB
                      InitialDatasets$CDBVal &lt;- commodityDBValue
@@ -3068,6 +3426,7 @@ observeEvent(input$save, { # Opening Observe event
                                     incProgress(0.95)
                                   })
                      
+                     commodityDB[geographicAreaM49_fi %in% c(&#39;830&#39;,&#39;833&#39;), geographicAreaM49_fi := &#39;826&#39;]
                      commodityDB$flagObservationStatus &lt;- factor(commodityDB$flagObservationStatus,
                                                                  levels = c(&#39;M&#39;, &#39;O&#39;, &#39;N&#39;, &#39;&#39;, &#39;X&#39;, &#39;T&#39;, &#39;E&#39;, &#39;I&#39;), 
                                                                  ordered = TRUE)
@@ -3085,7 +3444,7 @@ observeEvent(input$save, { # Opening Observe event
                      # Isolate prices (not entering all the processing)
                      commodityDBValue &lt;- copy(commodityDB)
                      commodityDBValue &lt;- commodityDBValue[measuredElement %in% ValueElements]
-                     commodityDB &lt;- commodityDB[!measuredElement %in% ValueElements]
+                    # commodityDB &lt;- commodityDB[!measuredElement %in% ValueElements]
                      
                      InitialDatasets$CDB &lt;- commodityDB
                      InitialDatasets$CDBVal &lt;- commodityDBValue
@@ -3097,16 +3456,20 @@ observeEvent(input$save, { # Opening Observe event
                    
   
                    
-                   #-- Start processing commodity DB ----
-                   newCDB &lt;- CDBrecalc(CDB = commodityDB, map_isscfc = map_isscfc, new_map_isscfc = newMapCDB, year = input$btn_year)
+                   #++ Start processing commodity DB ----
+                   newCDB &lt;- CDBrecalc(CDB = commodityDB,
+                                       map_isscfc = map_isscfc,
+                                       new_map_isscfc = newMapCDB,
+                                       year = input$btn_year)
                    
                    Sys.sleep(0.1)
                    incProgress(0.45) 
-
 </code></pre>
 <p>After the two initial datasets have been processed the SUA unbalanced is compiled with the ‘SUAunbalCalc’ function and stored in the ‘SUAunbal’ object. The just modified SUA is the saved into the ‘modifiedSUA’ object, this can come either directly from the shiny app tab or from an uploaded file, depending on the button selected by the user. Once the ‘modifiedSUA’ object is ready it is compared with the latest SUA save, the ‘SUAinit’ object. Now previous and current modifications have been merged together they are compared with the just calculated SUA unbalanced by merging the two SUA. Now the value of the newly updated SUA prevail on the SUA unbalanced except for the primary elements (production, import and export) that might have changed due to mapping changes.</p>
-<pre><code>                 #-- SUA unbalanced ----
+<pre><code>
+                   #++ SUA unbalanced ----
                    
+            
                    SUAunbalResults &lt;- SUAunbalCalc(globalProductionAggr = newGP, commodityDBAggr = newCDB)
                    
                    SUAunbal &lt;- SUAunbalResults$SUAunbal
@@ -3127,12 +3490,12 @@ observeEvent(input$save, { # Opening Observe event
                      setnames(modifiedSUA, c(&#39;Country&#39;, &#39;ICSprod&#39;, &#39;Element&#39;),
                               c(&#39;geographicAreaM49_fi&#39;, &#39;measuredItemFaostat_L2&#39;, &#39;measuredElementSuaFbs&#39;))
                      
-                     modifiedSUA &lt;- modifiedSUA[!measuredElementSuaFbs %in% ValueElements]
+                   #  modifiedSUA &lt;- modifiedSUA[!measuredElementSuaFbs %in% ValueElements]
                      
                    } else if(input$csv_online == 2)
                    {
                      
-                     #-- Pulling uploaded file ----
+                     #++ Pulling uploaded file ----
                      modifiedSUA0 &lt;- recalc_value$SUAupload
                      
                      setnames(modifiedSUA0, names(modifiedSUA0)[c(1,3,4)], c(&#39;geographicAreaM49_fi&#39;,
@@ -3157,19 +3520,23 @@ observeEvent(input$save, { # Opening Observe event
                                          na.rm = TRUE)
                      
                      modifiedSUA &lt;- as.data.table(modifiedSUA)
+                    
                      modifiedSUA$Value &lt;- as.numeric(modifiedSUA$Value)
                      
                    }
                    
                    modifiedSUA &lt;- modifiedSUA[!measuredElementSuaFbs %in% elkeyNot2consider,]
-                   modifiedSUA &lt;- modifiedSUA[!measuredElementSuaFbs %in% ValueElements,]
+                  # modifiedSUA &lt;- modifiedSUA[!measuredElementSuaFbs %in% ValueElements,]
+                   modifiedSUA &lt;- modifiedSUA[!measuredElementSuaFbs %in% &#39;5023&#39;,]
                    
                    # First compare what changed with respect to the original table
                    
                    if(nrow(recalc_value$SUAmodtab) == 0){
                      SUAinit &lt;- recalc_value$SUAinit[!measuredElementSuaFbs %in% elkeyNot2consider,]
+                     SUAinit &lt;- SUAinit[measuredElementSuaFbs != &#39;5023&#39;]
                    } else {
                      SUAinit &lt;- recalc_value$SUAmodtab[!measuredElementSuaFbs %in% elkeyNot2consider,]
+                     SUAinit &lt;- SUAinit[measuredElementSuaFbs != &#39;5023&#39;]
                    }
                    
                    SUAcomp &lt;- merge(SUAinit, modifiedSUA, 
@@ -3194,10 +3561,14 @@ observeEvent(input$save, { # Opening Observe event
                                         by = c(&#39;geographicAreaM49_fi&#39;, &#39;measuredItemFaostat_L2&#39;, 
                                                &#39;measuredElementSuaFbs&#39;, &#39;timePointYears&#39;), 
                                         all = TRUE, suffixes = c(&#39;&#39;,&#39;Mod&#39;))
-                   
-                   SUAunbalMod &lt;- SUAunbalMod[!measuredElementSuaFbs %in% primaryEl ][Value != ValueMod  | is.na(Value),
-                                                c(&#39;Value&#39;, &#39;flagObservationStatus&#39;, &#39;flagMethod&#39;) := list(ValueMod, flagObservationStatusMod,
+                
+                   SUAprimMod &lt;- SUAunbalMod[ measuredElementSuaFbs %in% primaryEl]
+                  
+                   SUAsecMod &lt;- SUAunbalMod[!measuredElementSuaFbs %in% primaryEl] 
+                   SUAsecMod &lt;- SUAsecMod[Value != ValueMod  | is.na(Value),
+                                          c(&#39;Value&#39;, &#39;flagObservationStatus&#39;, &#39;flagMethod&#39;) := list(ValueMod, flagObservationStatusMod,
                                                                                                           flagMethodMod)]
+                   SUAunbalMod &lt;- rbind(SUAprimMod, SUAsecMod)
                    
                    # SUAunbalMod[round(Value, 2) != round(ValueMod, 2),
                    #           c(&#39;Value&#39;, &#39;flagObservationStatus&#39;, &#39;flagMethod&#39;) := list(ValueMod, flagObservationStatusMod,
@@ -3207,63 +3578,72 @@ observeEvent(input$save, { # Opening Observe event
                    
                    
                    Sys.sleep(0.1)
-                   incProgress(0.5)</code></pre>
+                   incProgress(0.5)
+                   </code></pre>
 <p>The new extraction rates are stored in a new object and the SUA balanced calculation are performed with the ‘SUAbalCalc’ function. Then the SUA with nutrients and the two FBS versions are also compiled with their corresponding functions. The new objects are then stored in the <code>recalc_value</code> and the <code>updated_data</code> objects.</p>
 <pre><code>
-#-- SUA balanced ----
-
-eR &lt;- SUAunbalMod[measuredElementSuaFbs == &#39;5423&#39;]
-
-# validate(
-#   need(length(input$radioErVSinput == 1),
-#        &#39;Choose only to update Extraction rates or Input&#39;
-#        )
-# )
-
-primary &lt;- unique(map_asfis$ics)
-SUAunbalMod &lt;- SUAunbalMod[measuredElementSuaFbs != &#39;5166&#39;]
-SUAbalResults &lt;- SUAbalCalc(SUA = SUAunbalMod, eR = eR, use = input$radioErVSinput)
-SUAbal &lt;- SUAbalResults$SUA
-newMessages &lt;- SUAbalResults$msg
-FPproblems &lt;- SUAbalResults$FPproblems$NotCovered
-SecNegAv &lt;- SUAbalResults$NegAv
-updated_table$NegAv &lt;- SecNegAv
-updated_table$FPproblems &lt;- FPproblems
-
-# Compare with modifiable table
-Sys.sleep(0.1) 
-incProgress(0.65) 
-
-SUAwithNutr &lt;- SUAnutrCalc(SUAbalAvail = SUAbal, popSWS = popSWS)
-recalc_value$SUAmodtab &lt;- SUAwithNutr
-Sys.sleep(0.1) 
-incProgress(0.80)
-
-#-- FBS ----
-
-FBS &lt;- FBScalc(SUA2save = SUAwithNutr, popSWS = popSWS)
-
-faostatFBS &lt;- FBS$faostat
-fiasFBS &lt;- FBS$fias
-Sys.sleep(0.1) 
-incProgress(0.95)
+                   #++ SUA balanced ----
+                   
+                   eR &lt;- SUAunbalMod[measuredElementSuaFbs == &#39;5423&#39;]
+                   
+                   # validate(
+                   #   need(length(input$radioErVSinput == 1),
+                   #        &#39;Choose only to update Extraction rates or Input&#39;
+                   #        )
+                   # )
+      
+                   primary &lt;- unique(map_asfis$ics)
+                   SUAunbalMod &lt;- SUAunbalMod[measuredElementSuaFbs != &#39;5166&#39;]
+                   SUAbalResults &lt;- SUAbalCalc(SUA = SUAunbalMod, eR = eR, use = input$radioErVSinput)
+                   SUAbal &lt;- SUAbalResults$SUA
+                   SUAbal[measuredElementSuaFbs %in% c(&#39;5630&#39;, &#39;5930&#39;),flagMethod := &#39;c&#39;]
+                   
+                   FPfile &lt;&lt;- SUAbalResults$FPproblems
+                   
+                   newMessages &lt;- SUAbalResults$msg
+                   FPproblems &lt;- SUAbalResults$FPproblems$NotCovered
+                   SecNegAv &lt;- SUAbalResults$NegAv
+                   updated_table$NegAv &lt;- SecNegAv
+                   updated_table$FPproblems &lt;- FPproblems
+                   
+                   # Compare with modifiable table
+                   Sys.sleep(0.1) 
+                   incProgress(0.65) 
+                   
+                   SUAwithNutrList &lt;- SUAnutrCalc(SUAbalAvail = SUAbal, popSWS = popSWS)
+                   
+                   recalc_value$SUAmodtab &lt;- SUAwithNutrList$SUA2save
+                   SUAwithNutr &lt;- SUAwithNutrList$SUA2save
+                   foodPercapita &lt;- SUAwithNutrList$foodPercapita
+                   Sys.sleep(0.1) 
+                   incProgress(0.80)
+                   
+                   #++ FBS ----
+                   
+                   FBS &lt;- FBScalc(SUA2save = rbind(SUAwithNutr, foodPercapita), popSWS = popSWS)
+                
+                   faostatFBS &lt;- FBS$faostat
+                   fiasFBS &lt;- FBS$fias
+                   Sys.sleep(0.1) 
+                   incProgress(0.95)
                  })
-                 
-                 #-- New SUA ----
-                 updated_data$SUAunbal &lt;- SUAunbal
-                 updated_data$SUAbal &lt;- SUAwithNutr
-                 updated_data$FBSfaostat &lt;- faostatFBS
-                 updated_data$FBSfias &lt;- fiasFBS
-                 
-                 showModal(modalDialog(
-                 title = &quot;Recalculation completed!&quot; ,
-                 sprintf(&quot;Please check the new results.&quot;, newMessages$msg1, newMessages$msg2, newMessages$msg3)
-                 ))
-                 
-                 workaround$V &lt;- 1
-                 </code></pre>
+    
+    #++ New SUA ----
+    updated_data$SUAunbal &lt;- SUAunbal
+    updated_data$SUAbal &lt;- SUAwithNutr
+    updated_data$FBSfaostat &lt;- faostatFBS
+    updated_data$FBSfias &lt;- fiasFBS
+    
+    showModal(modalDialog(
+      title = &quot;Recalculation completed!&quot; ,
+      sprintf(&quot;Please check the new results.&quot;, newMessages$msg1, newMessages$msg2, newMessages$msg3)
+    ))
+    
+    workaround$V &lt;- 1
+    </code></pre>
 <p>If only the SUA recalculation is wanted what the code does is to take the SUA unbalanced, either from SWS or from the ‘live_data’ object compare it with the ‘SUA2replace’ object (merge between ‘modifiedSUA’ and ‘SUAinit’ as in the ‘Complete’ recalculation case) and update it with the newest values. The SUA balanced and SUA with nutrients are the calculated and stored as new SUA. Only the new SUA balanced will be stored.</p>
-<pre><code>  # -- Only SUA balanced recalculation ----
+<pre><code>
+    # -- Only SUA balanced recalculation ----
     
   } else if(input$reprocess == &#39;SUAb&#39;)
   { ## Closing input$reprocess == &#39;Complete&#39; &amp; Opening input$reprocess == &#39;SUAb&#39;
@@ -3290,7 +3670,7 @@ incProgress(0.95)
                    
                    if(!is.null(SUAunbal)){
                      ValueElements &lt;- c(&#39;5922&#39;, &#39;5930&#39;, &#39;5622&#39;, &#39;5630&#39;)
-                     SUAunbal &lt;- SUAunbal[!measuredElementSuaFbs %in% ValueElements]
+                  #   SUAunbal &lt;- SUAunbal[!measuredElementSuaFbs %in% ValueElements]
                      live_data$SUAu &lt;- SUAunbal
                    } else {
                      SUAunbal &lt;- live_data$SUAu
@@ -3312,13 +3692,13 @@ incProgress(0.95)
                      
                      setnames(modifiedSUA, c(&#39;Country&#39;, &#39;ICSprod&#39;, &#39;Element&#39;),
                               c(&#39;geographicAreaM49_fi&#39;, &#39;measuredItemFaostat_L2&#39;, &#39;measuredElementSuaFbs&#39;))
-                     modifiedSUA &lt;- modifiedSUA[!measuredElementSuaFbs %in% ValueElements]
+                   #  modifiedSUA &lt;- modifiedSUA[!measuredElementSuaFbs %in% ValueElements]
                      
                      
                    } else if(input$csv_online == 2)
                    {
-
-                   #-- Pulling uploaded file ----
+                     
+                     #++ Pulling uploaded file ----
                      modifiedSUA0 &lt;- recalc_value$SUAupload
                      
                      setnames(modifiedSUA0, names(modifiedSUA0)[c(1,3,4)], c(&#39;geographicAreaM49_fi&#39;,
@@ -3348,13 +3728,20 @@ incProgress(0.95)
                    }
                    
                    modifiedSUA &lt;- modifiedSUA[!measuredElementSuaFbs %in% elkeyNot2consider,]
-                   modifiedSUA &lt;- modifiedSUA[!measuredElementSuaFbs %in% ValueElements,]
+                #   modifiedSUA &lt;- modifiedSUA[!measuredElementSuaFbs %in% ValueElements,]
+                   modifiedSUA &lt;- modifiedSUA[!measuredElementSuaFbs %in% &#39;5023&#39;,]
                    # First compare what changed with respect to the original table
+                   
+                  # if(nrow(recalc_value$SUAmodtab) &gt; 0){
+                  #  browser()
+                  # }
                    
                    if(nrow(recalc_value$SUAmodtab) == 0){
                      SUAinit &lt;- recalc_value$SUAinit[!measuredElementSuaFbs %in% elkeyNot2consider,]
+                     SUAinit &lt;- SUAinit[measuredElementSuaFbs != &#39;5023&#39;]
                    } else {
                      SUAinit &lt;- recalc_value$SUAmodtab[!measuredElementSuaFbs %in% elkeyNot2consider,]
+                     SUAinit &lt;- SUAinit[measuredElementSuaFbs != &#39;5023&#39;]
                    }
                    
                    SUAcomp &lt;- merge(SUAinit, modifiedSUA, 
@@ -3363,16 +3750,20 @@ incProgress(0.95)
                                     suffixes = c(&#39;&#39;, &#39;Mod&#39;),
                                     all = TRUE)
                    setDT(SUAcomp)
-                   SUAcomp &lt;- SUAcomp[][!is.na(ValueMod) &amp; Value != ValueMod | is.na(Value) , c(&#39;Value&#39;, 
-                                                                                         &#39;flagObservationStatus&#39;, 
-                                                                                          &#39;flagMethod&#39;) := list(ValueMod,
-                                                                                                                 &#39;E&#39;,
-                                                                                                                 &#39;f&#39;)]
+                   SUAcomp &lt;- SUAcomp[][!is.na(ValueMod) &amp; 
+                                          Value != ValueMod | is.na(Value) , 
+                                        c(&#39;Value&#39;, 
+                                          &#39;flagObservationStatus&#39;, 
+                                          &#39;flagMethod&#39;) := list(ValueMod,
+                                                                &#39;E&#39;,
+                                                                &#39;f&#39;)]
                    
                    SUAcomp &lt;- SUAcomp[ , c(&#39;ValueMod&#39;) := NULL]
                    
                    SUA2replace &lt;- SUAcomp
-                 
+                   # SUAbal$Value &lt;- round(SUAbal$Value, 2)
+                   # modifiedSUA$Value &lt;- round(modifiedSUA$Value, 2)
+                   
                    SUAunbalMod &lt;- merge(SUAunbal, SUA2replace, 
                                         by = c(&#39;geographicAreaM49_fi&#39;, &#39;measuredItemFaostat_L2&#39;, 
                                                &#39;measuredElementSuaFbs&#39;, &#39;timePointYears&#39;), 
@@ -3382,26 +3773,38 @@ incProgress(0.95)
                                                 c(&#39;Value&#39;, &#39;flagObservationStatus&#39;, &#39;flagMethod&#39;) := list(ValueMod, flagObservationStatusMod,
                                                                                                           flagMethodMod)]
                    
-                  
+                   # SUAunbalMod[round(Value, 2) != round(ValueMod, 2),
+                   #           c(&#39;Value&#39;, &#39;flagObservationStatus&#39;, &#39;flagMethod&#39;) := list(ValueMod, flagObservationStatusMod,
+                   #                                                                     flagMethodMod)]
+                   
                    SUAunbalMod[ , c(&#39;ValueMod&#39;, &#39;flagObservationStatusMod&#39;, &#39;flagMethodMod&#39;) := NULL]
-                   
-                   
+                
                    Sys.sleep(0.1)
                    incProgress(0.5)
                    
-
-                   #-- SUA balanced ----
+                   #++ SUA balanced ----
                    
                    eR &lt;- SUAunbalMod[measuredElementSuaFbs == &#39;5423&#39;]
                    
+                   # validate(
+                   #   need(length(input$radioErVSinput == 1),
+                   #        &#39;Choose only to update Extraction rates or Input&#39;
+                   #        )
+                   # )
+                   
                    primary &lt;- unique(map_asfis$ics)
                    SUAunbalMod &lt;- SUAunbalMod[measuredElementSuaFbs != &#39;5166&#39;]
+                   
                    if(any(names(SUAunbalMod) == &#39;sign&#39;)){
                      SUAunbalMod &lt;- SUAunbalMod[sign := NULL]
                    }
-                   SUAbalResults &lt;- SUAbalCalc(SUA = SUAunbalMod, eR = eR, use = input$radioErVSinput)
+                   SUAbalResults &lt;- SUAbalCalc(SUA = SUAunbalMod, 
+                                               eR = eR, use = input$radioErVSinput)
+                   
+                   FPfile &lt;&lt;- SUAbalResults$FPproblems
                    
                    SUAbal &lt;- SUAbalResults$SUA
+                   SUAbal[measuredElementSuaFbs %in% c(&#39;5630&#39;, &#39;5930&#39;),flagMethod := &#39;c&#39;]
                    newMessages &lt;- SUAbalResults$msg
                    FPproblems &lt;- SUAbalResults$FPproblems$NotCovered
                    SecNegAv &lt;- SUAbalResults$NegAv
@@ -3412,15 +3815,28 @@ incProgress(0.95)
                    Sys.sleep(0.1) 
                    incProgress(0.65) 
                    
-                   SUAwithNutr &lt;- SUAnutrCalc(SUAbalAvail = SUAbal, popSWS = popSWS)
-                   recalc_value$SUAmodtab &lt;- SUAwithNutr
- 
+                   SUAwithNutrList &lt;- SUAnutrCalc(SUAbalAvail = SUAbal, popSWS = popSWS)
+                   recalc_value$SUAmodtab &lt;- SUAwithNutrList$SUA2save
+                   SUAwithNutr &lt;- SUAwithNutrList$SUA2save
+                   foodPercapita &lt;- SUAwithNutrList$foodPercapita
+                   # Sys.sleep(0.80) 
+                   # incProgress(0.80)
+                   # 
+                   #-- FBS ---
+                   # FBS &lt;- FBScalc(SUA2save = SUAwithNutr, popSWS = popSWS)
+                   # 
+                   # faostatFBS &lt;- FBS$faostat
+                   # fiasFBS &lt;- FBS$fias
+                  
                    Sys.sleep(0.1) 
                    incProgress(0.95)
                  })
     
-    #-- New SUA ----
+    #++ New SUA ----
+    # updated_data$SUAunbal &lt;- SUAunbal
     updated_data$SUAbal &lt;- SUAwithNutr
+    # updated_data$FBSfaostat &lt;- faostatFBS
+    # updated_data$FBSfias &lt;- fiasFBS
     
     showModal(modalDialog(
       title = &quot;Recalculation completed!&quot; ,
@@ -3428,9 +3844,11 @@ incProgress(0.95)
     ))
     
     workaround$V &lt;- 1
+    
 </code></pre>
 <p>If both SUA balanced and FBS want to be recalculated the procedure is the same as with only the SUA balanced but with the ‘FBScalc’ function in addition and with all the new objects stored again.</p>
-<pre><code>    # -- SUA balanced + FBS recalculation ----
+<pre><code>
+    # -- SUA balanced + FBS recalculation ----
     
   } else if(input$reprocess == &#39;SUAbTot&#39;)
   {  # Closing input$reprocess == &#39;SUAb&#39; &amp; Opening input$reprocess == &#39;SUAbTot&#39;
@@ -3440,7 +3858,7 @@ incProgress(0.95)
       sprintf(&quot;Please wait for the calculations to be completed.&quot;)
     ))
     
-    
+  
     withProgress(message = &#39;Calculation in progress&#39;,
                  value = 0, {
                    
@@ -3458,7 +3876,7 @@ incProgress(0.95)
                    
                    if(!is.null(SUAunbal)){
                      ValueElements &lt;- c(&#39;5922&#39;, &#39;5930&#39;, &#39;5622&#39;, &#39;5630&#39;)
-                     SUAunbal &lt;- SUAunbal[!measuredElementSuaFbs %in% ValueElements]
+                   #  SUAunbal &lt;- SUAunbal[!measuredElementSuaFbs %in% ValueElements]
                      live_data$SUAu &lt;- SUAunbal
                    } else {
                      SUAunbal &lt;- live_data$SUAu
@@ -3477,11 +3895,11 @@ incProgress(0.95)
                      
                      setnames(modifiedSUA, c(&#39;Country&#39;, &#39;ICSprod&#39;, &#39;Element&#39;),
                               c(&#39;geographicAreaM49_fi&#39;, &#39;measuredItemFaostat_L2&#39;, &#39;measuredElementSuaFbs&#39;))
-                     modifiedSUA &lt;- modifiedSUA[!measuredElementSuaFbs %in% ValueElements]
+                   #  modifiedSUA &lt;- modifiedSUA[!measuredElementSuaFbs %in% ValueElements]
                      
                    } else if(input$csv_online == 2){
                      
-                     #-- Pulling uploaded file ----
+                     #++ Pulling uploaded file ----
                      modifiedSUA0 &lt;- recalc_value$SUAupload
                      
                      setnames(modifiedSUA0, names(modifiedSUA0)[c(1,3,4)], c(&#39;geographicAreaM49_fi&#39;,
@@ -3511,14 +3929,16 @@ incProgress(0.95)
                    }
                    
                    modifiedSUA &lt;- modifiedSUA[!measuredElementSuaFbs %in% elkeyNot2consider,]
-                   modifiedSUA &lt;- modifiedSUA[!measuredElementSuaFbs %in% ValueElements,]
-                   
+                 #  modifiedSUA &lt;- modifiedSUA[!measuredElementSuaFbs %in% ValueElements,]
+                   modifiedSUA &lt;- modifiedSUA[!measuredElementSuaFbs %in% &#39;5023&#39;,]
                    # First compare what changed with respect to the original table
                    
                    if(nrow(recalc_value$SUAmodtab) == 0){
                      SUAinit &lt;- recalc_value$SUAinit[!measuredElementSuaFbs %in% elkeyNot2consider,]
+                     SUAinit &lt;- SUAinit[measuredElementSuaFbs != &#39;5023&#39;]
                    } else {
                      SUAinit &lt;- recalc_value$SUAmodtab[!measuredElementSuaFbs %in% elkeyNot2consider,]
+                     SUAinit &lt;- SUAinit[measuredElementSuaFbs != &#39;5023&#39;]
                    }
                    
                    SUAcomp &lt;- merge(SUAinit, modifiedSUA, 
@@ -3558,7 +3978,7 @@ incProgress(0.95)
                    Sys.sleep(0.1)
                    incProgress(0.5)
                    
-                   #-- SUA balanced ----
+                   #++ SUA balanced ----
                    
                    eR &lt;- SUAunbalMod[measuredElementSuaFbs == &#39;5423&#39;]
                    
@@ -3572,6 +3992,10 @@ incProgress(0.95)
                    SUAunbalMod &lt;- SUAunbalMod[measuredElementSuaFbs != &#39;5166&#39;]
                    SUAbalResults &lt;- SUAbalCalc(SUA = SUAunbalMod, eR = eR, use = input$radioErVSinput)
                    SUAbal &lt;- SUAbalResults$SUA
+                   SUAbal[measuredElementSuaFbs %in% c(&#39;5630&#39;, &#39;5930&#39;),flagMethod := &#39;c&#39;]
+                   
+                   FPfile &lt;&lt;- SUAbalResults$FPproblems
+                   
                    newMessages &lt;- SUAbalResults$msg
                    FPproblems &lt;- SUAbalResults$FPproblems$NotCovered
                    SecNegAv &lt;- SUAbalResults$NegAv
@@ -3582,14 +4006,17 @@ incProgress(0.95)
                    Sys.sleep(0.1) 
                    incProgress(0.65) 
                    
-                   SUAwithNutr &lt;- SUAnutrCalc(SUAbalAvail = SUAbal, popSWS = popSWS)
-                   recalc_value$SUAmodtab &lt;- SUAwithNutr
+                   SUAwithNutrList &lt;- SUAnutrCalc(SUAbalAvail = SUAbal, popSWS = popSWS)
+                   
+                   recalc_value$SUAmodtab &lt;- SUAwithNutrList$SUA2save
+                   SUAwithNutr &lt;- SUAwithNutrList$SUA2save
+                   foodPercapita &lt;- SUAwithNutrList$foodPercapita
                    Sys.sleep(0.1) 
                    incProgress(0.80)
                    
-                   #-- FBS ----
+                   #++ FBS ----
                    
-                   FBS &lt;- FBScalc(SUA2save = SUAwithNutr, popSWS = popSWS)
+                   FBS &lt;- FBScalc(SUA2save = rbind(SUAwithNutr, foodPercapita), popSWS = popSWS)
                    
                    faostatFBS &lt;- FBS$faostat
                    fiasFBS &lt;- FBS$fias
@@ -3598,7 +4025,7 @@ incProgress(0.95)
                  }) 
     
     
-    #-- New SUA ----
+    #++ New SUA ----
     updated_data$SUAunbal &lt;- SUAunbal
     updated_data$SUAbal &lt;- SUAwithNutr
     updated_data$FBSfaostat &lt;- faostatFBS
@@ -3610,9 +4037,10 @@ incProgress(0.95)
     ))
     
     workaround$V &lt;- 1
-</code></pre>
+   </code></pre>
 <p>If only the FBS have to be recalculated as the SUA are those specified in the tab the SUA balanced is derived only updating the SUA balanced through the usual merging, the function ‘SUAbalCalc’ is not run and only the nutrients and the FBSs are recalculated and stored again.</p>
-<pre><code>    # -- Only FBS recalculation ----
+<pre><code>
+    # -- Only FBS recalculation ----
   } else if(input$reprocess == &#39;NutFbs&#39;)
   { # Closing input$reprocess == &#39;SUAbTot&#39; &amp; Opening input$reprocess == &#39;NutFbs&#39;
     
@@ -3636,7 +4064,10 @@ incProgress(0.95)
                    
                    if(!is.null(SUAbal)){
                      ValueElements &lt;- c(&#39;5922&#39;, &#39;5930&#39;, &#39;5622&#39;, &#39;5630&#39;)
-                     SUAbal &lt;- SUAbal[!measuredElementSuaFbs %in% ValueElements]
+                     liveBval &lt;- copy(SUAbal)
+                     liveBval &lt;- liveBval[measuredElementSuaFbs %in% ValueElements]
+                     live_data$SUAbVal &lt;- liveBval
+                   #  SUAbal &lt;- SUAbal[!measuredElementSuaFbs %in% ValueElements]
                      live_data$SUAb &lt;- SUAbal
                    } else {
                      SUAbal &lt;- live_data$SUAb
@@ -3656,11 +4087,11 @@ incProgress(0.95)
                      
                      setnames(modifiedSUA, c(&#39;Country&#39;, &#39;ICSprod&#39;, &#39;Element&#39;),
                               c(&#39;geographicAreaM49_fi&#39;, &#39;measuredItemFaostat_L2&#39;, &#39;measuredElementSuaFbs&#39;))
-                     modifiedSUA &lt;- modifiedSUA[!measuredElementSuaFbs %in% ValueElements]
+                    # modifiedSUA &lt;- modifiedSUA[!measuredElementSuaFbs %in% ValueElements]
                      
                    } else if(input$csv_online == 2){
                      
-                     #-- Pulling uploaded file ----
+                     #++ Pulling uploaded file ----
                      modifiedSUA0 &lt;- recalc_value$SUAupload
                      
                      setnames(modifiedSUA0, names(modifiedSUA0)[c(1,3,4)], c(&#39;geographicAreaM49_fi&#39;,
@@ -3690,14 +4121,16 @@ incProgress(0.95)
                    }
                    
                    modifiedSUA &lt;- modifiedSUA[!measuredElementSuaFbs %in% elkeyNot2consider,]
-                   modifiedSUA &lt;- modifiedSUA[!measuredElementSuaFbs %in% ValueElements,]
-                   
+                 #  modifiedSUA &lt;- modifiedSUA[!measuredElementSuaFbs %in% ValueElements,]
+                   # modifiedSUA &lt;- modifiedSUA[!measuredElementSuaFbs %in% &#39;5023&#39;,]
                    # First compare what changed with respect to the original table
                    
                    if(nrow(recalc_value$SUAmodtab) == 0){
                      SUAinit &lt;- recalc_value$SUAinit[!measuredElementSuaFbs %in% elkeyNot2consider,]
+                    # SUAinit &lt;- SUAinit[measuredElementSuaFbs != &#39;5023&#39;]
                    } else {
                      SUAinit &lt;- recalc_value$SUAmodtab[!measuredElementSuaFbs %in% elkeyNot2consider,]
+                    # SUAinit &lt;- SUAinit[measuredElementSuaFbs != &#39;5023&#39;]
                    }
                    
                    SUAcomp &lt;- merge(SUAinit, modifiedSUA, 
@@ -3737,14 +4170,16 @@ incProgress(0.95)
                    Sys.sleep(0.1)
                    incProgress(0.5)
                    
-                   SUAwithNutr &lt;- SUAnutrCalc(SUAbalAvail = SUAbalMod, popSWS = popSWS)
-                   recalc_value$SUAmodtab &lt;- SUAwithNutr
+                   SUAwithNutrList &lt;- SUAnutrCalc(SUAbalAvail = SUAbalMod, popSWS = popSWS)
+                   recalc_value$SUAmodtab &lt;- SUAwithNutrList$SUA2save
+                   SUAwithNutr &lt;- SUAwithNutrList$SUA2save
+                   foodPercapita &lt;- SUAwithNutrList$foodPercapita
                    Sys.sleep(0.1) 
                    incProgress(0.80)
                    
-                   #-- FBS ----
+                   #++ FBS ----
                    
-                   FBS &lt;- FBScalc(SUA2save = SUAwithNutr, popSWS = popSWS)
+                   FBS &lt;- FBScalc(SUA2save = rbind(SUAwithNutr, foodPercapita), popSWS = popSWS)
                    
                    faostatFBS &lt;- FBS$faostat
                    fiasFBS &lt;- FBS$fias
@@ -3752,7 +4187,7 @@ incProgress(0.95)
                    incProgress(0.95)
                  })
     
-    #-- New SUA ----
+    #++ New SUA ----
     updated_data$SUAunbal &lt;- ifelse(nrow(updated_data$SUAunbal) == 0, 
                                     live_data$SUAu, updated_data$SUAunbal)
     updated_data$SUAbal &lt;- SUAwithNutr
@@ -3770,12 +4205,14 @@ incProgress(0.95)
   }
   
 })  # Closing Observe event
+
 </code></pre>
 </div>
-<div id="data-update-tab-1" class="section level3">
-<h3><span class="header-section-number">4.3.11</span> ‘Data update’ tab</h3>
+<div id="data-update-tab" class="section level3">
+<h3><span class="header-section-number">4.3.12</span> ‘Data update’ tab</h3>
 <p>The tab has the same structure as the ‘Overview’ tab but it uses the FBS recalculated in the ‘Data validation’ tab and stored in the <code>updated_data$FBSfias</code> object.</p>
-<pre><code># Eighth tab, showing changes consequences
+<pre><code>
+# Eighth tab, showing changes consequences
 
 consequenceTab_reac &lt;- reactive({
   
@@ -3905,11 +4342,10 @@ output$gg_plot_tab8 &lt;- renderPlot({
     theme(text = element_text(size= 15))
   
 })
-
 </code></pre>
 </div>
-<div id="data-saving-tab-1" class="section level3">
-<h3><span class="header-section-number">4.3.12</span> ‘Data saving’ tab</h3>
+<div id="data-saving-tab" class="section level3">
+<h3><span class="header-section-number">4.3.13</span> ‘Data saving’ tab</h3>
 <p>The first part of this tab replicates what was programmed for the token of the working dataset whereas here the user has to insert the token of the validated datasets. The update structure is exactly the same.</p>
 <pre><code># -- Insert token validated ---- 
 output$btn_token1val &lt;- renderUI({
@@ -3969,7 +4405,8 @@ observeEvent(input$btn_upd_token_val, {
 })
 </code></pre>
 <p>In order to update the datasets in the SWS the user has to choose if update the whole selected time series or only the last year selected. Then, once the user press the ‘Update SWS’ button, the year(s) to update are selected and the SUAs and FBSs filtered accordingly. Subsequently, a series of dataset update starts. First all the existing data and flags are saved as NAs, then they are substituted with the new values. If the user is satisfied the only missing operation is to save these data directly into the SWS.</p>
-<pre><code>observeEvent(input$update,  {
+<pre><code>
+observeEvent(input$update,  {
 
   sel_country &lt;- country_input[country_input$label == input$btn_country, code]
   # Cancel data from SUA and FBS 
@@ -3990,16 +4427,36 @@ observeEvent(input$btn_upd_token_val, {
   }
   
   # Datasets
-  SUAun &lt;- updated_data$SUAunbal 
+    
+  if(!is.data.table(updated_data$SUAunbal)){
+    
+    SUAunbalTot &lt;- reloadDataToken(data = live_data$SUAu, 
+                                   keycountry = sel_country, 
+                                   minyear = input$btn_start_year, 
+                                   maxyear = input$btn_year,
+                                   keydomain = domainComm, 
+                                   keydataset = datasetSUAUlive,
+                                   keytoken = tokenSuaU)
+    
+    if(!is.null(SUAunbalTot)){
+      SUAun &lt;- SUAunbalTot
+    } else {
+      SUAun &lt;- live_data$SUAu
+    } 
+    
+  } else {
+  SUAun &lt;- updated_data$SUAunbal
+  }
+
   SUAun &lt;- SUAun[timePointYears %in% sel_years]
   
   SUAb &lt;- updated_data$SUAbal
   SUAb &lt;- SUAb[timePointYears %in% sel_years]
   
-  SUAbVal &lt;- live_data$SUAbVal
-  SUAbVal &lt;- SUAbVal[timePointYears %in% sel_years]
-  
-  SUAb &lt;- rbind(SUAb, SUAbVal)
+  # SUAbVal &lt;- live_data$SUAbVal
+  # SUAbVal &lt;- SUAbVal[timePointYears %in% sel_years]
+  # 
+  # SUAb &lt;- rbind(SUAb, SUAbVal)
   
   FBSfias &lt;- updated_data$FBSfias 
   FBSfias &lt;- FBSfias[timePointYears %in% sel_years]
@@ -4007,9 +4464,7 @@ observeEvent(input$btn_upd_token_val, {
   FBSfaostat &lt;- updated_data$FBSfaostat
   FBSfaostat &lt;- FBSfaostat[timePointYears %in% sel_years]
   
-browser()
-
-message(&#39;SUA unbalanced validated&#39;)
+message(&#39;Saving datasets...&#39;)
   #-- Save SUA unbalanced validated -----
   if(localrun){
     if(CheckDebug()){
@@ -4023,7 +4478,7 @@ message(&#39;SUA unbalanced validated&#39;)
   } else {
     R_SWS_SHARE_PATH = &quot;Z:&quot;
     SetClientFiles(&quot;/srv/shiny-server/.R/QA/&quot;)
-    GetTestEnvironment(baseUrl = &quot;https://hqlqasws1.hq.un.fao.org:8181/sws&quot;,
+    GetTestEnvironment(baseUrl = &quot;https://swsqa.aws.fao.org:8181&quot;,
                        token = tokenSuaUval)
   }
 
@@ -4043,11 +4498,16 @@ message(&#39;SUA unbalanced validated&#39;)
            data = SUAun2blank,
            waitTimeout = Inf)
   
+  SUAun$timePointYears &lt;- as.character(SUAun$timePointYears)
   SaveData(domain = domainComm,
            dataset = datasetSUAUval,
            data = SUAun,
            waitTimeout = Inf)
   message(&#39;SUA unbalanced validated saved&#39;)
+  showModal(modalDialog(
+    title = &quot;Updating dataset...&quot; ,
+    sprintf(&quot;1/8&quot;)
+  ))
   #-- Save SUA unbalanced ---- 
   if(localrun){
     if(CheckDebug()){
@@ -4062,7 +4522,7 @@ message(&#39;SUA unbalanced validated&#39;)
     } else {
     R_SWS_SHARE_PATH = &quot;Z:&quot;
     SetClientFiles(&quot;/srv/shiny-server/.R/QA/&quot;)
-    GetTestEnvironment(baseUrl = &quot;https://hqlqasws1.hq.un.fao.org:8181/sws&quot;,
+    GetTestEnvironment(baseUrl = &quot;https://swsqa.aws.fao.org:8181&quot;,
                        token = tokenSuaU)
   }
   
@@ -4081,12 +4541,17 @@ message(&#39;SUA unbalanced validated&#39;)
            dataset = datasetSUAUlive,
            data = SUAunlive2blank,
            waitTimeout = Inf)
-  
+
   SaveData(domain = domainComm,
            dataset = datasetSUAUlive,
            data = SUAun,
            waitTimeout = Inf)
-  message(&#39;SUA unbalanced validated saved&#39;)
+  message(&#39;SUA unbalanced live saved&#39;)
+  showModal(modalDialog(
+    title = &quot;Updating dataset...&quot; ,
+    sprintf(&quot;2/8&quot;)
+  ))
+  
   #-- Save SUA balanced validated ----
   if(localrun){
     if(CheckDebug()){
@@ -4100,7 +4565,7 @@ message(&#39;SUA unbalanced validated&#39;)
   } else {
     R_SWS_SHARE_PATH = &quot;Z:&quot;
     SetClientFiles(&quot;/srv/shiny-server/.R/QA/&quot;)
-    GetTestEnvironment(baseUrl = &quot;https://hqlqasws1.hq.un.fao.org:8181/sws&quot;,
+    GetTestEnvironment(baseUrl = &quot;https://swsqa.aws.fao.org:8181&quot;,
                        token = tokenSuaBval)
   }
   
@@ -4113,18 +4578,24 @@ message(&#39;SUA unbalanced validated&#39;)
     timePointYears = Dimension(name = &quot;timePointYears&quot;, keys =  as.character(sel_years) )))
   
   SUAb2blank &lt;- GetData(KeySUAb)
+  if(nrow(SUAb2blank) &gt; 0){
   SUAb2blank &lt;- SUAb2blank[ , c(&#39;Value&#39;, &#39;flagObservationStatus&#39;, &#39;flagMethod&#39;) := list(NA, NA, NA)]
   
   SaveData(domain = domainComm,
            dataset = datasetSUABval,
            data = SUAb2blank,
            waitTimeout = Inf)
-  
+  }
+  SUAb$timePointYears &lt;- as.character(SUAb$timePointYears)
   SaveData(domain = domainComm,
            dataset = datasetSUABval,
            data = SUAb,
            waitTimeout = Inf)
   message(&#39;SUA balanced validated saved&#39;)
+  showModal(modalDialog(
+    title = &quot;Updating dataset...&quot; ,
+    sprintf(&quot;3/8&quot;)
+  ))
   #-- Save SUA balanced ----
   if(localrun){
     if(CheckDebug()){
@@ -4138,7 +4609,7 @@ message(&#39;SUA unbalanced validated&#39;)
     } else {
     R_SWS_SHARE_PATH = &quot;Z:&quot;
     SetClientFiles(&quot;/srv/shiny-server/.R/QA/&quot;)
-    GetTestEnvironment(baseUrl = &quot;https://hqlqasws1.hq.un.fao.org:8181/sws&quot;,
+    GetTestEnvironment(baseUrl = &quot;https://swsqa.aws.fao.org:8181&quot;,
                        token = tokenSuaB)
   }
   
@@ -4157,12 +4628,16 @@ message(&#39;SUA unbalanced validated&#39;)
            dataset = datasetSUABlive,
            data = SUAblive2blank,
            waitTimeout = Inf)
-  
+
   SaveData(domain = domainComm,
            dataset = datasetSUABlive,
            data = SUAb,
            waitTimeout = Inf)
-  message(&#39;SUA balanced saved&#39;)
+  message(&#39;SUA balanced live saved&#39;)
+  showModal(modalDialog(
+    title = &quot;Updating dataset...&quot; ,
+    sprintf(&quot;4/8&quot;)
+  ))
   #-- Save FBS Fias validated ----
   if(localrun){
     if(CheckDebug()){
@@ -4176,7 +4651,7 @@ message(&#39;SUA unbalanced validated&#39;)
   } else {
     R_SWS_SHARE_PATH = &quot;Z:&quot;
     SetClientFiles(&quot;/srv/shiny-server/.R/QA/&quot;)
-    GetTestEnvironment(baseUrl = &quot;https://hqlqasws1.hq.un.fao.org:8181/sws&quot;,
+    GetTestEnvironment(baseUrl = &quot;https://swsqa.aws.fao.org:8181&quot;,
                        token = tokenFbsFiasval)
   }
 
@@ -4196,11 +4671,16 @@ message(&#39;SUA unbalanced validated&#39;)
            data = fbsFias2blank,
            waitTimeout = Inf)
   
+  FBSfias$timePointYears &lt;- as.character(FBSfias$timePointYears)
   SaveData(domain = domainComm,
            dataset = datasetFBSval,
            data = FBSfias,
            waitTimeout = Inf)
   message(&#39;FBS Fias validated saved&#39;)
+  showModal(modalDialog(
+    title = &quot;Updating dataset...&quot; ,
+    sprintf(&quot;5/8&quot;)
+  ))
   #-- Save FBS Fias ----
   if(localrun){
     if(CheckDebug()){
@@ -4215,7 +4695,7 @@ message(&#39;SUA unbalanced validated&#39;)
     } else {
     R_SWS_SHARE_PATH = &quot;Z:&quot;
     SetClientFiles(&quot;/srv/shiny-server/.R/QA/&quot;)
-    GetTestEnvironment(baseUrl = &quot;https://hqlqasws1.hq.un.fao.org:8181/sws&quot;,
+    GetTestEnvironment(baseUrl = &quot;https://swsqa.aws.fao.org:8181&quot;,
                        token = tokenFbs)
   }
   
@@ -4234,12 +4714,17 @@ message(&#39;SUA unbalanced validated&#39;)
            dataset = datasetFBSlive,
            data = fbsFiaslive2blank,
            waitTimeout = Inf)
-  
+
+  FBSfias$timePointYears &lt;- as.character(FBSfias$timePointYears)
   SaveData(domain = domainComm,
            dataset = datasetFBSlive,
            data = FBSfias,
            waitTimeout = Inf)
-  message(&#39;FBS Fias saved&#39;)
+  message(&#39;FBS Fias live saved&#39;)
+  showModal(modalDialog(
+    title = &quot;Updating dataset...&quot; ,
+    sprintf(&quot;6/8&quot;)
+  ))
   #-- Save FBS Faostat validated ----
   if(localrun){
     if(CheckDebug()){
@@ -4254,7 +4739,7 @@ message(&#39;SUA unbalanced validated&#39;)
     } else {
     R_SWS_SHARE_PATH = &quot;Z:&quot;
     SetClientFiles(&quot;/srv/shiny-server/.R/QA/&quot;)
-    GetTestEnvironment(baseUrl = &quot;https://hqlqasws1.hq.un.fao.org:8181/sws&quot;,
+    GetTestEnvironment(baseUrl = &quot;https://swsqa.aws.fao.org:8181&quot;,
                        token = tokenFbsFaostatval)
   }
   
@@ -4273,12 +4758,16 @@ message(&#39;SUA unbalanced validated&#39;)
            dataset = datasetFBSfaostatval,
            data = fbsFaostat2blank,
            waitTimeout = Inf)
-  
+  FBSfaostat$timePointYears &lt;- as.character(FBSfaostat$timePointYears)
   SaveData(domain = domainComm,
            dataset = datasetFBSfaostatval,
            data = FBSfaostat,
            waitTimeout = Inf)
   message(&#39;FBS Faostat validated saved&#39;)
+  showModal(modalDialog(
+    title = &quot;Updating dataset...&quot; ,
+    sprintf(&quot;7/8&quot;)
+  ))
   #-- Save FBS Faostat -----
   if(localrun){
     if(CheckDebug()){
@@ -4293,7 +4782,7 @@ message(&#39;SUA unbalanced validated&#39;)
     } else {
     R_SWS_SHARE_PATH = &quot;Z:&quot;
     SetClientFiles(&quot;/srv/shiny-server/.R/QA/&quot;)
-    GetTestEnvironment(baseUrl = &quot;https://hqlqasws1.hq.un.fao.org:8181/sws&quot;,
+    GetTestEnvironment(baseUrl = &quot;https://swsqa.aws.fao.org:8181&quot;,
                        token = tokenFbsFaostat)
   }
   
@@ -4312,39 +4801,41 @@ message(&#39;SUA unbalanced validated&#39;)
            dataset = datasetFBSfaostatlive,
            data = fbsFaostatlive2blank,
            waitTimeout = Inf)
-  
+
   SaveData(domain = domainComm,
            dataset = datasetFBSfaostatlive,
            data = FBSfaostat,
            waitTimeout = Inf)
-  message(&#39;FBS Faostat saved&#39;)
+  message(&#39;FBS Faostat live saved&#39;)
   #-- The End ----
   showModal(modalDialog(
-    title = &quot;Successfull data updated!&quot; ,
+    title = &quot;All datasets updated successfully!&quot; ,
     sprintf(&quot;Validated data are now saved into the SWS. 
             Please now save data directly into the SWS session.&quot;)
   ))
   
   }
   
-})</code></pre>
+})
+</code></pre>
 </div>
 </div>
-<div id="external-functions-1" class="section level2">
+<div id="external-functions" class="section level2">
 <h2><span class="header-section-number">4.4</span> External functions</h2>
 <p>Most of the external functions of the shiny replicate what the plugin does but with separate functions in order to control better the input and output objects but also for the functions to be self-contained as they are used several times in the shiny. The functions recalled in the ‘SUAbalCalc’ functions: ‘eRcomputation’, ‘inputComputation’ and ‘foodProcessingComputation’ are the same used in the plugin. These functions are reported below for completeness purposes. For code-related explanation go to chapter (PluginCode). The new functions ‘reloadData’ and ‘reloadDataToken’ are explained in the corresponding paragraphs.</p>
 <div id="gprecalc" class="section level3">
 <h3><span class="header-section-number">4.4.1</span> GPrecalc</h3>
-<pre><code>GPrecalc &lt;- function(GP, map_asfis, new_map_asfis, year = input$btn_year){
+<pre><code>
+GPrecalc &lt;- function(GP, map_asfis, new_map_asfis, year = input$btn_year){
 
   # Map to ICS
   t1 &lt;- Sys.time()
   gpMap &lt;- merge(GP, map_asfis, by = c(&quot;fisheriesAsfis&quot;), all.x = TRUE)
-  
+
   if(nrow(new_map_asfis) &gt; 0){
     
     new_map_asfis[ end_year == &#39;LAST&#39;, end_year := as.character(year)]
-    newMapping &lt;- merge(globalProductionMapping, new_map_asfis, 
+    newMapping &lt;- merge(gpMap, new_map_asfis, 
                         by.x = c(&#39;geographicAreaM49_fi&#39;, &#39;fisheriesAsfis&#39;),
                         by.y = c(&#39;country&#39;, &#39;asfis&#39;), all = TRUE, allow.cartesian = TRUE)
     
@@ -4401,7 +4892,8 @@ message(&#39;SUA unbalanced validated&#39;)
 </div>
 <div id="cdbrecalc" class="section level3">
 <h3><span class="header-section-number">4.4.2</span> CDBrecalc</h3>
-<pre><code>CDBrecalc &lt;- function(CDB, map_isscfc, new_map_isscfc, year = input$btn_year){
+<pre><code>
+CDBrecalc &lt;- function(CDB, map_isscfc, new_map_isscfc, year = input$btn_year){
   
   t1 &lt;- Sys.time()
   commodityDBIcs &lt;- merge(CDB, map_isscfc, by = &quot;measuredItemISSCFC&quot;)
@@ -4479,15 +4971,34 @@ message(&#39;SUA unbalanced validated&#39;)
   
   link_table2 &lt;- merge(link_table, linkCorrespondence, by = &quot;flow&quot;, allow.cartesian = TRUE)
   
-  link_table2$end_year &lt;- ifelse(link_table2$end_year == &quot;LAST&quot;, max(as.numeric(cdbMap_new$timePointYears)),
+  if(max(as.numeric(cdbMap_new$timePointYears)) == -Inf){
+    yearmax&lt;- year
+    } else {yearmax&lt;- max(as.numeric(cdbMap_new$timePointYears))}
+  
+  link_table2$end_year &lt;- ifelse(link_table2$end_year == &quot;LAST&quot;, yearmax,
                                  link_table2$end_year)
+
+  link_table2 &lt;- link_table2[end_year &gt;= as.character(start_year)]
   
+  years &lt;- expand.grid(as.character(1:nrow(link_table2)), 1948:year)
+  years &lt;- as.data.table(years)
+  setnames(years, c(&#39;Var1&#39;,&#39;Var2&#39;), c(&#39;idx&#39;, &#39;timePointYears&#39;))
+  
+  link_table2[ , idx := row.names(link_table2) ]
+  
+  link_table3 &lt;- merge(link_table2, 
+                       years, by = &#39;idx&#39;)
+  
+  link_table3 &lt;- link_table3[timePointYears &gt;= start_year &amp; timePointYears &lt;= end_year]
+  link_table3[ , idx := NULL]
+  link_table3[ ,timePointYears := as.character(timePointYears)]
   # Change ICS codes
-  
-  commodityDBLink &lt;- merge(cdbMap_new, link_table2, 
-                           by.x = c(&quot;geographicAreaM49_fi&quot;, &quot;measuredElement&quot;, &quot;ics&quot;),
-                           by.y = c(&quot;geographic_area_m49&quot;, &quot;measuredElement&quot;, &quot;from_code&quot;), 
+  message(&#39;From table to CDB&#39;)
+  commodityDBLink &lt;- merge(cdbMap_new, link_table3, 
+                           by.x = c(&quot;geographicAreaM49_fi&quot;, &quot;measuredElement&quot;, &quot;timePointYears&quot;, &quot;ics&quot;),
+                           by.y = c(&quot;geographic_area_m49&quot;, &quot;measuredElement&quot;, &quot;timePointYears&quot;,&quot;from_code&quot;), 
                            all.x = TRUE, allow.cartesian = TRUE)
+  
   setkey(commodityDBLink)
   commodityDBLink &lt;- unique(commodityDBLink)
   
@@ -4495,11 +5006,10 @@ message(&#39;SUA unbalanced validated&#39;)
   commodityDBLink$start_year &lt;- ifelse(is.na(commodityDBLink$start_year), &quot;1900&quot;, commodityDBLink$start_year)
   commodityDBLink$end_year &lt;- ifelse(is.na(commodityDBLink$end_year), &quot;9999&quot;, commodityDBLink$end_year)
   
-  commodityDBLink &lt;- commodityDBLink[timePointYears &gt;= start_year, ]
-  commodityDBLink &lt;- commodityDBLink[timePointYears &lt;= end_year]
+  # commodityDBLink &lt;- commodityDBLink[timePointYears &gt;= start_year, ]
+  # commodityDBLink &lt;- commodityDBLink[timePointYears &lt;= end_year]
   
   # Change ICS for defined periods
-  
   commodityDBLink[!is.na(to_code) &amp; 
                     as.numeric(timePointYears) &gt;= as.numeric(start_year) &amp;
                     as.numeric(timePointYears) &lt;= as.numeric(end_year), ics := to_code]
@@ -4535,16 +5045,49 @@ message(&#39;SUA unbalanced validated&#39;)
                                            measuredElement,
                                            ics)]
   
+  tradeQ &lt;- commodityDBAggr[measuredElement %in% c(&#39;5910&#39;, &#39;5610&#39;)]
+  tradeV &lt;- commodityDBAggr[measuredElement %in% c(&#39;5922&#39;, &#39;5622&#39;)]
+  tradeQ[measuredElement == &#39;5910&#39;, flow := &#39;EXP&#39;]
+  tradeQ[measuredElement == &#39;5610&#39;, flow := &#39;IMP&#39;]
+  tradeV[measuredElement == &#39;5922&#39;, flow := &#39;EXP&#39;]
+  tradeV[measuredElement == &#39;5622&#39;, flow := &#39;IMP&#39;]
+  
+  if(nrow(tradeQ) &gt; 0){
+  tradeUV &lt;- merge(tradeQ, tradeV, by = c(&#39;geographicAreaM49_fi&#39;,
+                                          &#39;timePointYears&#39;,
+                                          &#39;flow&#39;,
+                                          &#39;ics&#39;), all = T,
+                   suffixes = c(&#39;Q&#39;, &#39;V&#39;))
+  
+  tradeUV &lt;- tradeUV[, c(&#39;Value&#39;, &#39;flagObservationStatus&#39;, &#39;flagMethod&#39;) := 
+                       list(ValueV/ValueQ, flagObservationStatusV, &quot;c&quot;)]
+  tradeUV[flow == &#39;IMP&#39;, measuredElement := &#39;5630&#39; ]
+  tradeUV[flow == &#39;EXP&#39;, measuredElement := &#39;5930&#39; ]
+  tradeUV[is.nan(Value), Value := 0]
+  tradeUV[ValueQ == 0, Value := ValueV]
+  
+  
+  commodityDBAggrTot &lt;- rbind(commodityDBAggr[!measuredElement %in% c(&#39;5930&#39;, &#39;5630&#39;)], 
+                              tradeUV[,.(geographicAreaM49_fi,
+                                         timePointYears,
+                                         measuredElement,
+                                         ics, Value, 
+                                         flagObservationStatus, 
+                                         flagMethod)])
+  } else {
+    commodityDBAggrTot &lt;- commodityDBAggr
+  }
   
   t2 &lt;- Sys.time()
   message(paste(&quot;CDB, okay&quot;, t2-t1))
-  return(commodityDBAggr)
+  return(commodityDBAggrTot)
 }
 </code></pre>
 </div>
 <div id="suaunbalcalc" class="section level3">
 <h3><span class="header-section-number">4.4.3</span> SUAunbalCalc</h3>
-<pre><code>SUAunbalCalc &lt;- function(globalProductionAggr, commodityDBAggr){
+<pre><code>
+SUAunbalCalc &lt;- function(globalProductionAggr, commodityDBAggr){
 t1 &lt;- Sys.time()
   SUA &lt;- rbind(globalProductionAggr, commodityDBAggr)
   yearVals &lt;- unique(SUA$timePointYears)
@@ -4581,7 +5124,8 @@ t1 &lt;- Sys.time()
 <div id="suabalcalc" class="section level3">
 <h3><span class="header-section-number">4.4.4</span> SUAbalCalc</h3>
 <p>The function includes the same ‘eRcomputation’, ‘inputComputation’ and ‘foodProcessingComputation’ functions as those described in chapter (PluginCode)</p>
-<pre><code>SUAbalCalc &lt;- function(SUA, eR, use){
+<pre><code>
+SUAbalCalc &lt;- function(SUA, eR, use){
   t1 &lt;- Sys.time()
   SUAno131 &lt;- SUA[ measuredElementSuaFbs != &quot;5023&quot;]
   SUA131 &lt;- SUA[ measuredElementSuaFbs == &quot;5023&quot;]
@@ -4712,7 +5256,8 @@ t1 &lt;- Sys.time()
                             suffixes = c(&#39;&#39;, &#39;_added&#39;), all = TRUE)
     SUAwithProdupd$sign_added &lt;- as.integer(SUAwithProdupd$sign_added)
     
-    SUAwithProdupd[measuredElementSuaFbs == &#39;5510&#39; , c(&quot;Value&quot;, &quot;sign&quot;, &quot;flagObservationStatus&quot;,
+    SUAwithProdupd[measuredElementSuaFbs == &#39;5510&#39; , c(&quot;Value&quot;, &quot;sign&quot;,
+                                                       &quot;flagObservationStatus&quot;,
                                                        &quot;flagMethod&quot;) := list(ifelse(is.na(Value), Value_added, 
                                                                                     Value+Value_added),
                                                                              sign_added,
@@ -4730,14 +5275,19 @@ t1 &lt;- Sys.time()
                                              flagObservationStatus, flagMethod, sign)],
                          SUAcomplement)
   
-    SUAwithProd[ , sign := NULL ]
+    # SUAwithProd[ , sign := NULL ]
     } else {
     
     SUAwithProd &lt;- SUAexpanded
-    SUAwithProd[ , sign := NULL ]
+    # SUAwithProd[ , sign := NULL ]
     
   }
 
+  SUAwithProd[, availability := sum(Value * sign, na.rm = TRUE), 
+              by = list(geographicAreaM49_fi, timePointYears, measuredItemFaostat_L2)]
+  
+  SUAwithProd[ , sign := NULL]
+  
   
   tree &lt;- ReadDatatable(&#39;fi_commodity_tree&#39;)
   treePrim &lt;- copy(tree)
@@ -4747,7 +5297,6 @@ t1 &lt;- Sys.time()
   SUAvalEr &lt;- SUAwithProd[measuredElementSuaFbs == &#39;5423&#39; &amp; timePointYears != max(yearVals)]
   FPproblems &lt;- list()
   
-
   if(nrow(SUAwithProd[!measuredItemFaostat_L2 %in% primary]) &gt; 0){
   message(&quot;fi_SUA-FBS: Calculating extraction rates&quot;)
 
@@ -4783,33 +5332,149 @@ SUAnewEr[ , c(&#39;ValueNew&#39;, &#39;flagObservationStatusNew&#39;, &#39;flagM
   
   #--Food processing ----
   message(&quot;fi_SUA-FBS: Calculating food processing&quot;)
-  FPdata_all &lt;- foodProcessingComputation(SUAinput = SUAinput, treeNewER = newTree,
-                                          primary = primary)
-  FPdata &lt;- FPdata_all$result
-  FPdata &lt;- FPdata[Value != 0]
-  FPproblems &lt;- list()
-  FPproblems &lt;- FPdata_all$problems
+  
+  FPdata_alltest &lt;- foodProcessingComputation(SUAinput = SUAinput, 
+                                              treeNewER = newTree, primary = primary)
+  FPdatatest &lt;- FPdata_alltest$result
+  FPdatatest &lt;- FPdatatest[Value != 0]
+  FPproblemstest &lt;- list()
+  FPproblemstest &lt;- FPdata_alltest$problems
+  ###########
+  
+  # Change of input to calculate FP for problematic data ----
+  
+  # Get problematic groups
+  if(any(sapply(FPproblemstest, nrow)&gt;0)){
+    avoidProblems &lt;- rbindlist(FPproblemstest, fill = TRUE)
+    avoidProblems &lt;- unique(avoidProblems[ , .(geographicAreaM49_fi,
+                                               timePointYears,
+                                               parent_primary)])
+    
+    # Parent-child tree
+    treeneeded0 &lt;- data.table(parent = unique(avoidProblems$parent_primary),
+                              child = unique(avoidProblems$parent_primary))
+    treeneeded &lt;- unique(newTree[parent %in% unique(avoidProblems$parent_primary), .(parent, child) ])
+    treeneeded &lt;- rbind(treeneeded, treeneeded0)
+    
+    # Get complete structure of problematic groups
+    avoidProblems2 &lt;- merge(avoidProblems, treeneeded,
+                            by.x = &#39;parent_primary&#39;,
+                            by.y = &#39;parent&#39;, all.x = TRUE,
+                            allow.cartesian = TRUE)
+    setnames(avoidProblems2, &#39;child&#39;, &#39;measuredItemFaostat_L2&#39;)
+    
+    # The problematic groups with food are recalculated without food
+    SUAnoFood0 &lt;- SUAinput[measuredElementSuaFbs != &#39;5141&#39; ]
+    
+    SUAnoFood &lt;- merge(SUAnoFood0, elementSignTable[ , .(measuredElementSuaFbs, sign)], by = &quot;measuredElementSuaFbs&quot;, all.x = TRUE)
+    
+    SUAnoFood[, availability := sum(Value * sign, na.rm = TRUE), 
+                by = list(geographicAreaM49_fi, timePointYears, measuredItemFaostat_L2)]
+    
+    SUAnoFood[ , sign := NULL]
+    
+    subst &lt;- merge(SUAnoFood, avoidProblems2[ , .(geographicAreaM49_fi,
+                                                 timePointYears,
+                                                 measuredItemFaostat_L2)],
+                   by = c(&quot;geographicAreaM49_fi&quot;,
+                          &quot;timePointYears&quot;, 
+                          &quot;measuredItemFaostat_L2&quot;))
+    
+    # The part that was okay with food is recalculated without the problematic part
+    cancel &lt;- merge(SUAinput, avoidProblems2[ , .(geographicAreaM49_fi,
+                                                 timePointYears,
+                                                 measuredItemFaostat_L2)],
+                    by = c(&quot;geographicAreaM49_fi&quot;,
+                           &quot;timePointYears&quot;, 
+                           &quot;measuredItemFaostat_L2&quot;))
+    
+    SUAinputcan &lt;- SUAinput[!cancel, on = names(SUAinput)]
+  
+    if(nrow(SUAinputcan) &gt; 0){
+    FPdata_all1 &lt;- foodProcessingComputation(SUAinput = SUAinputcan, 
+                                             treeNewER = newTree, primary = primary)
+    FPdata1 &lt;- FPdata_all1$result
+    
+    
+    FPdata1 &lt;- FPdata1[Value != 0]
+    FPproblems1 &lt;- list(primary = data.table(),
+                        secondaryTot = data.table(),
+                        secondary = data.table(),
+                        tertiary = data.table(),
+                        quaternary = data.table(),
+                        NotCovered = data.table())
+    FPproblems1 &lt;- FPdata_all1$problems
+    } else {
+      FPdata1 &lt;- data.table()
+      FPproblems1 &lt;- list(primary = data.table(),
+                          secondaryTot = data.table(),
+                          secondary = data.table(),
+                          tertiary = data.table(),
+                          quaternary = data.table(),
+                          NotCovered = data.table())
+    }
+    # FP calculated for problematic elements
+    
+    FPdata_all2 &lt;- foodProcessingComputation(SUAinput = subst,
+                                             treeNewER = newTree,
+                                             primary = primary)
+    
+    FPdata2 &lt;- FPdata_all2$result
+    FPdata2 &lt;- FPdata2[Value != 0]
+    FPproblems2 &lt;- list(primary = data.table(),
+                        secondaryTot = data.table(),
+                        secondary = data.table(),
+                        tertiary = data.table(),
+                        quaternary = data.table(),
+                        NotCovered = data.table())
+    FPproblems2 &lt;- FPdata_all2$problems
+    
+    # Put together results and dataset to consider
+    FPdata &lt;- rbind(FPdata1, FPdata2)
+    FPproblems &lt;- FPproblems2
+    SUAnoFP &lt;- rbind(SUAinputcan, subst)
+  } else {SUAnoFP &lt;- SUAinput
+  FPdata &lt;- FPdatatest
+  FPproblems &lt;- list(primary = data.table(),
+                      secondaryTot = data.table(),
+                      secondary = data.table(),
+                      tertiary = data.table(),
+                      quaternary = data.table(),
+                      NotCovered = data.table())}
+  
+  message(&#39;Food re-processing okay&#39;)
+  
+
   FPdata &lt;- FPdata[ , availability := NULL ]
   FPdata[ , c(&quot;flagObservationStatus&quot;, &quot;flagMethod&quot;) := list(&quot;E&quot;, &quot;i&quot;)]
   
-  SUAinput[ , availability := NULL]
+  SUAnoFP[ , availability := NULL]
 
   # If processing value changed in the shiny, i.e. flagged as (E,f)
   # then value flagged (E,f) prevail on the computed one
+  
   FPdataupd &lt;- merge(SUA131, FPdata, by = c(&#39;geographicAreaM49_fi&#39;, &#39;measuredItemFaostat_L2&#39;,
                                             &#39;timePointYears&#39;, &#39;measuredElementSuaFbs&#39;),
                      all = TRUE, suffixes = c(&#39;&#39;, &#39;Recalc&#39;))
-  FPdataupd[is.na(Value) | flagMethodRecalc == &#39;f&#39;, c(&#39;Value&#39;,
-                                                &#39;flagObservationStatus&#39;,
-                                                &#39;flagMethod&#39;) := list(ValueRecalc,
-                                                                      flagObservationStatusRecalc,
-                                                                      flagMethodRecalc)]
+
+  # FPdataupd[is.na(Value) | flagMethodRecalc == &#39;f&#39;, c(&#39;Value&#39;,
+  #                                               &#39;flagObservationStatus&#39;,
+  #                                               &#39;flagMethod&#39;) := list(ValueRecalc,
+  #                                                                     flagObservationStatusRecalc,
+  #                                                                     flagMethodRecalc)]
+  
+  FPdataupd[!is.na(ValueRecalc), c(&#39;Value&#39;,
+                                   &#39;flagObservationStatus&#39;,
+                                   &#39;flagMethod&#39;) := list(ValueRecalc,
+                                                         flagObservationStatusRecalc,
+                                                         flagMethodRecalc)]
+  
   FPdataupd[ , c(&#39;ValueRecalc&#39;,
                  &#39;flagObservationStatusRecalc&#39;,
                  &#39;flagMethodRecalc&#39;) := NULL]
   
   
-  SUAunbal &lt;- rbind(SUAinput[!is.na(Value), ], FPdataupd[!is.na(Value), ])
+  SUAunbal &lt;- rbind(SUAnoFP[!is.na(Value), ], FPdataupd[!is.na(Value), ])
   SUAunbal$flagObservationStatus &lt;- as.character(SUAunbal$flagObservationStatus)
 
   } else {
@@ -4821,27 +5486,27 @@ SUAnewEr[ , c(&#39;ValueNew&#39;, &#39;flagObservationStatusNew&#39;, &#39;flagM
   #         file.path(R_SWS_SHARE_PATH, &quot;taglionic&quot;, &quot;FPfisheries&quot;, &quot;FoodProcessingFeedback.rds&quot;)
   # )
 
-  if(is.list(FPproblems$NotCovered) &amp; length(FPproblems$NotCovered) &gt; 0){
+  if(length(FPproblems) &gt; 0 &amp; exists(&#39;FPproblems$NotCovered&#39;)){
+    if(nrow(FPproblems$NotCovered) &gt; 0){
     uncovered &lt;- copy(FPproblems$NotCovered)
     uncovered[ , measuredElementSuaFbs := &#39;5023&#39;]
     setnames(uncovered, c(&#39;parent_primary&#39;, &#39;UncoveredQuantity&#39;),
              c(&#39;measuredItemFaostat_L2&#39;, &#39;Value&#39;))
-    
-    rouUncovered &lt;-copy(uncovered) 
+
+    rouUncovered &lt;-copy(uncovered)
     rouUncovered[ , measuredElementSuaFbs := &#39;5166&#39;]
     rouUncovered[ , Value := -Value]
-    
-    uncoveredAdjusted &lt;- rbind(uncovered, rouUncovered) 
+
+    uncoveredAdjusted &lt;- rbind(uncovered, rouUncovered)
     uncoveredAdjusted[ , c(&quot;flagObservationStatus&quot;, &quot;flagMethod&quot;) := list(&quot;E&quot;, &quot;i&quot;)]
     uncoveredAdjusted[ measuredElementSuaFbs == &#39;5166&#39; , c(&quot;flagObservationStatus&quot;, &quot;flagMethod&quot;) := list(&quot;I&quot;, &quot;i&quot;)]
-    
+}
   } else {
     uncoveredAdjusted &lt;- data.table()
   }
-  
+
   SUAunbal &lt;- rbind(SUAunbal, uncoveredAdjusted)
   SUAunbal$flagObservationStatus &lt;- factor(SUAunbal$flagObservationStatus, levels = c(&#39;M&#39;, &#39;O&#39;, &#39;N&#39;, &#39;&#39;, &#39;X&#39;, &#39;T&#39;, &#39;E&#39;, &#39;I&#39;), ordered = TRUE)
-  
   SUAunbal &lt;- SUAunbal[ , list(Value = sum(Value, na.rm = TRUE),
                                flagObservationStatus = max(flagObservationStatus),
                                flagMethod = &#39;s&#39;), 
@@ -4889,27 +5554,30 @@ SUAnewEr[ , c(&#39;ValueNew&#39;, &#39;flagObservationStatusNew&#39;, &#39;flagM
   balancing2merge[ , c(&#39;flagObservationStatus&#39;, &#39;flagMethod&#39;) := list(&#39;E&#39;,&#39;b&#39;)]
   
   # Balancing cannot be negative
-  balancingproblems &lt;- balancing2merge[round(Value,3) &lt; 0,]
+  balancingproblems &lt;- balancing2merge[round(Value,6) &lt; 0,]
   
   balancingproblems_store &lt;- ReadDatatable(&#39;balancing_problems_tab&#39;, readOnly = FALSE)
 
   # Store balancing problems
   balancingproblems_store &lt;- ReadDatatable(&#39;balancing_problems_tab&#39;, readOnly = FALSE)
-  if(nrow(balancingproblems_store[ geographicaream49_fi %in% unique(SUAunbal$geographicAreaM49_fi) &amp; timepointyears %in% yearVals, ]) &gt; 0){
+  if(nrow(balancingproblems_store[ geographicaream49_fi %in% unique(SUAunbal$geographicAreaM49_fi) &amp; 
+                                   timepointyears %in% yearVals, ]) &gt; 0){
     changeset &lt;- Changeset(&#39;balancing_problems_tab&#39;)
     AddDeletions(changeset, balancingproblems_store[ geographicaream49_fi %in% unique(SUAunbal$geographicAreaM49_fi) &amp; timepointyears %in% yearVals, ])
     Finalise(changeset)
   }
   # Add new imbalances
-  
-  if(length(FPproblems) &gt; 0 &amp; length(FPproblems$NotCovered) &gt; 0){
+ 
+  if(length(FPproblems) &gt; 0 &amp; exists(&#39;FPproblems$NotCovered&#39;)){
+    if(nrow(FPproblems$NotCovered) &gt; 0){
     toupload &lt;- copy(FPproblems$NotCovered)
     toupload[ , measuredElementSuaFbs := &#39;5023&#39;]
     setnames(toupload, c(&#39;parent_primary&#39;, &#39;UncoveredQuantity&#39;),
              c(&#39;measuredItemFaostat_L2&#39;, &#39;Value&#39;))
     balancingproblemsCompliant &lt;- rbind(toupload, balancingproblems[ , .(geographicAreaM49_fi, measuredItemFaostat_L2,
                                                                          timePointYears, measuredElementSuaFbs, Value)])
-  } else {
+    }
+    } else {
     balancingproblemsCompliant &lt;- rbind(balancingproblems[ , .(geographicAreaM49_fi, measuredItemFaostat_L2,
                                                                timePointYears, measuredElementSuaFbs, Value)])
   }
@@ -4961,6 +5629,37 @@ SUAnewEr[ , c(&#39;ValueNew&#39;, &#39;flagObservationStatusNew&#39;, &#39;flagM
                         &#39;flagObservationStatusBal&#39;,
                         &#39;flagMethodBal&#39;) := NULL]
   
+  tradeQ &lt;- SUAbal[measuredElementSuaFbs %in% c(&#39;5910&#39;, &#39;5610&#39;)]
+  tradeV &lt;- SUAbal[measuredElementSuaFbs %in% c(&#39;5922&#39;, &#39;5622&#39;)]
+  tradeQ[measuredElementSuaFbs == &#39;5910&#39;, flow := &#39;EXP&#39;]
+  tradeQ[measuredElementSuaFbs == &#39;5610&#39;, flow := &#39;IMP&#39;]
+  tradeV[measuredElementSuaFbs == &#39;5922&#39;, flow := &#39;EXP&#39;]
+  tradeV[measuredElementSuaFbs == &#39;5622&#39;, flow := &#39;IMP&#39;]
+
+  if(nrow(tradeQ) &gt; 0){
+  tradeUV &lt;- merge(tradeQ, tradeV, by = c(&#39;geographicAreaM49_fi&#39;,
+                                          &#39;timePointYears&#39;,
+                                          &#39;flow&#39;,
+                                          &#39;measuredItemFaostat_L2&#39;), all = T,
+                   suffixes = c(&#39;Q&#39;, &#39;V&#39;))
+  
+  tradeUV &lt;- tradeUV[, c(&#39;Value&#39;, &#39;flagObservationStatus&#39;, &#39;flagMethod&#39;) := 
+                       list(ValueV/ValueQ, flagObservationStatusV, &quot;c&quot;)]
+  tradeUV[flow == &#39;IMP&#39;, measuredElementSuaFbs := &#39;5630&#39; ]
+  tradeUV[flow == &#39;EXP&#39;, measuredElementSuaFbs := &#39;5930&#39; ]
+  tradeUV[is.nan(Value), Value := 0]
+  tradeUV[ValueQ == 0, Value := ValueV]
+
+  SUAbal &lt;- rbind(SUAbal[!measuredElementSuaFbs %in% c(&#39;5630&#39;,&#39;5930&#39;)], tradeUV[,.(geographicAreaM49_fi,
+                                                                                   timePointYears,
+                                                                                   measuredElementSuaFbs,
+                                                                                   measuredItemFaostat_L2,
+                                                                                   Value, 
+                                                                                   flagObservationStatus, 
+                                                                                   flagMethod)])
+  }
+  
+  
   SUAbalAvail &lt;- merge(SUAbal, elementSignTable[, .(measuredElementSuaFbs, sign)], by = &quot;measuredElementSuaFbs&quot;, all.x = TRUE)
   
   SUAbalAvail[, availability := sum(Value * sign, na.rm = TRUE), 
@@ -4987,7 +5686,8 @@ SUAnewEr[ , c(&#39;ValueNew&#39;, &#39;flagObservationStatusNew&#39;, &#39;flagM
 </div>
 <div id="suanutrcalc" class="section level3">
 <h3><span class="header-section-number">4.4.5</span> SUAnutrCalc</h3>
-<pre><code>SUAnutrCalc &lt;- function(SUAbalAvail, popSWS){
+<pre><code>
+SUAnutrCalc &lt;- function(SUAbalAvail, popSWS){
 t1 &lt;- Sys.time()
   ## Add NutrientFactors
   nutrientFactors &lt;- ReadDatatable(&quot;fishery_nutrient&quot;)
@@ -5053,13 +5753,14 @@ t1 &lt;- Sys.time()
   t2 &lt;- Sys.time()
   message(paste(&quot;SUAnut, okay&quot;, t2-t1))
   
-  return(SUA2save)
+  return(list(SUA2save = SUA2save, foodPercapita = SUANoPop[measuredElementSuaFbs == &#39;645&#39;]))
 }
 </code></pre>
 </div>
 <div id="fbscalc" class="section level3">
 <h3><span class="header-section-number">4.4.6</span> FBScalc</h3>
-<pre><code>FBScalc &lt;- function(SUA2save, popSWS){
+<pre><code>
+FBScalc &lt;- function(SUA2save, popSWS){
 t1 &lt;- Sys.time()
   # get all conversion factors (or extration rates) from commodity tree
   message(&#39;Get commodity tree&#39;)
@@ -5113,18 +5814,18 @@ t1 &lt;- Sys.time()
   
   # SUAstandAggr0$flagObservationStatus &lt;- factor(SUAstandAggr0$flagObservationStatus, levels = c(&#39;M&#39;, &#39;O&#39;, &#39;N&#39;, &#39;&#39;, &#39;X&#39;, &#39;T&#39;, &#39;E&#39;, &#39;I&#39;), ordered = TRUE)
   
-  SUAstandAggr1 &lt;- SUAstandAggr0[measuredElementSuaFbs != &#39;511&#39; , list(Value = sum(Value_stand, na.rm = TRUE),
+  SUAstandAggr &lt;- SUAstandAggr0[measuredElementSuaFbs != &#39;511&#39; , list(Value = sum(Value_stand, na.rm = TRUE),
                                                                        flagObservationStatusAggr = &#39;I&#39;,
                                                                        flagMethodAggr = &#39;s&#39;), by = c(&quot;measuredElementSuaFbs&quot;, &quot;geographicAreaM49_fi&quot;,
                                                                                                      &quot;timePointYears&quot;, &quot;parent&quot;)]
   
-  setnames(SUAstandAggr1, c(&#39;parent&#39;, &#39;flagObservationStatusAggr&#39;, &#39;flagMethodAggr&#39;), 
+  setnames(SUAstandAggr, c(&#39;parent&#39;, &#39;flagObservationStatusAggr&#39;, &#39;flagMethodAggr&#39;), 
            c(&#39;measuredItemFaostat_L2&#39;, &#39;flagObservationStatus&#39;, &#39;flagMethod&#39;))
-  Pop2SUAaggr &lt;- SUAstandAggr0[measuredElementSuaFbs == &#39;511&#39;]
-  setkey(Pop2SUAaggr)
-  Pop2SUAaggr &lt;- unique(Pop2SUAaggr)
-  setnames(Pop2SUAaggr, c(&#39;Value_stand&#39;, &#39;parent&#39;), c(&#39;Value&#39;, &#39;measuredItemFaostat_L2&#39;))
-  SUAstandAggr &lt;- rbind(SUAstandAggr1, Pop2SUAaggr)
+  # Pop2SUAaggr &lt;- SUAstandAggr0[measuredElementSuaFbs == &#39;511&#39;]
+  # setkey(Pop2SUAaggr)
+  # Pop2SUAaggr &lt;- unique(Pop2SUAaggr)
+  # setnames(Pop2SUAaggr, c(&#39;Value_stand&#39;, &#39;parent&#39;), c(&#39;Value&#39;, &#39;measuredItemFaostat_L2&#39;))
+  # SUAstandAggr &lt;- rbind(SUAstandAggr1, Pop2SUAaggr)
   
   IcsGroups &lt;- unique(SUAstandAggr[ , .(geographicAreaM49_fi, timePointYears, measuredItemFaostat_L2)])
   
@@ -5184,18 +5885,20 @@ t1 &lt;- Sys.time()
   setnames(mealsInput, c(&quot;parent&quot;), c(&quot;measuredItemFaostat_L2&quot;))
   
   # SUAstandAggrFias0$flagObservationStatus &lt;- factor(SUAstandAggrFias0$flagObservationStatus, levels = c(&#39;M&#39;, &#39;O&#39;, &#39;N&#39;, &#39;&#39;, &#39;X&#39;, &#39;T&#39;, &#39;E&#39;, &#39;I&#39;), ordered = TRUE)
-  
-  SUAstandAggrFias1 &lt;- SUAstandAggrFias0[measuredElementSuaFbs != &#39;511&#39; , list(Value = sum(Value_stand, na.rm = TRUE),
+
+  SUAstandAggrFias &lt;- SUAstandAggrFias0[measuredElementSuaFbs != &#39;511&#39; , list(Value = sum(Value_stand, na.rm = TRUE),
                                                                                flagObservationStatusAggr = &#39;I&#39;,
                                                                                flagMethodAggr = &#39;s&#39;), by = c(&quot;measuredElementSuaFbs&quot;, &quot;geographicAreaM49_fi&quot;,
                                                                                                              &quot;timePointYears&quot;, &quot;parent&quot;)]
   
-  setnames(SUAstandAggrFias1, c(&#39;parent&#39;, &#39;flagObservationStatusAggr&#39;, &#39;flagMethodAggr&#39;), 
+  setnames(SUAstandAggrFias, c(&#39;parent&#39;, &#39;flagObservationStatusAggr&#39;, &#39;flagMethodAggr&#39;), 
            c(&#39;measuredItemFaostat_L2&#39;, &#39;flagObservationStatus&#39;, &#39;flagMethod&#39;))
   
-  Pop2SUAaggFias &lt;- SUAstandAggrFias0[measuredElementSuaFbs == &#39;511&#39;]
-  setnames(Pop2SUAaggFias,c(&#39;Value_stand&#39;, &#39;parent&#39;), c(&#39;Value&#39;, &#39;measuredItemFaostat_L2&#39;))
-  SUAstandAggrFias &lt;- rbind(SUAstandAggrFias1, Pop2SUAaggFias)
+  # Pop2SUAaggFias &lt;- SUAstandAggrFias0[measuredElementSuaFbs == &#39;511&#39;]
+  # setkey(Pop2SUAaggFias)
+  # Pop2SUAaggFias &lt;- unique(Pop2SUAaggFias)
+  # setnames(Pop2SUAaggFias,c(&#39;Value_stand&#39;, &#39;parent&#39;), c(&#39;Value&#39;, &#39;measuredItemFaostat_L2&#39;))
+  # SUAstandAggrFias &lt;- rbind(SUAstandAggrFias1, Pop2SUAaggFias)
   
   fiasFbsTot &lt;- rbind(SUAstandAggrFias, mealsInput)
   IcsGroups &lt;- unique(fiasFbsTot[ , .(geographicAreaM49_fi, timePointYears, measuredItemFaostat_L2)])
@@ -5245,7 +5948,8 @@ t1 &lt;- Sys.time()
 <div id="reloaddata" class="section level3">
 <h3><span class="header-section-number">4.4.7</span> reloadData</h3>
 <p>The ‘reloadData’ and ‘reloadDataToken’ functions are sister functions. Their purpose is to check if the dataset required by the shiny has already been loaded or if it needs to be loaded for the first time or again because the parameters have changed. The difference between the two is that the ‘reloadData’ function pulls data saved in the dataset whereas the ‘reloadDataToken’ pulls data saved in a session and hence needs the specific token of the session. The function works in this way: it checks the row of the object where the data should be (‘data’). If the object is empty it gets the data from the SWS. If the object is not empty, it checks the years selected and the chosen country if they are not the same as those of the selected objects it reloads the data with the right parameters. If none of the condition is true then the function return a null object and the data object remain the one already loaded. In order to avoid problems with the dimensions all of them are specified in the arguments along with the domain and the dataset name.</p>
-<pre><code>reloadData &lt;- function(data, keycountry, minyear, maxyear, keydomain, keydataset,
+<pre><code>
+reloadData &lt;- function(data, keycountry, minyear, maxyear, keydomain, keydataset,
                        keygeo = &#39;geographicAreaM49_fi&#39;, keytime = &#39;timePointYears&#39;,
                        keyelement= &#39;measuredElementSuaFbs&#39;,
                        keyitem = &#39;measuredItemFaostat_L2&#39;){
@@ -5316,7 +6020,8 @@ if(nrow(data) == 0){
 <div id="reloaddatatoken" class="section level3">
 <h3><span class="header-section-number">4.4.8</span> reloadDataToken</h3>
 <p>The ‘reloadDataToken’ function has the same structure as the previous one but, in addition, it has a token argument allowing to get data from the wanted SWS session.</p>
-<pre><code>reloadDataToken &lt;- function(data, keycountry, minyear, maxyear, keydomain, keydataset, keytoken,
+<pre><code>
+reloadDataToken &lt;- function(data, keycountry, minyear, maxyear, keydomain, keydataset, keytoken,
                             keygeo = &#39;geographicAreaM49_fi&#39;, keytime = &#39;timePointYears&#39;,
                             keyelement= &#39;measuredElementSuaFbs&#39;,
                             keyitem = &#39;measuredItemFaostat_L2&#39;){
@@ -5336,8 +6041,8 @@ if(nrow(data) == 0){
       }
     } else {
       R_SWS_SHARE_PATH = &quot;Z:&quot;
-      SetClientFiles(&quot;/srv/shiny-server/shinyFi_SUAFBS&quot;)
-      GetTestEnvironment(baseUrl = &quot;https://hqlqasws1.hq.un.fao.org:8181/sws&quot;,
+      SetClientFiles(&quot;/srv/shiny-server/.R/QA/&quot;)
+      GetTestEnvironment(baseUrl = &quot;https://swsqa.aws.fao.org:8181&quot;,
                          token = keytoken)
     }
     
@@ -5382,8 +6087,8 @@ if(nrow(data) == 0){
       }
     } else {
       R_SWS_SHARE_PATH = &quot;Z:&quot;
-      SetClientFiles(&quot;/srv/shiny-server/shinyFi_SUAFBS&quot;)
-      GetTestEnvironment(baseUrl = &quot;https://hqlqasws1.hq.un.fao.org:8181/sws&quot;,
+      SetClientFiles(&quot;/srv/shiny-server/.R/QA/&quot;)
+      GetTestEnvironment(baseUrl = &quot;https://swsqa.aws.fao.org:8181&quot;,
                          token = keytoken)
     }
     
@@ -5413,6 +6118,7 @@ if(nrow(data) == 0){
     return(data)
   } else {data &lt;- NULL}
 }
+
 </code></pre>
 
 </div>
@@ -5425,29 +6131,26 @@ if(nrow(data) == 0){
       </div>
 <a href="ShinyDes.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 
-    </div>
-  </div>
+
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
-<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
 <script>
-gitbook.require(["gitbook"], function(gitbook) {
+require(["gitbook"], function(gitbook) {
 gitbook.start({
 "sharing": {
 "github": false,
 "facebook": true,
 "twitter": true,
-"linkedin": false,
+"google": false,
 "weibo": false,
-"instapaper": false,
+"instapper": false,
 "vk": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -5455,14 +6158,6 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": null,
-"text": null
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
 "link": null,
 "text": null
 },

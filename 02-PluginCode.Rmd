@@ -9,13 +9,13 @@ The first part of the main file is dedicated to library loading and parameter se
 
 - The structure of the four session used is stored in the `sessionKey_` objects.
 
+- the function `flagMethodAss` provides the appropariate flagMethod depending on the flagObservationStatus of the figure.
+
 - The country parameter is optional therefore if the parameter is null or has length zero the countries from the session of the FBS FIAS dataset are pulled (`sessionCountry` object).
 
 - The start and end years are mandatory parameters and all the selected years are stored in the `yearVals` object.
 
 ```
-
-## load the library
 library(faosws)
 library(faoswsUtil)
 library(faoswsProcessing)
@@ -41,6 +41,27 @@ if(CheckDebug()){
   
 }
 
+
+flagMethodAss <- function(fos){
+  
+  
+  if(is.na(fos)){
+    fm <- '-'
+  } else {
+  
+  fos <- as.character(fos)
+  
+  if(fos == 'E'){
+    fm <- 'f'
+  } else if(fos == 'I'){
+    fm <- 'i'
+  }  else {
+    fm <- '-'
+  }
+}
+  return(as.character(fm))
+}
+
 # -- Parameters ----
 
 message("fi_SUA-FBS: Getting parameters")
@@ -52,6 +73,7 @@ sessionKey_fbsFaostat = swsContext.datasets[[4]]
 
 # Countries either from session or from parameters
 countryPar <-  swsContext.computationParams$countries
+print(countryPar)
 if(!is.null(countryPar) & length(countryPar) > 0){
   countryPar <- swsContext.computationParams$countries
   sessionCountry <- strsplit(countryPar, ', ')[[1]]
@@ -69,10 +91,13 @@ minyear <- as.numeric(swsContext.computationParams$minyear)
 yearVals <- as.character(minyear:maxyear)
 year <- max(as.numeric(yearVals))
 
+
 ```
 
 The data from the initial datasets (Global production and Commodity) can now be retrieved. The 'fisheriesCatchArea' dimension of the Global production dataset is aggregated and the production code is made coherent with the rest of the data.
 All the observation flags, before aggregation, are transformed into factor objects so to make aggregation and flag selection easier. Method flag are usually set to 's' being the flag for sum elements.
+The production of Channel Islands and Isle of Man are added to the UK production, the same happens with the COmmodity dataset.
+
 
 ```
 
@@ -83,39 +108,42 @@ All the observation flags, before aggregation, are transformed into factor objec
 message("fi_SUA-FBS: Pulling data from Global production")
 
 KeyGlobal <- DatasetKey(domain = "Fisheries", dataset = "fi_global_production", dimensions = list(
-geographicAreaM49_fi = Dimension(name = "geographicAreaM49_fi", keys = sessionCountry),
-fisheriesAsfis = Dimension(name = "fisheriesAsfis", keys = GetCodeList("Fisheries", "fi_global_production","fisheriesAsfis" )[,code]),
-fisheriesCatchArea = Dimension(name = "fisheriesCatchArea", keys = GetCodeList("Fisheries", "fi_global_production","fisheriesCatchArea" )[,code]),
-measuredElement = Dimension(name = "measuredElement", keys = c("FI_001")),
-timePointYears = Dimension(name = "timePointYears", keys = yearVals )))
+  geographicAreaM49_fi = Dimension(name = "geographicAreaM49_fi", keys = sessionCountry),
+  fisheriesAsfis = Dimension(name = "fisheriesAsfis", keys = GetCodeList("Fisheries", "fi_global_production","fisheriesAsfis" )[,code]),
+  fisheriesCatchArea = Dimension(name = "fisheriesCatchArea", keys = GetCodeList("Fisheries", "fi_global_production","fisheriesCatchArea" )[,code]),
+  measuredElement = Dimension(name = "measuredElement", keys = c("FI_001")),
+  timePointYears = Dimension(name = "timePointYears", keys = yearVals )))
 
 globalProduction <- GetData(KeyGlobal)
+
+# Add Channel Is and Isle of Man to UK
+globalProduction[geographicAreaM49_fi %in% c('830','833'), geographicAreaM49_fi := '826']
 
 # Aggregate by fisheriesCatchArea
 # Convert flags into ordinal factor so that simple aggregation is possible
 # The function aggregateObservationFlag is too slow so flag are transformed into factors
 
 globalProduction$flagObservationStatus <- factor(globalProduction$flagObservationStatus, 
-levels = c('M', 'O', 'N', '', 'X', 'T', 'E', 'I'), 
-ordered = TRUE)
-
+                                                 levels = c('M', 'O', 'N', '', 'X', 'T', 'E', 'I'), 
+                                                 ordered = TRUE)
+if(nrow(globalProduction)){
 globalProduction <- globalProduction[ , list(ValueAggr = sum(Value, na.rm = TRUE), 
-flagObservationStatusAggr = max(flagObservationStatus),
-flagMethodAggr = "-"),
-by=c("geographicAreaM49_fi",
-"fisheriesAsfis",
-"measuredElement",
-"timePointYears")]
-
+                                             flagObservationStatusAggr = max(flagObservationStatus),
+                                             flagMethodAggr = flagMethodAss(max(flagObservationStatus))),
+                                      by=c("geographicAreaM49_fi",
+                                           "fisheriesAsfis",
+                                           "measuredElement",
+                                           "timePointYears")]
+}
 setnames(globalProduction, names(globalProduction), c("geographicAreaM49_fi", "fisheriesAsfis",
-"measuredElement", "timePointYears",
-"Value", "flagObservationStatus",
-"flagMethod"))
+                                                      "measuredElement", "timePointYears",
+                                                      "Value", "flagObservationStatus",
+                                                      "flagMethod"))
 
 # Hard code change from FI_001 to 5510, both are Production in tonnes.
 globalProduction$measuredElement <- ifelse(globalProduction$measuredElement == "FI_001", "5510", globalProduction$measuredElement)
 if(any(globalProduction$measuredElement != "5510") ){
-message("Not all the elements in Global production dataset are FI_001")
+  message("Not all the elements in Global production dataset are FI_001")
 }
 
 ```
@@ -143,6 +171,10 @@ for(i in 1:length(sessionCountry)){
   print(i)
 }
 
+# Add Channel Is and Isle of Man to UK
+commodityDB0[geographicAreaM49_fi %in% c('830','833'), geographicAreaM49_fi := '826']
+
+
 commodityDB0$flagObservationStatus <- factor(commodityDB0$flagObservationStatus,
                                             levels = c('M', 'O', 'N', '', 'X', 'T', 'E', 'I'), 
                                             ordered = TRUE)
@@ -152,6 +184,7 @@ commodityDB0[measuredElement == '5912', measuredElement := '5910'] # quantity
 commodityDB0[measuredElement == '5923', measuredElement := '5922'] # Value in 1000$
 commodityDB0[measuredElement == '5931', measuredElement := '5930'] # Unit value $/t
 
+
 commodityDB0 <- commodityDB0[!measuredElement %in% c('5907', '5937', 
                                                      '5607', '5637',
                                                      '5906', '5940')]
@@ -159,27 +192,27 @@ commodityDB0 <- commodityDB0[!measuredElement %in% c('5907', '5937',
 # Other import
 
 # Isolate prices (not entering all the processing)
-ValueElements <- c('5922', '5930', '5622', '5630')
-commodityDBValue <- commodityDB0[measuredElement %in% ValueElements]
-commodityDB <- commodityDB0[!measuredElement %in% ValueElements]
-
+ValueElements <- c('5930', '5630')
+commodityDB <- commodityDB0
+if(nrow(commodityDB) > 0){
 # Aggregate re-export to export
 commodityDB <- commodityDB[ , c("Value", 
                                 "flagObservationStatus", 
                                 "flagMethod") := list(sum(Value, na.rm = TRUE),
                                                       max(flagObservationStatus),
-                                                      '-'),
+                                                      flagMethodAss(max(flagObservationStatus))),
                             by = c('geographicAreaM49_fi',
                                    'timePointYears',
                                    'measuredItemISSCFC',
                                    'measuredElement')]
-
+}
 # Get datatables that correspond to the EBX code
 map_isscfc <- ReadDatatable('map_isscfc')
 setnames(map_isscfc, "measured_item_isscfc", "measuredItemISSCFC")
 
 map_asfis <- ReadDatatable('map_asfis')
 setnames(map_asfis, "asfis", "fisheriesAsfis")
+
 
 ```
 
@@ -255,7 +288,7 @@ if(nrow(new_map_asfis) > 0){ # if there is any change from default YBKlang mappi
 
 globalProductionAggr <- gpMap_new[, list(Value = sum(Value, na.rm = TRUE),
                                          flagObservationStatus = max(flagObservationStatus),
-                                         flagMethod = "s"), 
+                                         flagMethod = flagMethodAss(max(flagObservationStatus))), 
                                   by = list(geographicAreaM49_fi,
                                             timePointYears,
                                             measuredElement,
@@ -263,6 +296,7 @@ globalProductionAggr <- gpMap_new[, list(Value = sum(Value, na.rm = TRUE),
 
 # Remove ISSCAAP/ASFIS not mapped to any ICS (Sponges, Corals, Pearls): 
 globalProductionAggr <- globalProductionAggr[!is.na(ics), ]
+
 
 ```
 
@@ -340,18 +374,18 @@ if(nrow(new_map_isscfc) > 0){
   cdbMap_new <- commodityDBIcs
 }
 
-
 ```
 
 The link table is a table to deviate flows from one ICS code to another. The flow is not expressed in code so it has to be converted through the 'link_table_elements' data table and the checks to make sure the 100% of the available quantity is deviated controls are coded. The deviation period is checked and the deviation is applied.
 
 ```
 
-# -- Link table ----
+#-- Link table ----
 message('fi_SUA-FBS: Link table and other uses deviations')
 # Link table for special period ICS group changes (regularly updated)
 link_table <- ReadDatatable("link_table")
 
+link_table <- link_table[geographic_area_m49 %in% sessionCountry]
 ## Checks on link table
 # quantity different from 100% allocated
 link_table[ , check := sum(percentage), by=c("geographic_area_m49","flow","start_year","end_year","from_code")]
@@ -376,11 +410,25 @@ link_table2 <- merge(link_table, linkCorrespondence, by = "flow", allow.cartesia
 link_table2$end_year <- ifelse(link_table2$end_year == "LAST", max(as.numeric(cdbMap_new$timePointYears)),
                                link_table2$end_year)
 
+link_table2 <- link_table2[end_year >= as.character(minyear)]
+
+years <- expand.grid(as.character(1:nrow(link_table2)), 1948:year)
+years <- as.data.table(years)
+setnames(years, c('Var1','Var2'), c('idx', 'timePointYears'))
+
+link_table2[ , idx := row.names(link_table2) ]
+ 
+link_table3 <- merge(link_table2, 
+                    years, by = 'idx')
+
+link_table3 <- link_table3[timePointYears >= start_year & timePointYears <= end_year]
+link_table3[ , idx := NULL]
+link_table3[ ,timePointYears := as.character(timePointYears)]
 # Change ICS codes
 message('From table to CDB')
-commodityDBLink <- merge(cdbMap_new, link_table2, 
-                         by.x = c("geographicAreaM49_fi", "measuredElement", "ics"),
-                         by.y = c("geographic_area_m49", "measuredElement", "from_code"), 
+commodityDBLink <- merge(cdbMap_new, link_table3, 
+                         by.x = c("geographicAreaM49_fi", "measuredElement", "timePointYears", "ics"),
+                         by.y = c("geographic_area_m49", "measuredElement", "timePointYears","from_code"), 
                          all.x = TRUE, allow.cartesian = TRUE)
 
 setkey(commodityDBLink)
@@ -389,9 +437,6 @@ commodityDBLink <- unique(commodityDBLink)
 # Avoid NAs for periods
 commodityDBLink$start_year <- ifelse(is.na(commodityDBLink$start_year), "1900", commodityDBLink$start_year)
 commodityDBLink$end_year <- ifelse(is.na(commodityDBLink$end_year), "9999", commodityDBLink$end_year)
-
-commodityDBLink <- commodityDBLink[timePointYears >= start_year, ]
-commodityDBLink <- commodityDBLink[timePointYears <= end_year]
 
 # Change ICS for defined periods
 commodityDBLink[!is.na(to_code) & 
@@ -410,7 +455,7 @@ A similar but simpler process is applied to the data with the 'other_uses' data 
 
 ```
 
-## -- Other uses introduction ----
+##-- Other uses introduction ----
 # Some commodities are not imported for food purpouses (e.g. "ornamental fish").
 # Those flow are deviated to "other utilizations"
 
@@ -427,28 +472,60 @@ commodityDBotherUses <- commodityDBotherUses[ , c("label", "measured_element_des
 commodityDBdeviated <- rbind(commodityDBLink, commodityDBotherUses)
 
 # Sum by ICS, no commodities anymore
+
+if(nrow(commodityDBdeviated)>0){
 commodityDBAggr <- commodityDBdeviated[ , list(Value = sum(Value, na.rm = TRUE),
                                                flagObservationStatus = max(flagObservationStatus),
-                                               flagMethod = "s"),
+                                               flagMethod = flagMethodAss(max(flagObservationStatus))),
                                         by = list(geographicAreaM49_fi,
                                                   timePointYears,
                                                   measuredElement,
                                                   ics)]
+} else {
+  commodityDBAggr <- commodityDBdeviated[ , list(Value = sum(Value, na.rm = TRUE),
+                                                 flagObservationStatus = flagObservationStatus,
+                                                 flagMethod = flagMethod),
+                                          by = list(geographicAreaM49_fi,
+                                                    timePointYears,
+                                                    measuredElement,
+                                                    ics)]
+}
 
-# Aggregate commodity value data by ICS
-commodityDBValueIcs <- merge(commodityDBValue, map_isscfc, by = "measuredItemISSCFC")
-commodityDBValueIcs$measuredItemISSCFC <- as.character(commodityDBValueIcs$measuredItemISSCFC)
+tradeQ <- commodityDBAggr[measuredElement %in% c('5910', '5610')]
+tradeV <- commodityDBAggr[measuredElement %in% c('5922', '5622')]
+tradeQ[measuredElement == '5910', flow := 'EXP']
+tradeQ[measuredElement == '5610', flow := 'IMP']
+tradeV[measuredElement == '5922', flow := 'EXP']
+tradeV[measuredElement == '5622', flow := 'IMP']
 
-commodityDBValueAggr <- commodityDBValueIcs[ , list(Value = mean(Value, na.rm = TRUE),
-                                               flagObservationStatus = max(flagObservationStatus),
-                                               flagMethod = "s"),
-                                        by = list(geographicAreaM49_fi,
-                                                  timePointYears,
-                                                  measuredElement,
-                                                  ics)]
+if(nrow(tradeQ) > 0){
+tradeUV <- merge(tradeQ, tradeV, by = c('geographicAreaM49_fi',
+                             'timePointYears',
+                             'flow',
+                             'ics'), all = T,
+                 suffixes = c('Q', 'V'))
 
-commodityDBAggrTot <- rbind(commodityDBAggr, commodityDBValueAggr)
+tradeUV <- tradeUV[, c('Value', 'flagObservationStatus', 'flagMethod') := 
+                            list(ValueV/ValueQ, flagObservationStatusV, "i")]
+tradeUV[flow == 'IMP', measuredElement := '5630' ]
+tradeUV[flow == 'EXP', measuredElement := '5930' ]
+tradeUV[is.nan(Value), Value := 0]
+tradeUV[ValueQ == 0, Value := ValueV]
 
+
+commodityDBAggrTot <- rbind(commodityDBAggr[!measuredElement %in% c('5930', '5630')], 
+                            tradeUV[,.(geographicAreaM49_fi,
+                                       timePointYears,
+                                       measuredElement,
+                                       ics, Value, 
+                                       flagObservationStatus, 
+                                       flagMethod)])
+} else {
+  commodityDBAggrTot <- commodityDBAggr
+}
+
+
+ValueElements <- c('5922', '5930', '5622', '5630')
 
 ```
 
@@ -463,10 +540,11 @@ setnames(SUA, "ics", "measuredItemFaostat_L2")
 
 SUA <- SUA[ , list(Value = sum(Value, na.rm = TRUE),
                    flagObservationStatus = max(flagObservationStatus),
-                   flagMethod = "s"), by = list(geographicAreaM49_fi,
-                                                timePointYears,
-                                                measuredElement,
-                                                measuredItemFaostat_L2)]
+                   flagMethod = flagMethodAss(max(flagObservationStatus))), 
+            by = list(geographicAreaM49_fi,
+                      timePointYears,
+                      measuredElement,
+                      measuredItemFaostat_L2)]
 setnames(SUA, 'measuredElement', 'measuredElementSuaFbs')
 
 SUA <- SUA[!is.na(Value)]
@@ -474,6 +552,7 @@ SUA <- SUA[!is.na(Value)]
 message("fi_SUA-FBS: Saving SUA unbalanced data")
 
 CONFIG <- GetDatasetConfig(sessionKey_suaUnb@domain, sessionKey_suaUnb@dataset)
+
 stats <- SaveData(domain = CONFIG$domain,
                   dataset = CONFIG$dataset,
                   data = SUA, waitTimeout = Inf)
@@ -512,6 +591,7 @@ if(any(is.na(SUAexpanded$sign))){
 message("fi_SUA-FBS: Calculating availability")
 SUAexpanded[, availability := sum(Value * sign, na.rm = TRUE), 
             by = list(geographicAreaM49_fi, timePointYears, measuredItemFaostat_L2)]
+
 
 
 ```
@@ -595,7 +675,7 @@ msg2email5 <- ifelse(nrow(secondaryneg0) > 0, msg2email5, "")
 
 # Get meals codes
 mealCodes <- GetCodeList("FisheriesCommodities", 
-                         "fi_sua_balanced_legacy",
+                         "fi_sua_balanced_validated",
                          "measuredItemFaostat_L2")[ grepl('meals', description)]$code
 
 if(any(secondaryneg0$measuredItemFaostat_L2 %in% mealCodes)){
@@ -654,8 +734,9 @@ if(nrow(secondaryneg) > 0){
                        SUAcomplement)
 } else {
   SUAwithProd <- SUAexpanded
-  SUAwithProd[ , sign := NULL ]
+#  SUAwithProd[ , sign := NULL ]
 }
+
 
 ```
 
@@ -671,18 +752,18 @@ SUAwithProd[, availability := sum(Value * sign, na.rm = TRUE),
 SUAwithProd[ , sign := NULL]
 
 # Add input value if present
-KeySUAinput <- DatasetKey(domain = "Fisheries Commodities", dataset = "fi_sua_balanced_legacy", # TO SUBSTITUTE WITH 'fi_sua_balanced_validated' 
+KeySUAinput <- DatasetKey(domain = "Fisheries Commodities", dataset = "fi_sua_balanced_validated", # TO SUBSTITUTE WITH 'fi_sua_balanced_validated' 
                                                                                                 # and erase the /10000 line
                           dimensions = list(
                             geographicAreaM49_fi = Dimension(name = "geographicAreaM49_fi", keys = sessionCountry),
-                            measuredItemFaostat_L2 = Dimension(name = "measuredItemFaostat_L2", keys = GetCodeList("FisheriesCommodities", "fi_sua_balanced_legacy","measuredItemFaostat_L2" )[,code]),
-                            measuredElementSuaFbs = Dimension(name = "measuredElementSuaFbs", keys = c('5510', '5141', '5423')), # GetCodeList("FisheriesCommodities", "fi_sua_balanced_legacy","measuredElementSuaFbs" )[,code]),
+                            measuredItemFaostat_L2 = Dimension(name = "measuredItemFaostat_L2", keys = GetCodeList("FisheriesCommodities", "fi_sua_balanced_validated","measuredItemFaostat_L2" )[,code]),
+                            measuredElementSuaFbs = Dimension(name = "measuredElementSuaFbs", keys = c('5510', '5141', '5423')), # GetCodeList("FisheriesCommodities", "fi_sua_balanced_validated","measuredElementSuaFbs" )[,code]),
                             timePointYears = Dimension(name = "timePointYears", keys = as.character((minyear -1):maxyear))))
 
 SUAstored <- GetData(KeySUAinput)
 SUAvalEr <- SUAstored[measuredElementSuaFbs == '5423' ]
-SUAvalEr <- SUAvalEr[ , Value := Value/10000] # To erase when substituting _legacy with _validated
-SUAwithInput <- SUAwithProd
+
+SUAwithInput <- SUAwithProd #rbind(SUAwithProd, SUAstoredInput)
 setkey(SUAwithInput)
 SUAwithInput <- unique(SUAwithInput)
 
@@ -691,10 +772,10 @@ SUAwithInput <- unique(SUAwithInput)
 For primary items the food/production ratio for the latest available year is computed and applied to the current production for groups that need balancing. This is to avoid to assign all the food processing to the primary products. This process is applied only to products having food as balancing element.
 
 ```
-
 # Calculate ratio of food to assign to primary elements
 SUAvalProd <- SUAstored[measuredItemFaostat_L2 %in% primary & measuredElementSuaFbs == '5510' & timePointYears == as.character(max(as.numeric(yearVals)) - 1)]
 SUAvalFood <- SUAstored[measuredItemFaostat_L2 %in% primary & measuredElementSuaFbs == '5141' & timePointYears == as.character(max(as.numeric(yearVals)) - 1)]
+
 
 foodShare <- merge(SUAvalProd, SUAvalFood, by = c('geographicAreaM49_fi', 
                                                   'measuredItemFaostat_L2', 
@@ -705,7 +786,8 @@ foodShare[ , perc := (ValueFood/ValueProd), by = c('geographicAreaM49_fi',
                                                            'measuredItemFaostat_L2', 
                                                            'timePointYears')]
 # At least 3% is dedicated to Food
-foodShare[ , perc := ifelse(perc < 0.03, 0.03, perc)]
+foodShare[ , perc := ifelse(perc < 0.03 | is.na(perc), 0.03, perc)]
+
 balancingElements <- ReadDatatable('balancing_elements')
 
 setnames(balancingElements, names(balancingElements), c("geographicAreaM49_fi", 
@@ -720,7 +802,7 @@ onlyfood[ , perc := 0.03]
 SUAvalFoodSec <- onlyfood[ , .(geographicAreaM49_fi, measuredItemFaostat_L2, perc)]
 
 # Take primary food
-foodShare2apply1 <- foodShare[!is.na(perc) & perc != Inf & perc < 1 ]
+foodShare2apply1 <- foodShare[!is.na(perc) & perc != Inf & perc <= 1 ]
 foodShare2apply1 <- foodShare2apply1[ , .(geographicAreaM49_fi, measuredItemFaostat_L2, perc)]
 
 # Put together primary and secondary food
@@ -753,7 +835,7 @@ newTree <- merge(tree, unique(SUAinput[ measuredElementSuaFbs == '5423' & !is.na
 newTree[ , extraction_rate := Value ]
 newTree[ , Value:= NULL]
 
-# -- Recalculate availability using food imputation for primary products ----
+#-- Recalculate availability using food imputation for primary products ----
 food1 <- merge(SUAinput[availability > 0 & measuredElementSuaFbs == '5510'], 
                foodShare2apply, 
                by = c('geographicAreaM49_fi', 'measuredItemFaostat_L2'), 
@@ -770,6 +852,7 @@ food2 <- food2[!is.na(ValueFood)]
 # Otherwise the food processing calculation will assign it
 # according to availability
 food <- food2[ availability < ValueFood, ValueFood := availability]
+food <- food[ , ValueFood := ValueFood * 0.95]
 setnames(food, 'ValueFood', 'Value')
 
 SUAFood <- rbind(SUAinput, food)
@@ -784,29 +867,129 @@ SUAFood[, availability := sum(Value*sign, na.rm = TRUE),
 
 SUAFood[ , sign := NULL ]
 
+
 ```
 
-Food processing element is calculated with an external function as well. When the food processing is ready, the problems are stored in a separate object saved into a folder that the shiny reads and the unbalances due to the impossibility to cover secondary production are assigned as food processing to the corresponding primary element and balanced by an equal quantity as 'Residual other uses' (5166) the user has to address the imbalance in the shiny app. Elements are summed to avoid duplicates.
+Food processing element is calculated with an external function as well. When the food processing is ready, the problems are stored in datatables that the shiny reads. The imbalances resulting impossible to cover even with secondary production are assigned as food processing to the corresponding primary element and balanced by an equal quantity as 'Residual other uses' (5166). The user has to address the imbalance in the shiny app. Elements are summed to avoid duplicates.
+The food processing is calculated twice, once including the imputed food and once re-assigning the food part to production. The combination leading to less imbalances and best continuity in terms of food quantity assigned per product is chosen.
 
 ```
 
 # --Food processing ----
 
 message("fi_SUA-FBS: Calculating food processing")
-FPdata_all <- foodProcessingComputation(SUAinput = SUAFood, treeNewER = newTree)
-FPdata <- FPdata_all$result
-FPdata <- FPdata[Value != 0]
-FPproblems <- list()
-FPproblems <- FPdata_all$problems
+FPdata_alltest <- foodProcessingComputation(SUAinput = SUAFood, treeNewER = newTree, primary = primary)
+FPdatatest <- FPdata_alltest$result
+FPdatatest <- FPdatatest[Value != 0]
+FPproblemstest <- list(primary = data.table(),
+                       secondaryTot = data.table(),
+                       secondary = data.table(),
+                       tertiary = data.table(),
+                       quaternary = data.table(),
+                       NotCovered = data.table())
+
+FPproblemstest <- FPdata_alltest$problems
+
+# Change of input to calculate FP for problematic data ----
+
+# Get problematic groups
+if(any(sapply(FPproblemstest, nrow)>0)){
+# if(length(FPproblemstest) > 1 & nrow(FPproblemstest$NotCovered) > 0){
+avoidProblems <- rbindlist(FPproblemstest, fill = TRUE)
+avoidProblems <- unique(avoidProblems[ , .(geographicAreaM49_fi,
+                                           timePointYears,
+                                           parent_primary)])
+
+# Parent-child tree
+treeneeded0 <- data.table(parent = unique(avoidProblems$parent_primary),
+                          child = unique(avoidProblems$parent_primary))
+treeneeded <- unique(newTree[parent %in% unique(avoidProblems$parent_primary), .(parent, child) ])
+treeneeded <- rbind(treeneeded, treeneeded0)
+
+# Get complete structure of problematic groups
+avoidProblems2 <- merge(avoidProblems, treeneeded,
+                        by.x = 'parent_primary',
+                        by.y = 'parent', all.x = TRUE,
+                        allow.cartesian = TRUE)
+setnames(avoidProblems2, 'child', 'measuredItemFaostat_L2')
+
+# The problematic groups with food are recalculated without food
+subst <- merge(SUAinput, avoidProblems2[ , .(geographicAreaM49_fi,
+                                             timePointYears,
+                                             measuredItemFaostat_L2)],
+               by = c("geographicAreaM49_fi",
+                      "timePointYears", 
+                      "measuredItemFaostat_L2"))
+
+# The part that was okay with food is recalculated without the problematic part
+cancel <- merge(SUAFood, avoidProblems2[ , .(geographicAreaM49_fi,
+                                             timePointYears,
+                                             measuredItemFaostat_L2)],
+                by = c("geographicAreaM49_fi",
+                       "timePointYears", 
+                       "measuredItemFaostat_L2"))
+
+SUAFoodcan <- SUAFood[!cancel, on = names(SUAFood)]
+
+if(nrow(SUAFoodcan) > 0){
+FPdata_all1 <- foodProcessingComputation(SUAinput = SUAFoodcan, treeNewER = newTree, primary = primary)
+FPdata1 <- FPdata_all1$result
+FPdata1 <- FPdata1[Value != 0]
+FPproblems1 <- list(primary = data.table(),
+                    secondaryTot = data.table(),
+                    secondary = data.table(),
+                    tertiary = data.table(),
+                    quaternary = data.table(),
+                    NotCovered = data.table())
+FPproblems1 <- FPdata_all1$problems
+} else {
+  FPdata1 <- data.table()
+  FPproblems1 <- list(primary = data.table(),
+                      secondaryTot = data.table(),
+                      secondary = data.table(),
+                      tertiary = data.table(),
+                      quaternary = data.table(),
+                      NotCovered = data.table())
+}
+# FP calculated for problematic elements
+FPdata_all2 <- foodProcessingComputation(SUAinput = subst,
+                                         treeNewER = newTree,
+                                         primary = primary)
+
+FPdata2 <- FPdata_all2$result
+FPdata2 <- FPdata2[Value != 0]
+FPproblems2 <- list(primary = data.table(),
+                    secondaryTot = data.table(),
+                    secondary = data.table(),
+                    tertiary = data.table(),
+                    quaternary = data.table(),
+                    NotCovered = data.table())
+FPproblems2 <- FPdata_all2$problems
+
+# Put together results and dataset to consider
+FPdata <- rbind(FPdata1, FPdata2)
+FPproblems <- FPproblems2
+SUAnoFP <- rbind(SUAFoodcan, subst)
+} else {SUAnoFP <- SUAFood
+FPdata <- FPdatatest
+FPproblems <- list(primary = data.table(),
+                   secondaryTot = data.table(),
+                   secondary = data.table(),
+                   tertiary = data.table(),
+                   quaternary = data.table(),
+                   NotCovered = data.table())}
+
+message('Food re-processing okay')
+############
 
 FPdata <- FPdata[ , availability := NULL ]
 FPdata[ , c("flagObservationStatus", "flagMethod") := list("E", "i")]
 
-SUAFood[ , availability := NULL]
-SUAunbal <- rbind(SUAFood[!is.na(Value), ], FPdata)
+SUAnoFP[ , availability := NULL] # SUAFood[ , availability := NULL]
+SUAunbal <- rbind(SUAnoFP[!is.na(Value), ], FPdata)
 SUAunbal$flagObservationStatus <- as.character(SUAunbal$flagObservationStatus)
 
-if(is.list(FPproblems$NotCovered) & length(FPproblems$NotCovered) > 0){
+if(is.list(FPproblems$NotCovered) & nrow(FPproblems$NotCovered) > 0){
   uncovered <- copy(FPproblems$NotCovered)
   uncovered[ , measuredElementSuaFbs := '5023']
   setnames(uncovered, c('parent_primary', 'UncoveredQuantity'),
@@ -828,8 +1011,8 @@ SUAunbal <- rbind(SUAunbal, uncoveredAdjusted)
 SUAunbal$flagObservationStatus <- factor(SUAunbal$flagObservationStatus, levels = c('M', 'O', 'N', '', 'X', 'T', 'E', 'I'), ordered = TRUE)
 
 SUAunbal <- SUAunbal[ , list(Value = sum(Value, na.rm = TRUE),
-                                          flagObservationStatus = max(flagObservationStatus),
-                                                    flagMethod = flagMethod), 
+                             flagObservationStatus = max(flagObservationStatus),
+                             flagMethod = flagMethodAss(max(flagObservationStatus))), 
               by = c("geographicAreaM49_fi", "timePointYears",
                      "measuredItemFaostat_L2", "measuredElementSuaFbs")]
 
@@ -853,7 +1036,7 @@ if(any(is.na(SUAunbal$sign))){
 # Calculate imbalance
 SUAunbal[ , availability := sum(Value * sign, na.rm = TRUE), 
           by = list(geographicAreaM49_fi, timePointYears, measuredItemFaostat_L2)]
-SUAunbal[ , availability := round(availability, 3)]
+SUAunbal[ , availability := round(availability, 6)]
 message('fi_SUA-FBS: Pulling balancing elements')
 
 currentYear <- as.numeric(gsub("\\-[0-9]*", "", Sys.Date()))
@@ -877,7 +1060,7 @@ balancing2merge <- balancing[ as.numeric(timePointYears) >= as.numeric(start_yea
 balancing2merge[ , c('start_year', 'end_year', 'share') := NULL]
 balancing2merge[ , c('flagObservationStatus', 'flagMethod') := list('E','b')]
 # Balancing cannot be negative
-balancingproblems <- balancing2merge[round(Value,3) < 0,]
+balancingproblems <- balancing2merge[round(Value,6) < 0,]
 
 # Store balancing problems
 balancingproblems_store <- ReadDatatable('balancing_problems_tab', readOnly = FALSE)
@@ -923,6 +1106,7 @@ balancingimb <- balancingimb[Value < 0, c('measuredElementSuaFbs',
 balancingimb[ , Value := Value]
 
 balancingTot <- rbind(balancing2merge[Value > 0], balancingimb)
+
 
 ```
 
@@ -1069,6 +1253,7 @@ Metadata2include <- merge(unique(SUANoPop[ , .(measuredItemFaostat_L2,
                                                                                          'timePointYears'),
                           allow.cartesian = TRUE)
 
+
 ```
 
 The SUA balanced with nutrients, the SUA for value elements and the population data are bind together and saved into the SUA balanced dataset.
@@ -1081,10 +1266,10 @@ SUAwithPop <- rbind(SUANoPop, Pop2include)
 SUAwithValues <- rbind(SUAwithPop, SUAValues)
 
 SUA2save <- SUAwithValues[!is.na(Value)]
- 
+
 # -- Saving SUA balanced ----
 
-message("fi_SUA-FBS: Saving data SUA balanced data")
+message("fi_SUA-FBS: Saving SUA balanced data")
 CONFIG2 <- GetDatasetConfig(sessionKey_suabal@domain, sessionKey_suabal@dataset)
 
 stats2 <- SaveData(domain = CONFIG2$domain,
@@ -1132,6 +1317,7 @@ convFact <- rbind(convFact, primaryTree)
 setnames(convFact, new = 'extraction_rate', old = 'Value')
 
 # SUA with standardized element, no zero weight elements
+
 SUA2save <- SUA2save[!measuredElementSuaFbs %in% ValueElements]
 SUAstand_prep <- merge(SUA2save, convFact, by.x = c('geographicAreaM49_fi', 'timePointYears', 'measuredItemFaostat_L2'),
                        by.y = c('geographicAreaM49_fi', 'timePointYears', 'child'))
@@ -1196,7 +1382,7 @@ With the 'fi_faostat_standardization_element' data table the elements are aggreg
 
 ```
 
-# -- FAOSTAT FBS standardization ----
+#-- FAOSTAT FBS standardization ----
 
 message("Starting Faostat standardization")
 faostatGroups <- ReadDatatable('fi_faostat_standardization_element')
@@ -1292,7 +1478,7 @@ The FBS elements required by the FIAS Methodology are stored in the 'fi_fias_sta
 
 ```
 
-# -- FIAS FBS standardization ---- 
+#-- FIAS FBS standardization ---- 
 message("fi_SUA-FBS: Starting Fias standardization")
 fiasGroups <- ReadDatatable('fi_fias_standardization_element')
 setnames(fiasGroups, c('measuredelementsuafbs', 'measuredelementfias'), c('measuredElementSuaFbs', 'measuredElementFias'))
@@ -1333,40 +1519,116 @@ msg2email9 <- paste0("Standardization process completed successfully! ",
                      statsFias$ignored, " weren't updated, ",
                      statsFias$discarded, " had problems.")
 
+
 ```
 
-Files with food processing problems are saved in an appropriate folder in the share drive by country and
+Food processing problems are saved in the appropriate datatables and
 also sent as attachment via email to the user along with other saved messages along the plugin.
 
 ```
 R_SWS_SHARE_PATH <- Sys.getenv("R_SWS_SHARE_PATH")
 
-for( j in 1:length(sessionCountry)){
-  # Create a FP file for each country
-fp1 <- lapply(FPproblems, function(x) x[geographicAreaM49_fi == sessionCountry[j]])
+length(FPproblems)
 
-filename <- paste("FoodProcessingFeedback_", sessionCountry[j],".rds", sep = '')
-dirname <- file.path(R_SWS_SHARE_PATH, 'FisherySUAFBS')
-dir.create(dirname, showWarnings = FALSE, recursive = TRUE)
+primfp <- ReadDatatable('fi_fp_imb_primary', readOnly = F)
+secfp <- ReadDatatable('fi_fp_imb_sec', readOnly = F)
+tertfp <- ReadDatatable('fi_fp_imb_ter', readOnly = F)
+quatfp <- ReadDatatable('fi_fp_imb_quat', readOnly = F)
+sectot <- ReadDatatable('fi_fp_imb_sec_tot', readOnly = F)
+ncfp <- ReadDatatable('fi_fp_not_covered', readOnly = F)
 
-saveRDS(object = fp1,
-        file = file.path(R_SWS_SHARE_PATH, "FisherySUAFBS", filename))
+chn1 <- Changeset('fi_fp_imb_primary')
+chn2<- Changeset('fi_fp_imb_sec')
+chn3 <- Changeset('fi_fp_imb_ter')
+chn4 <- Changeset('fi_fp_imb_quat')
+chn5 <- Changeset('fi_fp_imb_sec_tot')
+chn6 <- Changeset('fi_fp_not_covered')
+
+AddDeletions(chn1, primfp[geographicaream49_fi %in% sessionCountry])
+Finalize(chn1)
+
+AddDeletions(chn2, secfp[geographicaream49_fi %in% sessionCountry])
+Finalize(chn2)
+
+AddDeletions(chn3, tertfp[geographicaream49_fi %in% sessionCountry])
+Finalize(chn3)
+
+AddDeletions(chn4, quatfp[geographicaream49_fi %in% sessionCountry])
+Finalize(chn4)
+
+AddDeletions(chn5, sectot[geographicaream49_fi %in% sessionCountry])
+Finalize(chn5)
+
+AddDeletions(chn6, ncfp[geographicaream49_fi %in% sessionCountry])
+Finalize(chn6)
+
+
+chn11 <- Changeset('fi_fp_imb_primary')
+chn22 <- Changeset('fi_fp_imb_sec')
+chn33 <- Changeset('fi_fp_imb_ter')
+chn44 <- Changeset('fi_fp_imb_quat')
+chn55 <- Changeset('fi_fp_imb_sec_tot')
+chn66 <- Changeset('fi_fp_not_covered')
+
+if(exists('primary', where = FPproblems)){
+  if(nrow(FPproblems$primary)>0){
+  names(FPproblems$primary) <- tolower(names(FPproblems$primary))
+  AddInsertions(chn11, FPproblems$primary[geographicaream49_fi %in% sessionCountry])
+  Finalize(chn11)
+  }
 }
 
-## -- send Email with notification of correct execution ----
+if(exists('secondary', where = FPproblems)){
+  if(nrow(FPproblems$secondary)>0){
+  names(FPproblems$secondary) <- tolower(names(FPproblems$secondary))
+  AddInsertions(chn22, FPproblems$secondary[geographicaream49_fi %in% sessionCountry])
+  Finalize(chn22)
+  }
+}
+
+if(exists('tertiary', where = FPproblems)){
+  if(nrow(FPproblems$tertiary)>0){
+  names(FPproblems$tertiary) <- tolower(names(FPproblems$tertiary))
+  AddInsertions(chn33, FPproblems$tertiary[geographicaream49_fi %in% sessionCountry])
+  Finalize(chn33)
+  }
+}
+
+if(exists('quaternary', where = FPproblems)){
+  if(nrow(FPproblems$quaternary)>0){
+  names(FPproblems$quaternary) <- tolower(names(FPproblems$quaternary))
+  AddInsertions(chn44, FPproblems$quaternary[geographicaream49_fi %in% sessionCountry])
+  Finalize(chn44)
+  }
+}
+
+if(exists('secondaryTot', where = FPproblems)){
+  if(nrow(FPproblems$secondaryTot)>0){
+  names(FPproblems$secondaryTot) <- tolower(names(FPproblems$secondaryTot))
+  AddInsertions(chn55, FPproblems$secondaryTot[geographicaream49_fi %in% sessionCountry])
+  Finalize(chn55)
+  }
+}
+
+if(exists('NotCovered', where = FPproblems)){
+  if(nrow(FPproblems$NotCovered)>0){
+  names(FPproblems$NotCovered) <- tolower(names(FPproblems$NotCovered))
+  AddInsertions(chn66, FPproblems$NotCovered[geographicaream49_fi %in% sessionCountry])
+  Finalize(chn66)
+  }
+}
+
+
+##-- send Email with notification of correct execution ----
 
 emailtext <- paste("The plug-in has saved the data in your sessions. The plugin returned the following messages:", 
       msg2email1, 
       msg2email1CDB,
       msg2email2, 
-     # msg2email4, 
-    #  msg2email5, 
-      # msg2email6,
       msg2email7, 
       msg2email8, 
       msg2email9, 
       msg2email10,
-      # FPproblems
       collapse = '\n')
 
 primaryUnb <- data.table()
@@ -1385,6 +1647,7 @@ subject = "fi_SUA-FBS plug-in has correctly run"
 body = list(emailtext, mime_part(primaryUnb), mime_part(secondaryUnb))
 sendmailR::sendmail(from = from, to = to, subject = subject, msg = body)
 paste0("Email sent to ", swsContext.userEmail)
+
 
 ```
 
@@ -1415,117 +1678,121 @@ The code then checks if there is a non-null and non-empty object with past extra
 The computed extraction rates are appended to the rest of the data.
 
 ```
-eRcomputation <- function(data,  tree,
-                          oldEr = NULL, years){
+#-- Extraction rates calculation ----
 
+eRcomputation <- function(data,  tree, 
+                          oldEr = NULL, years){
+  
   newYear <- max(as.numeric(years))
   ## the principal ingredient to compute the foodProcessing is the extraction rates
-  ## for those items that already have a protected figures for 31 the default extractio rate
+  ## for those items that already have a protected figures for 31 the default extractio rate 
   ## in the commodity tree has to be updated:
-
+  
   dataProd <- data[measuredElementSuaFbs=="5510"]
   dataInput <- data[measuredElementSuaFbs=="5302"]
-
+  
   # Take all secondary products
   Er0 <- unique(data[ !measuredItemFaostat_L2 %in% primary, .(geographicAreaM49_fi, timePointYears,  measuredItemFaostat_L2, availability)])
   Er0[ , measuredElementSuaFbs := '5423']
-
+  
   if(nrow(dataInput) > 0){
-    computeExtractionRate <- merge(dataProd, dataInput,
-                                   by = c("geographicAreaM49_fi", "timePointYears",
-                                          "measuredItemFaostat_L2", "availability"),
+    computeExtractionRate <- merge(dataProd, dataInput, 
+                                   by = c("geographicAreaM49_fi", "timePointYears", 
+                                          "measuredItemFaostat_L2", "availability"), 
                                    suffixes = c("_prod","_input"))
     computeExtractionRate[ , extraction_rate_C := Value_prod/Value_input]
-
+     
     setnames(computeExtractionRate,c("extraction_rate_C"), "Value")
     computeExtractionRate <- computeExtractionRate[, .(geographicAreaM49_fi, timePointYears, measuredItemFaostat_L2, availability, Value)]
-    computeExtractionRate[ , ':=' (flagObservationStatus = "I", flagMethod = "i" ) ]
-
+    computeExtractionRate[ , ':=' (flagObservationStatus = "I", flagMethod = "i" ) ] 
+    
     input2Er <- merge(Er0, computeExtractionRate, by = c("geographicAreaM49_fi", "timePointYears",
                                                           "measuredItemFaostat_L2", "availability"), all.x = TRUE)
   } else {
     # If no Input then nothing happens
-    input2Er <- Er0[ , ':=' (Value = 0, flagObservationStatus = "M", flagMethod = "u" ) ]
+    input2Er <- Er0[ , ':=' (Value = 0, flagObservationStatus = "M", flagMethod = "u" ) ] 
   }
-
+  
   # Historical data
   if(!is.null(oldEr)){
-
+    
     if(nrow(oldEr) > 0){
-
+    
     old2newEr <- merge(input2Er, oldEr, by = c('geographicAreaM49_fi', 'measuredElementSuaFbs',
-                                            'measuredItemFaostat_L2', 'timePointYears'),
+                                            'measuredItemFaostat_L2', 'timePointYears'), 
                        all.x = TRUE, suffixes = c('', 'Series'))
-
-    old2newEr[is.na(Value) | Value == 0, c('Value',
+    
+    old2newEr[is.na(Value) | Value == 0, c('Value', 
                                            'flagObservationStatus',
                                            'flagMethod') := list(ValueSeries,
                                                                  flagObservationStatusSeries,
                                                                  flagMethodSeries)]
-
+    
     old2newEr[ , c("ValueSeries", "flagObservationStatusSeries",
-                 "flagMethodSeries", "availabilitySeries") := NULL]
-
+                 "flagMethodSeries") := NULL]
+    
     # Carry forward are flagged as (E, t)
     carryforward <- data.table()
     for(i in 1:length(years)){
       previous <- oldEr[timePointYears == as.character(as.numeric(years[i])-1)]
       missing <- old2newEr[timePointYears == years[i]][is.na(Value) | Value == 0]
-
+      
       # Only previous available values taken
       carryforward2append <- merge(previous, missing, by = c('geographicAreaM49_fi',
                                                              'measuredElementSuaFbs',
                                                              'measuredItemFaostat_L2'),
                                    suffixes = c('Prev', ''))
-      carryforward2append[ , c('Value',
+      carryforward2append[ , c('Value', 
                                'flagObservationStatus',
                                'flagMethod') := list(ValuePrev,
                                                      flagObservationStatusPrev,
                                                      flagMethodPrev)]
       carryforward2append[ , names(carryforward2append)[grepl('Prev', names(carryforward2append))] := NULL]
-
+      
       carryforward <- rbind(carryforward, carryforward2append)
       }
-
+    
     ErFromData <- merge(old2newEr, carryforward, by = c('geographicAreaM49_fi',
                                                         'measuredElementSuaFbs',
                                                         'measuredItemFaostat_L2',
                                                         'timePointYears',
                                                         'availability'),
                         all.x = TRUE, suffixes = c('', 'CF'))
-
-    ErFromData[is.na(Value) | Value == 0, c('Value',
+    
+    ErFromData[is.na(Value) | Value == 0, c('Value', 
                                             'flagObservationStatus',
                                             'flagMethod') := list(ValueCF,
                                                                   'E', 't')]
     ErFromData[ , names(ErFromData)[grepl('CF', names(ErFromData))] := NULL]
-
-
+    
+  
     } else {
     ErFromData <- input2Er
   }
-
+    
   } else{
     ErFromData <- input2Er
   }
-
+  
   # Add default Er if still any missing
-  DefEr <- merge(ErFromData, tree[!is.na(extraction_rate) , .(child, extraction_rate)],
+  DefEr <- merge(ErFromData, tree[!is.na(extraction_rate) , .(child, extraction_rate)], 
                        by.x = c("measuredItemFaostat_L2"), by.y = c("child"), all.x = TRUE)
   # Flag for default extraction rate is (I, c) = Imputed, Copied from elsewhere in the working system
-  DefEr[is.na(Value) | Value == 0, c('Value',
+  DefEr[is.na(Value) | Value == 0, c('Value', 
                                          'flagObservationStatus',
                                          'flagMethod') := list(extraction_rate,
                                                                'I', 'c')]
   DefEr[ , extraction_rate := NULL]
-
+  
   eRadded <- DefEr[!is.na(Value)]
   setkey(eRadded)
   eRadded <- unique(eRadded)
+  eRadded <- eRadded[, Value := round(Value, 6)]
   dataEr <- rbind(data[measuredElementSuaFbs != '5423'], eRadded)
   setkey(dataEr)
   dataEr <- unique(dataEr)
 }
+
 
 ```
 
@@ -1537,18 +1804,18 @@ If there are official input data they are taken aside. The input element is calc
 
 ```
 
-# -- Input calculation ----
+#-- Input calculation ----
 
 inputComputation <- function(data){ #, treeNewER){
-
+ 
   # Isolate needed elements
   # Previous input available
   input <-  data[ !measuredItemFaostat_L2 %in% primary & measuredElementSuaFbs == '5302', ]
-
+  
   #Er and production needed to compute input if no previous data
   Er <- data[ !measuredItemFaostat_L2 %in% primary & measuredElementSuaFbs == '5423', ]
   Prod <- data[ !measuredItemFaostat_L2 %in% primary & measuredElementSuaFbs == '5510', ]
-
+  
   # Calculate Input
   InputCalc <- merge(Prod, Er, by = c("geographicAreaM49_fi",
                                       "timePointYears", "measuredItemFaostat_L2",
@@ -1557,43 +1824,44 @@ inputComputation <- function(data){ #, treeNewER){
   if(nrow(InputCalc[is.na(Value_Er)]) > 0 ){
   message('Missing extraction rates for some Ics groups')
   }
-
+  
   InputCalc[ , input := Value_prod / Value_Er]
-
+  
   data_compute31 <- melt(InputCalc,
                        id.vars = c("geographicAreaM49_fi", "timePointYears",  "measuredItemFaostat_L2", "availability"),
                        measure.vars = "input",
                        value.name = "Value" ,
                        variable.name = "measuredElementSuaFbs", variable.factor = FALSE)
 
-
+  
   data_compute31[measuredElementSuaFbs=="input",measuredElementSuaFbs:="5302"]
   data_compute31[ , ':='(flagObservationStatus = 'I', flagMethod = 'i', FBSsign = 0)]
-
+  
   # See if any official input
-  comp31 <- merge(data_compute31, input, by = c("geographicAreaM49_fi",
-                                "timePointYears",
-                                "measuredItemFaostat_L2",
-                                "availability",
+  comp31 <- merge(data_compute31, input, by = c("geographicAreaM49_fi", 
+                                "timePointYears",  
+                                "measuredItemFaostat_L2", 
+                                "availability", 
                                 "measuredElementSuaFbs"), all = TRUE,
                   suff = c('', 'Official'))
-
-  # If previous data is not NA then it is assigned as input
+  
+  # If previous data is not NA then it is assigned as input 
   # Note: the Er should have been computed as ratio between Production and Input
-  comp31[!is.na(ValueOfficial), c('Value','flagObservationStatus','flagMethod'):= list(ValueOfficial,
+  comp31[!is.na(ValueOfficial), c('Value','flagObservationStatus','flagMethod'):= list(ValueOfficial, 
                                                                                        flagObservationStatusOfficial,
                                                                                        flagMethodOfficial)]
-
+  
   comp31 <- comp31[ , c('ValueOfficial', 'flagObservationStatusOfficial',
                        'flagMethodOfficial') := NULL]
-
+  
   # Remove all input data from the original data and add the only data31 part
   # existing data are included as computed with computed extraction rates
   # other input data are computed starting from given extraction rates
   dataNo31 <- data[measuredElementSuaFbs!="5302"]
   SUAinput <- rbind(dataNo31, comp31[,.(geographicAreaM49_fi, timePointYears,  measuredItemFaostat_L2, availability, measuredElementSuaFbs, Value, flagObservationStatus, flagMethod)]) #rbind(data, data_compute31) #
   return(SUAinput)
-  }
+  
+}
 
 ```
 
@@ -1605,50 +1873,69 @@ Fist of all, it calculates the whole quantity to cover in terms of primary equiv
 
 ```
 
-# -- Food processing calculation ----
+#-- Food processing calculation ----
 
 foodProcessingComputation <- function(SUAinput, treeNewER, primary){
+  
+  #-- Primary processing ----
 
-  # -- Primary processing ----
-
+  if(nrow(SUAinput[measuredElementSuaFbs %in% c('5510', '5302') &
+                   measuredItemFaostat_L2 %in% treeNewER[weight == TRUE]$child]) == 0){
+   
+    data131full <- data.table(geographicAreaM49_fi = 0,
+                              measuredItemFaostat_L2 = 0,
+                              timePointYears = 0,
+                              availability = 0,
+                              Value = 0,
+                              measuredElementSuaFbs = 0)
+    problems <- list(primary = data.table(),
+                     secondaryTot = data.table(),
+                     secondary = data.table(),
+                     tertiary = data.table(),
+                     quaternary = data.table(),
+                     NotCovered = data.table())
+     
+  } else {
+  
+  
   # Tree only with primary
   treePrimary <- treeNewER[parent %in%  primary]
   treePrimary[, child:=as.character(child)]
-
+  
   data_compute131 <- copy(SUAinput)
   setnames(data_compute131, "measuredItemFaostat_L2", "child")
   data_compute131tree <- merge(data_compute131, treePrimary, by=c("geographicAreaM49_fi", "timePointYears", "child"))
-
+  
   # sum all the inputs
-  data_compute131tree[ measuredElementSuaFbs=="5302" , processing:=sum(Value, na.rm = TRUE), by=c("geographicAreaM49_fi",
+  data_compute131tree <- data_compute131tree[ measuredElementSuaFbs=="5302" , processing:=sum(Value, na.rm = TRUE), by=c("geographicAreaM49_fi",
                                                                                                   "timePointYears",
                                                                                                   "parent")]
-
+  
   # processing is unique for each primary parent so take only these values
   # data_compute131processing = Total input 5302 by parent
   setkey(data_compute131tree)
   data_compute131processing <- unique(data_compute131tree[!is.na(processing),.(geographicAreaM49_fi, parent, timePointYears, processing)])
   setnames(data_compute131processing, "parent", "measuredItemFaostat_L2")
-
-  ## The total 'food processing' (input to cover) has been just computed for any Primary Parent,
+  
+  ## The total 'food processing' (input to cover) has been just computed for any Primary Parent, 
   ## we have to compare the 'new component' based on the sum of all the child-input
   ## with the actual primary availability, in order to be sure that the new availabily
   ## (computed including the just computed food processing in the primary SUA line) does not produce
   ## a negative imbalance.
-
+  
   data131 <- merge(SUAinput, data_compute131processing, by=c( "geographicAreaM49_fi","measuredItemFaostat_L2","timePointYears"), all.x = TRUE)
-
+  
   # take only the processing to check availability
   setkey(data131)
   data131 <- unique(data131[!is.na(processing),.(geographicAreaM49_fi, measuredItemFaostat_L2, timePointYears, availability, processing)])
-
-  ## SeconLevelProcessing variable is computed to evaluate which primary availabilities are lower than the
-  ## food processing.
+  
+  ## SeconLevelProcessing variable is computed to evaluate which primary availabilities are lower than the 
+  ## food processing. 
   # secondLevelProcessing < 0 quantity left to cover (Not enough primary for all processing)
   # secondLevelProcessing > 0 primary availability exceeding processing
   data131[, secondLevelProcessing := availability-processing]
-
-  # If not enough availability then the processing imputable to primary parent is put equal to the availability
+  
+  # If not enough availability then the processing imputable to primary parent is put equal to the availability 
   data131[secondLevelProcessing < 0, processing := availability]
 
 ```
@@ -1663,93 +1950,138 @@ The products having enough availability are stored in a different object (`toDev
 
 
 ```
-  # Primary measuredItemFaostat_L2 from which not enough availability to cover processing
+   # Primary measuredItemFaostat_L2 from which not enough availability to cover processing
   secondLevelProcessing <- data131[secondLevelProcessing < 0]
   setnames(secondLevelProcessing, "measuredItemFaostat_L2", "parent")
-  problems <- list()
-
-  # -- Secondary processing  ----
-
+  problems <- list(primary = data.table(),
+                   secondaryTot = data.table(),
+                   secondary = data.table(),
+                   tertiary = data.table(),
+                   quaternary = data.table(),
+                   NotCovered = data.table())
+  
+  #-- Secondary processing  ----
+  
   if(nrow(secondLevelProcessing) > 0) {
-
+    
     # merge by parent so that secondary parents can be found
     # toDeviate has dimensions: (parent_primary, geographicAreaM49_fi, timePointYears,
     #   availability, processing, secondLevelProcessing, parent_secondary, weight, extraction_rate, rank)
-
+    
     toDeviate <- merge(secondLevelProcessing, treeNewER[weight != FALSE], by=c("geographicAreaM49_fi", "timePointYears", "parent"), allow.cartesian = TRUE)
     setnames(toDeviate, c("parent","child"), c("parent_primary","parent_secondary"))
-
+    
+    # # tree only with possible secondary parents
+    # secondary <- treeNewER[!parent %in% primary, unique(parent)]
+    # 
+    # # Keep a child only if it can also be a (secondary) parent
+    # toDeviate <- toDeviate[parent_secondary %in% secondary]
+    
     # compare imbalance with rank 1 parent availability
     toDeviate2proc <- merge(toDeviate, SUAinput, by.x = c("geographicAreaM49_fi", "timePointYears",  "parent_secondary"),
                             by.y = c("geographicAreaM49_fi", "timePointYears",  "measuredItemFaostat_L2"), suffixes = c('_primary','_secondary'))
-
+    
     # Make sure primary availability covers at least the rank 1 child
     rank1availCheck <- toDeviate2proc[parent_secondary %in%  unique(treeNewER[rank == 1 ]$parent) &
-                                        measuredElementSuaFbs == '5302' &
+                                        measuredElementSuaFbs == '5302' & 
                                         Value > availability_primary ]
-
+    
     if(nrow(rank1availCheck) > 0){
       msg1 <- paste('Not enough primary availability for groups: ', paste(unique(rank1availCheck$parent_primary), collapse = ","),
-                    'for years: ', paste(unique(rank1availCheck$timePointYears), collapse = ","),
+                    'for years: ', paste(unique(rank1availCheck$timePointYears), collapse = ","), 
                     'and country', paste(unique(rank1availCheck$geographicAreaM49_fi), collapse = ","))
       message(msg1)
       rank1availCheck
-
-    }
-
+      
+    }               
+    
     msg1 <- ifelse(nrow(rank1availCheck) > 0, msg1, 'Primary products cover at least first rank children (see commodity tree).')
-    toDeviate2proc2 <- unique(toDeviate2proc[, .( geographicAreaM49_fi, timePointYears, parent_secondary, parent_primary,
-                                                  availability_primary, processing, secondLevelProcessing, weight,
+    toDeviate2proc2 <- unique(toDeviate2proc[, .( geographicAreaM49_fi, timePointYears, parent_secondary, parent_primary, 
+                                                  availability_primary, processing, secondLevelProcessing, weight, 
                                                   extraction_rate, availability_secondary)])
-
+    # problems$primary <- list(msg = msg1, tab = rank1availCheck[ , .(geographicAreaM49_fi,
+    #                                                                 timePointYears,
+    #                                                                 parent_secondary,
+    #                                                                 parent_primary,
+    #                                                                 availability_primary,
+    #                                                                 Value)])
     problems$primary <- rank1availCheck[ , .(geographicAreaM49_fi,
                                              timePointYears,
                                              parent_secondary,
                                              parent_primary,
                                              availability_primary,
                                              Value)]
-
+    
+    # If availability for secondary products was negative then production has been artificially increased so
+    # secondary availability is 0 and not negative
+    #toDeviate2proc2[availability_secondary < 0, availability_secondary := 0]
     # Check if enough secondary availability to cover unbalance
     toDeviate2proc2[extraction_rate != 0 & !is.na(extraction_rate), availability_secondary_primEq := availability_secondary/extraction_rate ]
     toDeviate2proc2[parent_secondary %in% unique(treeNewER$parent), availability_secondary_primEq_tot := sum(availability_secondary_primEq, na.rm = TRUE), by = list(geographicAreaM49_fi,
                                                                                                                                                                      timePointYears,
                                                                                                                                                                      parent_primary) ]
-    checkingTab <- unique(toDeviate2proc2[ , .(geographicAreaM49_fi, timePointYears, parent_primary, availability_primary,
+    checkingTab <- unique(toDeviate2proc2[ , .(geographicAreaM49_fi, timePointYears, parent_primary, availability_primary, 
                                                secondLevelProcessing, availability_secondary_primEq_tot)])
-
+    
+    add2NotCovered <- toDeviate2proc2[availability_secondary_primEq_tot < (-1)*secondLevelProcessing ]
+    
+    add2NotCovered <- add2NotCovered[ , .(geographicAreaM49_fi, parent_primary, timePointYears,
+                                          secondLevelProcessing,
+                                          extraction_rate)]
+    
+    add2NotCovered <- add2NotCovered[ , secondLevelProcessing := -secondLevelProcessing]
+    add2NotCovered <- add2NotCovered[ , foodProcessingSecondary := 0]
+    setkey(add2NotCovered)
+    add2NotCovered <- unique(add2NotCovered)
     # -- General insufficiency ----
     insufficiency <- checkingTab[availability_secondary_primEq_tot < (-1)*secondLevelProcessing ]
-
+    
     if(nrow(insufficiency) > 0){
-
+      
       problem <- 'PROBLEM! Not enough secondary availability to cover production!'
       msg2 <- list(problem,insufficiency)
-
+      
     }
     msg2 <- ifelse(nrow(insufficiency) > 0, msg2, 'Total secondary availability can cover remaining secondary production. Level by level availability to be checked.')
-
+    
+    # problems$secondaryTot <- list(msg = msg2, tab = insufficiency[ , .(geographicAreaM49_fi,
+    #                                                                    timePointYears,
+    #                                                                    parent_primary,
+    #                                                                    AvailableQuantity = (availability_secondary_primEq_tot),
+    #                                                                    Quantity2cover = (secondLevelProcessing)*(-1))])
+    
     problems$secondaryTot <- insufficiency[ , .(geographicAreaM49_fi,
                                                 timePointYears,
                                                 parent_primary,
                                                 AvailableQuantity = (availability_secondary_primEq_tot),
                                                 Quantity2cover = (secondLevelProcessing)*(-1))]
-
+    
+    ##############################################################  
+    #-- NEW PART ----  
+    # Put unrealistic values to primary products for which there is not enough availability to cover production
+    # data131covered <- merge(data131, insufficiency[ , .(geographicAreaM49_fi, timePointYears, parent_primary, availability_primary)],
+    #                         by.x = c('geographicAreaM49_fi', 'measuredItemFaostat_L2', 'timePointYears'),
+    #                         by.y = c('geographicAreaM49_fi', 'parent_primary', 'timePointYears'),
+    #                         all = TRUE)
+    # data131covered[!is.na(availability_primary), processing := -9999]
+    
     # Exclude the products that cannot be covered
     toDeviateCovered <- merge(toDeviate2proc2[, .(geographicAreaM49_fi,
                                                   timePointYears,
                                                   parent_primary,
-                                                  parent_secondary,
+                                                  parent_secondary, 
                                                   secondLevelProcessing,
                                                   extraction_rate,
-                                                  availability_secondary,
-                                                  availability_secondary_primEq)],
-                              insufficiency[ , .(geographicAreaM49_fi, timePointYears, parent_primary, availability_primary)],
+                                                  availability_secondary, 
+                                                  availability_secondary_primEq)], 
+                              insufficiency[ , .(geographicAreaM49_fi, timePointYears, parent_primary, availability_primary)], 
                               by = c('geographicAreaM49_fi', 'timePointYears', 'parent_primary'), all = TRUE)
-
-    toDeviateCovered <- toDeviateCovered[is.na(availability_primary)]
+    
+    toDeviateCovered <- toDeviateCovered[is.na(availability_primary)] ### !!!!
     toDeviateCovered[ , availability_primary := NULL]
     setkey(toDeviateCovered)
     toDeviateCovered <- unique(toDeviateCovered)
+    #######################################################################
 
 ```
 
@@ -1759,66 +2091,74 @@ At each level, the function checks if there is at least enough availability for 
 
 
 ```
-    # Consider all ICS product that can be parent
-    secondaryFP <-  merge(unique(treeNewER[, .(parent, rank)]), toDeviateCovered,
-                          by.x = c("parent"),
-                          by.y = c("parent_secondary"))
 
+   # Consider all ICS product that can be parent
+    secondaryFP <-  merge(unique(treeNewER[, .(parent, rank)]), toDeviateCovered,
+                          by.x = c("parent"), 
+                          by.y = c("parent_secondary"))
+    
     # transform in secondary equivalent the excess of processing not covered by the primary
+    # secondaryFP[, secondLevelProcessing:= (secondLevelProcessing * extraction_rate)*(-1)]
     secondaryFP[, secondLevelProcessing:= (secondLevelProcessing)*(-1)]
     setkey(secondaryFP)
     secondaryFP <- unique(secondaryFP)
-
+    
     # Maximum level of processing is 4 so creating space for it
-    secondaryFP[ , ':=' (rank1Processing = 0, thirdLevelProcessing = 0,
-                         rank2Processing = 0, fourthLevelProcessing = 0,
+    secondaryFP[ , ':=' (rank1Processing = 0, thirdLevelProcessing = 0, 
+                         rank2Processing = 0, fourthLevelProcessing = 0, 
                          rank3Processing = 0, fifthLevelProcessing = 0, rank4Processing = 0)]
-
-
-    # -- Rank 1 secondary parent ----
-
+    
+    
+    #-- Rank 1 secondary parent ----
+    
     # Calculation of first secondary parent food processing already in secondary equivalent
     # rank1Processing = quantity of input covered by rank 1 parent
     secondaryFP[ rank == 1, rank1Processing := ifelse(availability_secondary_primEq  > secondLevelProcessing,
                                                       secondLevelProcessing*extraction_rate , availability_secondary) ]
-
+    
     # Where there is need of second secondary parent
     rank2needed <- unique(secondaryFP[rank == 1 & availability_secondary_primEq  < secondLevelProcessing, .(geographicAreaM49_fi, parent, timePointYears, parent_primary, secondLevelProcessing, availability_secondary_primEq) ])
-
-    # -- Rank 2 secondary parent ----
-
+    
+    #-- Rank 2 secondary parent ----
+    
     if(nrow(rank2needed) > 0){
       rank2needed[ , thirdLevelProcessing := secondLevelProcessing - (availability_secondary_primEq )]
-
+      
       # Merge to put the right third level processing
-      secondaryFPneeded <- merge(secondaryFP[ rank == 2], rank2needed,
+      secondaryFPneeded <- merge(secondaryFP[ rank == 2], rank2needed, 
                                  by = c("geographicAreaM49_fi", "timePointYears", "parent_primary"), all = TRUE, suffixes = c('_available', '_needed'))
-
+      
       secondaryFPneeded[ is.na(thirdLevelProcessing_needed), thirdLevelProcessing_needed := 0 ]
-
+      
       unavailable <- secondaryFPneeded[is.na(parent_available)]
-
+      
       if(nrow(unavailable) > 0){
         msg3 <- paste('Not enough product to cover processing for primary group(s)', paste(unique(unavailable$parent_primary), collapse = ", "),
                       "at level 2, for country", paste(unique(unavailable$geographicAreaM49_fi), collapse = ", ") )
         message(msg3)
       }
       msg3 <- ifelse(nrow(unavailable) > 0, msg3, 'Enough rank 2 secondary parent to cover rank 3 children (see commodity tree).')
-
+      
+      # problems$secondary <- list(msg = msg3, tab = unavailable[ , .(geographicAreaM49_fi,
+      #                                                               timePointYears,
+      #                                                               parent_primary,
+      #                                                               parent_needed,
+      #                                                               Quantity2cover = (thirdLevelProcessing_needed))] )
+      # 
       problems$secondary <- unavailable[ , .(geographicAreaM49_fi,
                                              timePointYears,
                                              parent_primary,
                                              parent_needed,
                                              Quantity2cover = (thirdLevelProcessing_needed))]
-
+      
       secondaryFP2 <- copy(secondaryFPneeded)
       secondaryFP2[is.na(parent_available), availability_secondary_primEq_available := 0]
-
-
-      secondaryFP2 <- secondaryFP2[ ,rank2Processing := ifelse(availability_secondary_primEq_available  > thirdLevelProcessing_needed,
-                                                               thirdLevelProcessing_needed *extraction_rate,
+      
+      
+      secondaryFP2 <- secondaryFP2[ ,rank2Processing := ifelse(availability_secondary_primEq_available  > thirdLevelProcessing_needed, 
+                                                               thirdLevelProcessing_needed *extraction_rate, 
                                                                availability_secondary_primEq_available *extraction_rate)]
-
+      
       secondaryFP2 <- secondaryFP2[  , .(geographicAreaM49_fi, timePointYears, parent_primary, parent_available, rank,
                                          secondLevelProcessing_available, extraction_rate, availability_secondary,
                                          availability_secondary_primEq_available, rank1Processing,
@@ -1826,46 +2166,52 @@ At each level, the function checks if there is at least enough availability for 
                                          thirdLevelProcessing_needed)]
       setnames(secondaryFP2, names(secondaryFP2), gsub("_available", "", names(secondaryFP2)))
       setnames(secondaryFP2, 'thirdLevelProcessing_needed', 'thirdLevelProcessing')
-      secondaryFP2 <- rbind(secondaryFP2, secondaryFP[rank != 2, ])
+      secondaryFP2 <- rbind(secondaryFP2, secondaryFP[rank != 2, ])   
       secondaryFP <- secondaryFP2
       # Where there is need of third secondary parent
-
+      
       rank3needed <- unique(secondaryFP2[rank == 2 & availability_secondary_primEq  < thirdLevelProcessing, .(geographicAreaM49_fi, parent, timePointYears, parent_primary, thirdLevelProcessing, availability_secondary_primEq) ])
-
-      # -- Rank 3 secondary parent ----
-
+      
+      #-- Rank 3 secondary parent ----
+      
       if(nrow(rank3needed) > 0){
         rank3needed[ , fourthLevelProcessing := thirdLevelProcessing - (availability_secondary_primEq )]
-
-        tertiaryFPneeded <- merge(secondaryFP2[ rank == 3], rank3needed,
+        
+        tertiaryFPneeded <- merge(secondaryFP2[ rank == 3], rank3needed, 
                                   by = c("geographicAreaM49_fi", "timePointYears", "parent_primary"), all = TRUE, suffixes = c('_available', '_needed'))
-
+        
         tertiaryFPneeded[is.na(fourthLevelProcessing_needed), fourthLevelProcessing_needed := 0 ]
-
+        
         unavailable3 <- tertiaryFPneeded[is.na(parent_available)]
-
+        
         if(nrow(unavailable3) > 0){
           msg4 <- paste('Not enough product to cover processing for primary group(s)', paste(unique(unavailable3$parent_primary), collapse = ", "),
                         "at level 3, for country ", paste(unique(unavailable3$geographicAreaM49_fi ), collapse = ", "))
           message(msg4)
         }
         msg4 <- ifelse(nrow(unavailable3) > 0, msg4, 'Enough rank 3 secondary parent to cover rank 4 children (see commodity tree).')
-
+        
+        # problems$tertiary <- list(msg = msg4, tab = unavailable3[ , .(geographicAreaM49_fi,
+        #                                                               timePointYears,
+        #                                                               parent_primary,
+        #                                                               parent_needed,
+        #                                                               Quantity2cover = (fourthLevelProcessing_needed))] )
+        # 
         problems$tertiary <- unavailable3[ , .(geographicAreaM49_fi,
                                                timePointYears,
                                                parent_primary,
                                                parent_needed,
                                                Quantity2cover = (fourthLevelProcessing_needed))]
 
-
+        
         secondaryFP3 <- copy(tertiaryFPneeded)
-
+        
         secondaryFP3[is.na(parent_available), availability_secondary_primEq_available := 0]
-
-        secondaryFP3 <- secondaryFP3[ ,rank3Processing := ifelse(availability_secondary_primEq_available  > fourthLevelProcessing_needed,
-                                                                 fourthLevelProcessing_needed *extraction_rate,
+        
+        secondaryFP3 <- secondaryFP3[ ,rank3Processing := ifelse(availability_secondary_primEq_available  > fourthLevelProcessing_needed, 
+                                                                 fourthLevelProcessing_needed *extraction_rate, 
                                                                  availability_secondary_primEq_available *extraction_rate)]
-
+        
         secondaryFP3 <- secondaryFP3[  , .(geographicAreaM49_fi, timePointYears, parent_primary, parent_available, rank,
                                            secondLevelProcessing, extraction_rate, availability_secondary,
                                            availability_secondary_primEq_available, rank1Processing, thirdLevelProcessing_available,
@@ -1873,72 +2219,80 @@ At each level, the function checks if there is at least enough availability for 
                                            fourthLevelProcessing_needed)]
         setnames(secondaryFP3, names(secondaryFP3), gsub("_available", "", names(secondaryFP3)))
         setnames(secondaryFP3, 'fourthLevelProcessing_needed', 'fourthLevelProcessing')
-        secondaryFP3 <- rbind(secondaryFP3, secondaryFP2[rank != 3, ])
+        secondaryFP3 <- rbind(secondaryFP3, secondaryFP2[rank != 3, ])   
         secondaryFP <- secondaryFP3
-
+        
         # Where there is need of fourth secondary parent
-
+        
         rank4needed <- unique(secondaryFP3[rank == 3 & availability_secondary_primEq  < fourthLevelProcessing, .(geographicAreaM49_fi, parent, timePointYears, parent_primary, fourthLevelProcessing, availability_secondary_primEq) ])
-
-        # -- Rank 4 secondary parent ----
+        
+        #-- Rank 4 secondary parent ----
         if(nrow(rank4needed) > 0 ){
           rank4needed[ , fifthLevelProcessing := fourthLevelProcessing - (availability_secondary_primEq )]
-
-          quaternaryFPneeded <- merge(secondaryFP3[ rank == 4], rank4needed,
+          
+          quaternaryFPneeded <- merge(secondaryFP3[ rank == 4], rank4needed, 
                                       by = c("geographicAreaM49_fi", "timePointYears", "parent_primary"), all = TRUE, suffixes = c('_available', '_needed'))
-
+          
           quaternaryFPneeded[ is.na(fifthLevelProcessing_needed), fifthLevelProcessing_needed := 0 ]
-
+          
           unavailable4 <- quaternaryFPneeded[is.na(parent_available)]
-
+          
           if(nrow(unavailable4) > 0){
             msg5 <- paste('Not enough product to cover processing for primary group(s)', paste(unique(unavailable4$parent_primary), collapse = ", "),
                           "at level 4, for country ", paste(unique(unavailable4$geographicAreaM49_fi), collapse = ", "))
             message(msg5)
           }
           msg5 <- ifelse(nrow(unavailable4) > 0, msg5, 'Enough rank 4 secondary parent to cover remaining children (see commodity tree).')
-
+          
+          # problems$quaternary <- list(msg = msg5, tab =unavailable4[ , .(geographicAreaM49_fi,
+          #                                                                timePointYears,
+          #                                                                parent_primary,
+          #                                                                parent_needed,
+          #                                                                Quantity2cover = (fifthLevelProcessing_needed))])
+          
           problems$quaternary <- unavailable4[ , .(geographicAreaM49_fi,
                                                    timePointYears,
                                                    parent_primary,
                                                    parent_needed,
                                                    Quantity2cover = (fifthLevelProcessing_needed))]
-
-
+          
+          
           secondaryFP4 <- copy(quaternaryFPneeded)
           secondaryFP4[is.na(parent_available), availability_secondary_primEq_available := 0]
-
-          secondaryFP4 <- secondaryFP4[ ,rank4Processing := ifelse(availability_secondary_primEq_available  > fifthLevelProcessing_needed,
-                                                                   fifthLevelProcessing_needed *extraction_rate,
+          
+          secondaryFP4 <- secondaryFP4[ ,rank4Processing := ifelse(availability_secondary_primEq_available  > fifthLevelProcessing_needed, 
+                                                                   fifthLevelProcessing_needed *extraction_rate, 
                                                                    availability_secondary_primEq_available *extraction_rate)]
-
+          
           secondaryFP4 <- secondaryFP4[  , .(geographicAreaM49_fi, timePointYears, parent_primary, parent_available, rank,
                                              secondLevelProcessing, extraction_rate, availability_secondary,
                                              availability_secondary_primEq_available, rank1Processing, thirdLevelProcessing,
-                                             rank2Processing, fourthLevelProcessing_available, rank3Processing,
+                                             rank2Processing, fourthLevelProcessing_available, rank3Processing, 
                                              fifthLevelProcessing_needed, rank4Processing)]
           setnames(secondaryFP4, names(secondaryFP4), gsub("_available", "", names(secondaryFP4)))
           setnames(secondaryFP4, 'fifthLevelProcessing_needed', 'fifthLevelProcessing')
-          secondaryFP4 <- rbind(secondaryFP4, secondaryFP3[rank != 4, ])
+          secondaryFP4 <- rbind(secondaryFP4, secondaryFP3[rank != 4, ])   
           secondaryFP <- secondaryFP4
-
-
+          
+          
           rank5needed <- unique(secondaryFP4[rank == 4 & availability_secondary_primEq  < fifthLevelProcessing,  ])
-
+          
         }
-
+        
       }
-
+      
     }
+    
 
 ```
 
 At the end of the process all the `secondaryFP` object is processed so to be appended to the other data and the uncovered data are stored in the `problems` list in the `NotCovered` table.
 
 ```
-    # -- Organising data ----
 
-    processingLevelsComputed <-  melt(secondaryFP,
+    #-- Organising data ----
+    
+    processingLevelsComputed <-  melt(secondaryFP, 
                                       id.vars = c("parent",
                                                   "rank", "geographicAreaM49_fi",
                                                   "timePointYears", "parent_primary",
@@ -1947,10 +2301,13 @@ At the end of the process all the `secondaryFP` object is processed so to be app
                                       measure.vars = c("rank1Processing", "rank2Processing", "rank3Processing", "rank4Processing"),
                                       value.name = "foodProcessingSecondary",
                                       variable.name = "levelOfProcessing")
-
+    
     NotCovered <- processingLevelsComputed[ , .(geographicAreaM49_fi, parent_primary, timePointYears, secondLevelProcessing, extraction_rate, foodProcessingSecondary)]
     setkey(NotCovered)
     NotCovered <- unique(NotCovered)
+    NotCovered <- rbind(NotCovered, add2NotCovered)
+
+    
     if(nrow(NotCovered) > 0){
       NotCovered[ , foodProcessingSecondary_primEq := foodProcessingSecondary/extraction_rate ]
       NotCovered[ , c('secondLevelProcessing',  'foodProcessingSecondary_primEq') := list(secondLevelProcessing,
@@ -1959,7 +2316,7 @@ At the end of the process all the `secondaryFP` object is processed so to be app
       NotCovered[ , UncoveredQuantity := secondLevelProcessing - foodProcessingSecondary_primEq]
       NotCovered <- NotCovered[secondLevelProcessing > foodProcessingSecondary_primEq]
     }
-
+    
     if(nrow(NotCovered) > 0){
       NotCovered <- NotCovered[ , c('secondLevelProcessing',  'foodProcessingSecondary', 'extraction_rate', 'foodProcessingSecondary_primEq') := NULL]
       setkey(NotCovered)
@@ -1968,33 +2325,34 @@ At the end of the process all the `secondaryFP` object is processed so to be app
     } else {
       problems$NotCovered <- data.table()
     }
-
+    
     processingLevelsAssigned <- processingLevelsComputed[foodProcessingSecondary != 0]
-
-    processingLevelsAssigned <- processingLevelsAssigned[ , .(geographicAreaM49_fi, parent, timePointYears,
+    
+    processingLevelsAssigned <- processingLevelsAssigned[ , .(geographicAreaM49_fi, parent, timePointYears, 
                                                               availability_secondary, foodProcessingSecondary)]
-
-    setnames(processingLevelsAssigned, c("parent", "availability_secondary", "foodProcessingSecondary"),
+    
+    setnames(processingLevelsAssigned, c("parent", "availability_secondary", "foodProcessingSecondary"), 
              c("measuredItemFaostat_L2", "availability", "processing"))
-
+    
     data131full <- rbind(data131[ , secondLevelProcessing := NULL], processingLevelsAssigned)
   } else {
-
+    
     data131full <- data131[ , secondLevelProcessing := NULL]
-
-  }
-
-
+    
+  } 
+  
+  
   data131full[, measuredElementSuaFbs:="5023"]
   setnames(data131full, "processing", "Value")
-
-
-
+  
+}
+  
   return(list(result = data131full,
               problems = problems
   )
   )
-
+  
 }
+
 
 ```
